@@ -1,0 +1,45 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Project: portafolio (greenfield portfolio website)
+  Tech stack: Next.js (App Router) + TypeScript + Firebase Firestore (planned; not yet scaffolded)
+  Architecture: Not yet established — to be decided during design phase
+  Testing: None detected — no test runner, no coverage tool, no quality tools (greenfield)
+  Style: Not yet established — to be decided during design phase
+  Runtime: Node v24.16.0, npm 11.13.0, git 2.54.0
+  Repo: Not a git repository yet; init during apply phase
+
+testing:
+  strict_tdd: false
+  detected: "2026-08-09"
+  rationale: >
+    Strict TDD is disabled. The project has no package.json, no test runner, and no
+    coverage tooling. Tooling will be scaffolded with the Next.js app in the apply
+    phase; testing capabilities must be re-detected during apply/verify.
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - State intent, scope, and approach explicitly
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns
+      - Scaffold the Next.js app and Firestore integration per the change design
+    tdd: false                 # Strict TDD disabled until a test runner exists; re-evaluate after scaffold
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: ""
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
