@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/*
+ * Editorial-light design tokens (visual direction B).
+ * Values are defined on :root and mapped into Tailwind utilities via
+ * `@theme inline` so the generated CSS references the variables once.
+ */
+
+:root {
+  /* Surfaces & text */
+  --background: #fafaf8; /* paper */
+  --foreground: #1c1917; /* ink */
+  --color-paper: #fafaf8;
+  --color-ink: #1c1917;
+  --color-ink-muted: #57534e;
+  --color-line: #e7e5e4;
+
+  /* Accent */
+  --color-teal: #0f766e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-paper: var(--color-paper);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-line: var(--color-line);
+  --color-teal: var(--color-teal);
+
+  /* Sans body + serif display (loaded via next/font in layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Visible keyboard focus ring in the accent color */
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: #ccfbf1;
+    color: #134e4a;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
