@@ -58,11 +58,11 @@ Chain strategy: stacked-to-main
 
 ## Phase 4: Testing
 
-- [ ] 4.1 `vitest.config.ts` + jsdom setup; unit: contact schema (valid/trim/length/email cases)
-- [ ] 4.2 Unit: rate-limit (window, burst→429, key isolation), honeypot (filled/empty), parse (malformed omitted, ISO)
-- [ ] 4.3 RTL: ContactForm success/error/retry; ProjectList loading/empty/error (fetch mocked)
-- [ ] 4.4 Integration: route handlers vs real Firestore, `describe.skipIf` when `FIREBASE_SERVICE_ACCOUNT` absent (direct invocation or supertest)
-- [ ] 4.5 Verify: `npm run test` + `npm run lint` + `npm run build` pass; Lighthouse mobile ≥90 (perf/a11y/SEO)
+- [x] 4.1 `vitest.config.ts` + jsdom setup; unit: contact schema (valid/trim/length/email cases)
+- [x] 4.2 Unit: rate-limit (window, burst→429, key isolation), honeypot (filled/empty), parse (malformed omitted, ISO)
+- [x] 4.3 RTL: ContactForm success/error/retry; ProjectList loading/empty/error (fetch mocked)
+- [x] 4.4 Integration: route handlers vs real Firestore, `describe.skipIf` when `FIREBASE_SERVICE_ACCOUNT` absent (direct invocation or supertest)
+- [x] 4.5 Verify: `npm run test` + `npm run lint` + `npm run build` pass; Lighthouse mobile ≥90 (perf/a11y/SEO) — scripted verify green via `npm run verify`; Lighthouse ≥90 is a manual dev-browser run (no Chrome/lighthouse tooling in apply env), tallied in apply-progress
 
 ## Phase 5: Documentation / Cleanup
 
