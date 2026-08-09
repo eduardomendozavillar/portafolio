@@ -50,11 +50,11 @@ Chain strategy: stacked-to-main
 
 ## Phase 3: UI Integration
 
-- [ ] 3.1 `layout.tsx` (lang="es") + `page.tsx` composing sections in order
-- [ ] 3.2 `src/components/ui/*`: container, buttons, section-heading primitives
-- [ ] 3.3 Sections (server): sticky header nav + mobile menu, Hero, SobreMí, Habilidades, Experiencia, Educación, Footer with LinkedIn/GitHub (`_blank`)
-- [ ] 3.4 `ProjectList.tsx` + `ProjectCard.tsx` (numbered index): loading/empty/error Spanish states via `/api/projects`
-- [ ] 3.5 `ContactForm.tsx` (client): idle/submitting/success/error states; keeps values on failure; hidden honeypot field
+- [x] 3.1 `layout.tsx` (lang="es") + `page.tsx` composing sections in order
+- [x] 3.2 `src/components/ui/*`: container, buttons, section-heading primitives
+- [x] 3.3 Sections (server): sticky header nav + mobile menu, Hero, SobreMí, Habilidades, Experiencia, Educación, Footer with LinkedIn/GitHub (`_blank`)
+- [x] 3.4 `ProjectList.tsx` + `ProjectCard.tsx` (numbered index): loading/empty/error Spanish states via `/api/projects`
+- [x] 3.5 `ContactForm.tsx` (client): idle/submitting/success/error states; keeps values on failure; hidden honeypot field
 
 ## Phase 4: Testing
 
