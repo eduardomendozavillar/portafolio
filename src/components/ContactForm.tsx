@@ -46,6 +46,9 @@ export function ContactForm() {
         name: values.name,
         email: values.email,
         message: values.message,
+        // The honeypot value must reach the API or the server-side check
+        // (isHoneypotFilled) can never see bot-filled submissions.
+        [HONEYPOT_FIELD]: values[HONEYPOT_FIELD],
       });
 
       if (response.ok) {

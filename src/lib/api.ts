@@ -1,3 +1,4 @@
+import { HONEYPOT_FIELD } from "./honeypot";
 import type { ApiResponse } from "../types/api";
 import type { ContactMessage } from "../types/contact";
 import type { Project } from "../types/project";
@@ -18,8 +19,14 @@ export async function fetchProjects(): Promise<Project[]> {
   return (await response.json()) as Project[];
 }
 
-/** POST /api/contact — returns the ApiResponse envelope (incl. 429/400). */
-export async function submitContact(message: ContactMessage): Promise<ApiResponse> {
+/**
+ * POST /api/contact — returns the ApiResponse envelope (incl. 429/400).
+ * The optional honeypot field is transmitted so the server can drop bots;
+ * it is stripped by the zod schema and never persisted.
+ */
+export async function submitContact(
+  message: ContactMessage & { [HONEYPOT_FIELD]?: string },
+): Promise<ApiResponse> {
   const response = await fetch("/api/contact", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
