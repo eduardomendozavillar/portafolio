@@ -66,6 +66,6 @@ Chain strategy: stacked-to-main
 
 ## Phase 5: Documentation / Cleanup
 
-- [ ] 5.1 `docs/setup.md` (es): SDD walkthrough, file glossary, local run, Firebase/Vercel env setup — completable unassisted
-- [ ] 5.2 `README.md`: run/setup instructions (English)
-- [ ] 5.3 Final pass: no console errors, no horizontal overflow, keyboard-operable nav/links
+- [x] 5.1 `docs/setup.md` (es): SDD walkthrough, file glossary, local run, Firebase/Vercel env setup — completable unassisted
+- [x] 5.2 `README.md`: run/setup instructions (English)
+- [x] 5.3 Final pass: no console errors, no horizontal overflow, keyboard-operable nav/links — code-level checks pass (semantic anchors/buttons, aria-expanded/controls, Escape closes + focus return, no overflow patterns like w-screen/100vw/unbounded nowrap); console/overflow visual confirmation is a manual dev-browser run, tallied in apply-progress
