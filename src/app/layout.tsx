@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Fraunces, Inter } from "next/font/google";
+import { Footer } from "./sections/Footer";
+import { Header } from "./sections/Header";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -28,7 +30,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
