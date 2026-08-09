@@ -39,14 +39,14 @@ Chain strategy: stacked-to-main
 
 ## Phase 2: Core (Lib + API)
 
-- [ ] 2.1 `src/lib/validation/contact.ts`: zod v4 schema — trim; name 1–100; email lowercase, well-formed, ≤254; message 10–4000
-- [ ] 2.2 `src/lib/honeypot.ts` + `src/lib/rate-limit.ts` (injectable clock/store; 60s window, 3 max, per-key isolation)
-- [ ] 2.3 `src/lib/projects/parse.ts`: safeParse → Project[]; Timestamp→ISO-8601; malformed omitted
-- [ ] 2.4 `src/lib/firebase/admin.ts`: `import "server-only"`; lazy `cert(JSON.parse(env))` singleton, no `NEXT_PUBLIC_`
-- [ ] 2.5 `src/lib/api.ts`: typed client fetch with `cache:"no-store"`; POST contact helper
-- [ ] 2.6 `src/app/api/projects/route.ts`: GET → orderBy sortOrder → parse → 200 Project[] (dynamic, uncached)
-- [ ] 2.7 `src/app/api/contact/route.ts`: POST → honeypot 200 silent → rate-limit 429+Retry-After → zod 400 → Firestore add (status "new", source "portfolio") → 201 {ok,id}; 500 catch
-- [ ] 2.8 `scripts/seed-projects.mjs`: optional Admin-SDK seed of 2 projects
+- [x] 2.1 `src/lib/validation/contact.ts`: zod v4 schema — trim; name 1–100; email lowercase, well-formed, ≤254; message 10–4000
+- [x] 2.2 `src/lib/honeypot.ts` + `src/lib/rate-limit.ts` (injectable clock/store; 60s window, 3 max, per-key isolation)
+- [x] 2.3 `src/lib/projects/parse.ts`: safeParse → Project[]; Timestamp→ISO-8601; malformed omitted
+- [x] 2.4 `src/lib/firebase/admin.ts`: `import "server-only"`; lazy `cert(JSON.parse(env))` singleton, no `NEXT_PUBLIC_`
+- [x] 2.5 `src/lib/api.ts`: typed client fetch with `cache:"no-store"`; POST contact helper
+- [x] 2.6 `src/app/api/projects/route.ts`: GET → orderBy sortOrder → parse → 200 Project[] (dynamic, uncached)
+- [x] 2.7 `src/app/api/contact/route.ts`: POST → honeypot 200 silent → rate-limit 429+Retry-After → zod 400 → Firestore add (status "new", source "portfolio") → 201 {ok,id}; 500 catch
+- [x] 2.8 `scripts/seed-projects.mjs`: optional Admin-SDK seed of 2 projects
 
 ## Phase 3: UI Integration
 
