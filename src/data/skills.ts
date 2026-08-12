@@ -4,14 +4,25 @@ export type Skill = {
   category: string;
 };
 
-/** Editable list — grouped by category for the Habilidades section. */
+/** Real skill set, grouped by category for the Habilidades section. */
 export const skills: Skill[] = [
+  { name: "Java", category: "Lenguajes" },
+  { name: "Python", category: "Lenguajes" },
   { name: "TypeScript", category: "Lenguajes" },
   { name: "JavaScript", category: "Lenguajes" },
-  { name: "Next.js", category: "Frameworks" },
-  { name: "React", category: "Frameworks" },
+  { name: "Angular", category: "Frontend" },
+  { name: "React.js", category: "Frontend" },
+  { name: "Tailwind CSS", category: "Frontend" },
+  { name: "FastAPI", category: "Backend" },
+  { name: "Spring Framework", category: "Backend" },
   { name: "Node.js", category: "Backend" },
-  { name: "Firebase / Firestore", category: "Backend" },
-  { name: "Tailwind CSS", category: "Herramientas" },
-  { name: "Vitest", category: "Herramientas" },
+  { name: "RAG", category: "IA" },
+  { name: "LLMs locales", category: "IA" },
+  { name: "Orquestación de agentes", category: "IA" },
+  { name: "n8n", category: "IA" },
+  { name: "SQL", category: "Datos" },
+  { name: "Docker", category: "Herramientas" },
+  { name: "GitHub", category: "Herramientas" },
+  { name: "Spec-Driven Development", category: "Herramientas" },
+  { name: "Vibe Coding", category: "Herramientas" },
 ];

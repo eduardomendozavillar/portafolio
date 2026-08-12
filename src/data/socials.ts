@@ -5,16 +5,16 @@ export type SocialLink = {
   href: string;
 };
 
-/** Editable placeholder URLs — replace with the real profiles before deploy. */
+/** Real owner profiles — opened in a new tab from the header and footer. */
 export const socials: SocialLink[] = [
   {
     platform: "github",
     label: "GitHub",
-    href: "https://github.com/tu-usuario",
+    href: "https://github.com/eduardomendozavillar",
   },
   {
     platform: "linkedin",
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/tu-usuario",
+    href: "https://www.linkedin.com/in/eduardo-mendoza-ing-sistemas",
   },
 ];

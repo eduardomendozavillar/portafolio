@@ -5,16 +5,36 @@ export type EducationItem = {
   period: string;
 };
 
-/** Placeholder entries — editable before deploy. */
+/** Real CV entries (Spanish; most recent first). */
 export const education: EducationItem[] = [
   {
-    degree: "Grado en Ingeniería Informática",
-    institution: "Universidad de ejemplo",
-    period: "2018 — 2023",
+    degree: "Especialización en Inteligencia Artificial",
+    institution: "CUN",
+    period: "(En curso) 2027",
   },
   {
-    degree: "Certificación en Desarrollo Web Avanzado",
-    institution: "Plataforma de ejemplo",
-    period: "2023",
+    degree: "Ingeniería de Sistemas",
+    institution: "CUN",
+    period: "2026",
+  },
+  {
+    degree: "Tecnólogo en Desarrollo de Software y Redes",
+    institution: "CUN",
+    period: "2025",
+  },
+  {
+    degree: "Técnico Profesional en Mantenimiento de Computadores",
+    institution: "CUN",
+    period: "2024",
+  },
+  {
+    degree: "Técnico en Desarrollo de Software",
+    institution: "SENA",
+    period: "2019",
+  },
+  {
+    degree: "Educación Secundaria",
+    institution: "I.E.D Líbano 2000",
+    period: "2018",
   },
 ];

@@ -18,9 +18,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Eduardo — Portafolio",
+  title: "Eduardo Mendoza Villar — Ingeniero de Sistemas e IA",
   description:
-    "Portafolio personal de Eduardo, desarrollador full-stack: aplicaciones web claras, accesibles y con fundamento.",
+    "Portafolio de Eduardo Mendoza Villar, ingeniero de sistemas enfocado en inteligencia artificial, RAG y desarrollo web.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
