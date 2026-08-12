@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# codegraph index (local code intelligence)
+.codegraph/
+
+# opencode local artifacts
+opencode 
+dev-server.log
