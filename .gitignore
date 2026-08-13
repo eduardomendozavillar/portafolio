@@ -45,3 +45,5 @@ next-env.d.ts
 
 # opencode local artifacts
 dev-server.log
+# Local AI runtime state
+.atl/
