@@ -16,7 +16,7 @@ export function ProjectCard({
   return (
     <li className="border-t border-line py-8 first:border-t-0 md:py-10">
       <div className="flex flex-col gap-4 md:flex-row md:items-baseline md:gap-8">
-        <p className="font-display text-2xl font-semibold text-teal" aria-hidden="true">
+        <p className="font-display text-2xl font-semibold text-accent" aria-hidden="true">
           {number}
         </p>
         <div className="min-w-0 flex-1">
@@ -46,7 +46,7 @@ export function ProjectCard({
                     href={project.links.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-teal underline decoration-teal/40 decoration-2 underline-offset-4 transition-colors hover:decoration-teal"
+                    className="text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
                   >
                     Demo
                   </a>
@@ -58,7 +58,7 @@ export function ProjectCard({
                     href={project.links.repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-ink underline decoration-line decoration-2 underline-offset-4 transition-colors hover:text-teal hover:decoration-teal"
+                    className="text-ink underline decoration-line decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
                   >
                     Código
                   </a>

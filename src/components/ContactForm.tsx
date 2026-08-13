@@ -23,8 +23,8 @@ const initialValues: FormValues = {
 };
 
 const fieldClasses =
-  "w-full rounded-md border border-line bg-white px-4 py-2.5 text-ink " +
-  "placeholder:text-ink-muted/60 focus:border-teal focus:outline-none";
+  "w-full rounded-md border border-line bg-paper-raised px-4 py-2.5 text-ink " +
+  "placeholder:text-ink-muted/60 focus:border-accent focus:outline-none";
 
 /**
  * Contact form (task 3.5): idle / submitting / success / error states.
@@ -86,7 +86,7 @@ export function ContactForm() {
       {status === "success" ? (
         <p
           role="status"
-          className="mb-6 rounded-md border border-teal/30 bg-teal/10 px-4 py-3 text-teal"
+          className="mb-6 rounded-md border border-accent/30 bg-accent-soft px-4 py-3 text-accent"
         >
           ¡Gracias! Tu mensaje se envió correctamente. Te responderé a la
           brevedad.

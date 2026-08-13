@@ -18,7 +18,7 @@ export function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-line decoration-2 underline-offset-4 transition-colors hover:text-teal hover:decoration-teal"
+                className="underline decoration-line decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
               >
                 {social.label}
               </a>

@@ -21,11 +21,11 @@ export function Habilidades() {
   return (
     <section id="habilidades" className="border-b border-line">
       <Container className="py-20 md:py-28">
-        <SectionHeading index="02" title="Habilidades" />
+        <SectionHeading eyebrow="Habilidades" title="Habilidades" />
         <dl className="grid gap-10 md:grid-cols-2">
           {skillGroups.map((group) => (
             <div key={group.category}>
-              <dt className="text-sm font-medium uppercase tracking-[0.2em] text-teal">
+              <dt className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
                 {group.category}
               </dt>
               <dd className="mt-4">

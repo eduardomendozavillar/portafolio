@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { education } from "@/data/education";
 
-/** Educación: placeholder entries rendered from the typed data. */
+/** Educación: real CV entries rendered from the typed data. */
 export function Educacion() {
   return (
     <section id="educacion" className="border-b border-line">
@@ -20,7 +20,7 @@ export function Educacion() {
                 </h3>
                 <p className="text-sm text-ink-muted">{item.period}</p>
               </div>
-              <p className="mt-1 text-sm font-medium text-teal">
+              <p className="mt-1 text-sm font-medium text-accent">
                 {item.institution}
               </p>
             </li>

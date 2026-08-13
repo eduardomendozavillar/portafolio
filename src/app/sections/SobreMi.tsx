@@ -7,7 +7,7 @@ export function SobreMi() {
   return (
     <section id="sobre-mi" className="border-b border-line">
       <Container className="py-20 md:py-28">
-        <SectionHeading index="01" title="Sobre mí" />
+        <SectionHeading eyebrow="Sobre mí" title="Sobre mí" />
         <div className="max-w-3xl space-y-5">
           {profile.about.map((paragraph, i) => (
             <p key={i} className="text-lg leading-8 text-ink-muted">

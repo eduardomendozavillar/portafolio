@@ -55,7 +55,7 @@ export function Header() {
           className="shrink-0 font-display text-lg font-semibold text-ink"
         >
           {profile.name}
-          <span className="text-teal">.</span>
+          <span className="text-accent">.</span>
         </a>
 
         {/* Desktop navigation */}
@@ -65,7 +65,7 @@ export function Header() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="transition-colors hover:text-teal"
+                  className="transition-colors hover:text-accent"
                 >
                   {link.label}
                 </a>
@@ -82,7 +82,7 @@ export function Header() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-colors hover:text-teal"
+                className="transition-colors hover:text-accent"
               >
                 {social.label}
               </a>
@@ -134,7 +134,7 @@ export function Header() {
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block py-3 text-base font-medium text-ink transition-colors hover:text-teal"
+                    className="block py-3 text-base font-medium text-ink transition-colors hover:text-accent"
                   >
                     {link.label}
                   </a>
@@ -149,7 +149,7 @@ export function Header() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setOpen(false)}
-                    className="transition-colors hover:text-teal"
+                    className="transition-colors hover:text-accent"
                   >
                     {social.label}
                   </a>

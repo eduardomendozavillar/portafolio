@@ -10,7 +10,7 @@ export function Contacto() {
     <section id="contacto" className="border-b border-line">
       <Container className="py-20 md:py-28">
         <SectionHeading
-          index="06"
+          eyebrow="Contacto"
           title="Contacto"
           description="¿Tiene un proyecto en mente o quiere conversar? Escríbame y responderé a la brevedad."
         />

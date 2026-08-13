@@ -1,21 +1,25 @@
 /**
- * Editorial section heading: teal index eyebrow (01, 02, …) + display title
- * + optional Spanish description. Used by every content section.
+ * Editorial section heading: accent eyebrow + display title + optional
+ * Spanish description. Sequence sections (Proyectos, Experiencia,
+ * Educación) pass a numeric `index`; the rest pass a text `eyebrow`.
  */
 export function SectionHeading({
   index,
+  eyebrow,
   title,
   description,
 }: {
-  /** Editorial number, e.g. "01". */
-  index: string;
+  /** Editorial number for sequence sections, e.g. "03". */
+  index?: string;
+  /** Text eyebrow for non-sequence sections, e.g. "Sobre mí". */
+  eyebrow?: string;
   title: string;
   description?: string;
 }) {
   return (
     <header className="mb-10 md:mb-14">
-      <p className="text-sm font-medium uppercase tracking-[0.2em] text-teal">
-        {index}
+      <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
+        {index ?? eyebrow}
       </p>
       <h2 className="mt-3 font-display text-3xl font-semibold text-ink md:text-4xl">
         {title}

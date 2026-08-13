@@ -19,8 +19,8 @@ const baseClasses =
   "text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60";
 
 const variantClasses: Record<Variant, string> = {
-  primary: "bg-teal text-white hover:bg-teal/90",
-  outline: "border border-line text-ink hover:border-teal hover:text-teal",
+  primary: "bg-accent text-accent-contrast hover:bg-accent/90",
+  outline: "border border-line text-ink hover:border-accent hover:text-accent",
 };
 
 /** Button/link primitive in the editorial style. */
