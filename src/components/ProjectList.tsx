@@ -2,11 +2,29 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { featuredGitHubProjects } from "@/data/github";
 import { fetchProjects } from "@/lib/api";
 import type { Project } from "@/types/project";
 import { ProjectCard } from "./ProjectCard";
 
 type Status = "loading" | "success" | "error";
+
+function projectIdentity(project: Project) {
+  return [
+    project.links?.repo?.toLowerCase(),
+    project.links?.demo?.toLowerCase(),
+    project.title.toLowerCase(),
+  ].filter(Boolean);
+}
+
+function mergeFeaturedProjects(remoteProjects: Project[]) {
+  const remoteIdentities = new Set(remoteProjects.flatMap(projectIdentity));
+  const uniqueFeaturedProjects = featuredGitHubProjects.filter(
+    (project) => !projectIdentity(project).some((identity) => remoteIdentities.has(identity)),
+  );
+
+  return [...uniqueFeaturedProjects, ...remoteProjects];
+}
 
 /**
  * Client project list with the Spanish states required by the
@@ -15,7 +33,7 @@ type Status = "loading" | "success" | "error";
  */
 export function ProjectList() {
   const [status, setStatus] = useState<Status>("loading");
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(featuredGitHubProjects);
 
   function retry() {
     setStatus("loading");
@@ -27,10 +45,11 @@ export function ProjectList() {
   function loadProjects() {
     return fetchProjects()
       .then((data) => {
-        setProjects(data);
+        setProjects(mergeFeaturedProjects(data));
         setStatus("success");
       })
       .catch(() => {
+        setProjects(featuredGitHubProjects);
         setStatus("error");
       });
   }
@@ -41,24 +60,28 @@ export function ProjectList() {
 
   if (status === "loading") {
     return (
-      <p
-        role="status"
-        className="flex items-center gap-3 text-ink-muted"
-      >
-        <span
-          aria-hidden="true"
-          className="h-4 w-4 animate-spin rounded-full border-2 border-line border-t-accent"
-        />
-        Cargando proyectos…
-      </p>
+      <div className="flex flex-col gap-4">
+        <ProjectItems projects={projects} />
+        <p
+          role="status"
+          className="flex items-center gap-3 text-ink-muted"
+        >
+          <span
+            aria-hidden="true"
+            className="h-4 w-4 animate-spin rounded-full border-2 border-line border-t-accent"
+          />
+          Cargando proyectos dinámicos…
+        </p>
+      </div>
     );
   }
 
   if (status === "error") {
     return (
       <div className="flex flex-col items-start gap-4">
+        <ProjectItems projects={projects} />
         <p role="alert" className="rounded-md border border-line bg-paper-raised px-4 py-3 text-ink-muted">
-          No se pudieron cargar los proyectos. Inténtalo de nuevo más tarde.
+          No se pudieron cargar los proyectos dinámicos. Mientras tanto, podés ver el proyecto destacado.
         </p>
         <Button variant="outline" onClick={retry}>
           Reintentar
@@ -75,6 +98,12 @@ export function ProjectList() {
     );
   }
 
+  return (
+    <ProjectItems projects={projects} />
+  );
+}
+
+function ProjectItems({ projects }: { projects: Project[] }) {
   return (
     <ol>
       {projects.map((project, index) => (

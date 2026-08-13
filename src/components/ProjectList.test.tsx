@@ -64,19 +64,19 @@ describe("ProjectList", () => {
 
     render(<ProjectList />);
 
-    expect(screen.getByRole("status").textContent).toContain("Cargando proyectos");
+    expect(screen.getByText("Portafolio personal")).toBeTruthy();
+    expect(screen.getByRole("status").textContent).toContain("Cargando proyectos dinámicos");
     expect(vi.mocked(globalThis.fetch)).toHaveBeenCalledWith("/api/projects", {
       cache: "no-store",
     });
   });
 
-  it("renders the Spanish empty state when there are no projects", async () => {
+  it("renders the featured project when there are no remote projects", async () => {
     mockProjectsResponse([]);
     render(<ProjectList />);
 
-    expect(
-      await screen.findByText(/Todavía no hay proyectos publicados/),
-    ).toBeTruthy();
+    expect(await screen.findByText("Portafolio personal")).toBeTruthy();
+    expect(screen.queryByText(/Todavía no hay proyectos publicados/)).toBeNull();
   });
 
   it("shows the Spanish error state and recovers via Reintentar", async () => {
@@ -92,13 +92,15 @@ describe("ProjectList", () => {
     render(<ProjectList />);
 
     const alert = await screen.findByRole("alert");
-    expect(alert.textContent).toContain("No se pudieron cargar los proyectos");
+    expect(screen.getByText("Portafolio personal")).toBeTruthy();
+    expect(alert.textContent).toContain("No se pudieron cargar los proyectos dinámicos");
     expect(screen.getByRole("button", { name: "Reintentar" })).toBeTruthy();
 
     fireEvent.click(screen.getByRole("button", { name: "Reintentar" }));
 
     expect(await screen.findByText("Alpha")).toBeTruthy();
     expect(screen.getByText("Beta")).toBeTruthy();
+    expect(screen.getByText("Portafolio personal")).toBeTruthy();
     expect(vi.mocked(globalThis.fetch)).toHaveBeenCalledTimes(2);
   });
 
@@ -108,20 +110,42 @@ describe("ProjectList", () => {
 
     expect(await screen.findByText("Alpha")).toBeTruthy();
     expect(screen.getByText("Beta")).toBeTruthy();
+    expect(screen.getByText("Portafolio personal")).toBeTruthy();
 
     // Numbered editorial index (aria-hidden) 01 / 02…
     expect(screen.getByText("01")).toBeTruthy();
     expect(screen.getByText("02")).toBeTruthy();
+    expect(screen.getByText("03")).toBeTruthy();
 
     // Tech chips.
     expect(screen.getByText("React")).toBeTruthy();
-    expect(screen.getByText("Next.js")).toBeTruthy();
-    expect(screen.getByText("TypeScript")).toBeTruthy();
+    expect(screen.getAllByText("Next.js").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("TypeScript").length).toBeGreaterThan(0);
 
     // External links.
-    const demoLink = screen.getByRole("link", { name: "Demo" });
-    expect(demoLink.getAttribute("href")).toBe("https://demo.example.com/alpha");
-    const codeLink = screen.getByRole("link", { name: "Código" });
-    expect(codeLink.getAttribute("href")).toBe("https://github.com/example/beta");
+    expect(
+      screen
+        .getAllByRole("link", { name: "Demo" })
+        .some((link) => link.getAttribute("href") === "https://portafolio-cumbre-edu.vercel.app"),
+    ).toBe(true);
+    expect(
+      screen
+        .getAllByRole("link", { name: "Código" })
+        .some((link) => link.getAttribute("href") === "https://github.com/eduardomendozavillar/portafolio"),
+    ).toBe(true);
+  });
+
+  it("does not duplicate the featured project when the API returns it", async () => {
+    mockProjectsResponse([
+      project({
+        id: "remote-portfolio",
+        title: "Portafolio personal",
+        links: { repo: "https://github.com/eduardomendozavillar/portafolio" },
+      }),
+    ]);
+
+    render(<ProjectList />);
+
+    expect(await screen.findAllByText("Portafolio personal")).toHaveLength(1);
   });
 });
