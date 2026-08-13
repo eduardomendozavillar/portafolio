@@ -47,7 +47,7 @@ export function ProjectList() {
       >
         <span
           aria-hidden="true"
-          className="h-4 w-4 animate-spin rounded-full border-2 border-line border-t-teal"
+          className="h-4 w-4 animate-spin rounded-full border-2 border-line border-t-accent"
         />
         Cargando proyectos…
       </p>
@@ -57,7 +57,7 @@ export function ProjectList() {
   if (status === "error") {
     return (
       <div className="flex flex-col items-start gap-4">
-        <p role="alert" className="rounded-md border border-line bg-white px-4 py-3 text-ink-muted">
+        <p role="alert" className="rounded-md border border-line bg-paper-raised px-4 py-3 text-ink-muted">
           No se pudieron cargar los proyectos. Inténtalo de nuevo más tarde.
         </p>
         <Button variant="outline" onClick={retry}>
@@ -69,7 +69,7 @@ export function ProjectList() {
 
   if (projects.length === 0) {
     return (
-      <p role="status" className="rounded-md border border-dashed border-line px-4 py-8 text-center text-ink-muted">
+      <p role="status" className="rounded-md border border-dashed border-line bg-paper-raised px-4 py-8 text-center text-ink-muted">
         Todavía no hay proyectos publicados. Vuelve pronto.
       </p>
     );
