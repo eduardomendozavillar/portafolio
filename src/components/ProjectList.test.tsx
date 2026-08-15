@@ -126,7 +126,7 @@ describe("ProjectList", () => {
     expect(
       screen
         .getAllByRole("link", { name: "Demo" })
-        .some((link) => link.getAttribute("href") === "https://portafolio-cumbre-edu.vercel.app"),
+        .some((link) => link.getAttribute("href") === "https://portafolio-psi-five-95.vercel.app"),
     ).toBe(true);
     expect(
       screen

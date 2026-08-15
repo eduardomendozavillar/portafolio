@@ -24,7 +24,7 @@ export const featuredGitHubProjects: Project[] = [
       "Proyecto actual en mejora continua para presentar experiencia, habilidades, proyectos y canales de contacto con una base técnica clara y mantenible.",
     technologies: ["Next.js", "TypeScript", "Tailwind", "Firebase", "Vercel"],
     links: {
-      demo: "https://portafolio-cumbre-edu.vercel.app",
+      demo: "https://portafolio-psi-five-95.vercel.app",
       repo: "https://github.com/eduardomendozavillar/portafolio",
     },
     featured: true,
