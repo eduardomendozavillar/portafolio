@@ -118,7 +118,7 @@ describe("ProjectList", () => {
     expect(screen.getByText("03")).toBeTruthy();
 
     // Tech chips.
-    expect(screen.getByText("React")).toBeTruthy();
+    expect(screen.getAllByText("React").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Next.js").length).toBeGreaterThan(0);
     expect(screen.getAllByText("TypeScript").length).toBeGreaterThan(0);
 
