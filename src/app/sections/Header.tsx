@@ -9,9 +9,9 @@ import { socials } from "@/data/socials";
 /** Anchor links shared by the desktop nav and the mobile menu. */
 const NAV_LINKS = [
   { label: "Inicio", href: "#inicio" },
+  { label: "Proyectos", href: "#proyectos" },
   { label: "Sobre mí", href: "#sobre-mi" },
   { label: "Habilidades", href: "#habilidades" },
-  { label: "Proyectos", href: "#proyectos" },
   { label: "Experiencia", href: "#experiencia" },
   { label: "Educación", href: "#educacion" },
   { label: "Contacto", href: "#contacto" },

@@ -28,7 +28,7 @@ export function SectionHeading({
         </p>
       ) : null}
       <h2
-        className={`font-display text-3xl font-semibold text-ink md:text-4xl ${
+        className={`font-display text-3xl font-semibold tracking-tight text-ink md:text-4xl ${
           showLabel ? "mt-3" : ""
         }`}
       >

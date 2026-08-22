@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Outfit, Source_Sans_3 } from "next/font/google";
 import { Footer } from "./sections/Footer";
 import { Header } from "./sections/Header";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
   subsets: ["latin"],
   display: "swap",
 });
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="es"
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
+      className={`${outfit.variable} ${sourceSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
         <Header />

@@ -35,9 +35,9 @@
   --color-accent-contrast: var(--color-accent-contrast);
   --color-teal: var(--color-accent);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -50,7 +50,10 @@
   body {
     background: var(--background);
     color: var(--foreground);
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
   }
 
   :focus-visible {

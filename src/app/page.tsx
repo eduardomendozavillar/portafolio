@@ -13,9 +13,9 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
       <Hero />
+      <Proyectos />
       <SobreMi />
       <Habilidades />
-      <Proyectos />
       <Experiencia />
       <Educacion />
       <Contacto />

@@ -25,13 +25,14 @@ Semantic utility names stay stable (`bg-paper`, `text-ink`, `border-line`, `text
 
 | Role | Face | Notes |
 |------|------|--------|
-| Display | **Space Grotesk** (`font-display`) | Name, section titles, large numbers |
-| Body | **Inter** (`font-sans` / body default) | Prose, nav, form |
+| Display | **Outfit** (`font-display`) | Name, section titles, large numbers |
+| Body | **Source Sans 3** (`font-sans` / body default) | Prose, nav, form |
 
-**Waiver:** Inter body + Space Grotesk display is deliberate. Do not collapse to Inter-only “safe” pairing. Do not introduce a third display face without a redesign brief.
+**Waiver:** Outfit display + Source Sans 3 body is deliberate for the Circuit Night recruiter refine. Do not introduce a third face without a redesign brief.
 
 ## Layout & depth
 
+- **Page order (recruiter-first):** Hero → Projects → About → Skills → Experience → Education → Contact.
 - Single-page sections separated by `border-b border-line`.
 - One raised surface + `border-line` is enough — **no nested cards**.
 - Body sections prefer denser vertical rhythm (`py-16 md:py-20`) over airy marketing padding.
@@ -56,7 +57,7 @@ Semantic utility names stay stable (`bg-paper`, `text-ink`, `border-line`, `text
 - Purple / rainbow gradients, gradient text
 - Cards nested inside cards
 - Bounce / playful easing on professional surfaces
-- Inter-only without display pairing
+- Body-only pairing without Outfit display
 - Neon overload (glow on every card, chip, and border)
 - Decorative section kickers that repeat the heading
 - Light theme without an explicit product decision

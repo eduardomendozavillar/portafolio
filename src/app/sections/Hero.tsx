@@ -54,7 +54,7 @@ export function Hero() {
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
               {profile.role}
             </p>
-            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight leading-[1.08] text-ink sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="mt-4 font-display text-4xl font-semibold tracking-[-0.02em] leading-[1.08] text-ink sm:text-5xl md:text-6xl lg:text-7xl">
               {profile.name}
             </h1>
             <div className="mt-6 md:border-l-2 md:border-accent md:pl-6">

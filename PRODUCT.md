@@ -27,6 +27,7 @@ In under **10 seconds**, answer:
 ## In scope
 
 - Single-page recruiter-facing presentation (Spanish UI copy)
+- Section order prioritizes proof-of-work (projects) before full CV narrative
 - Featured projects with maturity status
 - Real CV, skills, socials, contact form
 - Performance-conscious profile imagery in `public/images/`
