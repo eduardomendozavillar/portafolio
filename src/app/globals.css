@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 /*
- * Editorial-light design tokens, evolved (visual direction B).
- * Values are defined on :root and mapped into Tailwind utilities via
- * `@theme inline` so the generated CSS references the variables once.
+ * Circuit Night (visual direction B) — dark systems/IA identity.
+ * Semantic token names stay stable; only values change so components
+ * keep using paper / ink / accent utilities.
  */
 
 :root {
   /* Surfaces & text */
-  --background: #f7f6f2; /* paper */
-  --foreground: #171512; /* ink */
-  --color-paper: #f7f6f2;
-  --color-paper-raised: #ffffff;
-  --color-ink: #171512;
-  --color-ink-muted: #5c574e;
-  --color-line: #e4e1d8;
+  --background: #0a0e17; /* paper / base */
+  --foreground: #e8eef7; /* ink */
+  --color-paper: #0a0e17;
+  --color-paper-raised: #121826;
+  --color-ink: #e8eef7;
+  --color-ink-muted: #94a3b8;
+  --color-line: #1e293b;
 
-  /* Accent (deep teal-ink) */
-  --color-accent: #0b5f57;
-  --color-accent-soft: #e3efec;
-  --color-accent-contrast: #ffffff;
+  /* Accent (electric cyan) */
+  --color-accent: #22d3ee;
+  --color-accent-soft: #083344;
+  --color-accent-contrast: #0a0e17;
 }
 
 @theme inline {
@@ -35,17 +35,16 @@
   --color-accent-contrast: var(--color-accent-contrast);
   --color-teal: var(--color-accent);
 
-  /* Sans body + serif display (loaded via next/font in layout.tsx) */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Keep anchored sections clear of the sticky header. */
     scroll-padding-top: 4.5rem;
+    color-scheme: dark;
   }
 
   body {
@@ -54,7 +53,6 @@
     font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   }
 
-  /* Visible keyboard focus ring in the accent color */
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
@@ -62,7 +60,7 @@
 
   ::selection {
     background: var(--color-accent-soft);
-    color: #0b3f39;
+    color: var(--color-accent);
   }
 }
 

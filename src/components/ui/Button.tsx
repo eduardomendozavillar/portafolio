@@ -19,11 +19,13 @@ const baseClasses =
   "text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60";
 
 const variantClasses: Record<Variant, string> = {
-  primary: "bg-accent text-accent-contrast hover:bg-accent/90",
-  outline: "border border-line text-ink hover:border-accent hover:text-accent",
+  primary:
+    "bg-accent text-accent-contrast shadow-[0_0_24px_-6px_rgba(34,211,238,0.55)] hover:bg-accent/90",
+  outline:
+    "border border-line bg-paper-raised/40 text-ink hover:border-accent hover:text-accent",
 };
 
-/** Button/link primitive in the editorial style. */
+/** Button/link primitive in the Circuit Night style. */
 export function Button({
   children,
   variant = "primary",

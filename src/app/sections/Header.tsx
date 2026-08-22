@@ -48,7 +48,7 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/80 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between gap-6">
         <a
           href="#inicio"
