@@ -30,30 +30,7 @@ if (getApps().length === 0) {
 const db = getFirestore();
 
 const projects = [
-  {
-    title: "Cartelera editorial",
-    slug: "cartelera-editorial",
-    summary:
-      "Generador de carteleras tipográficas para editoriales independientes, con export a PDF.",
-    description:
-      "Proyecto de diseño y desarrollo full-stack.\n\nGenera composiciones editoriales a partir de plantillas, ajusta rejilla tipográfica en vivo y exporta listas para imprenta.",
-    technologies: ["Next.js", "TypeScript", "Firestore", "Tailwind CSS"],
-    links: { repo: "https://github.com/example/cartelera-editorial" },
-    featured: true,
-    sortOrder: 1,
-  },
-  {
-    title: "Museo de la palabra",
-    slug: "museo-de-la-palabra",
-    summary:
-      "Archivo digital de crónicas y relatos orales con búsqueda semántica.",
-    description:
-      "Plataforma de preservación cultural.\n\nCatalogación, transcripción y búsqueda por temas de más de mil relatos orales.",
-    technologies: ["React", "Node.js", "Firestore", "OpenAI API"],
-    links: { demo: "https://museo-de-la-palabra.example.com" },
-    featured: false,
-    sortOrder: 2,
-  },
+  // Add real projects here. Seed test data was removed (2026-08).
 ];
 
 const col = db.collection("projects");
