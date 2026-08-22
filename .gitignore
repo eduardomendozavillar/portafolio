@@ -47,3 +47,10 @@ next-env.d.ts
 dev-server.log
 # Local AI runtime state
 .atl/
+
+# Impeccable local / ephemeral
+.impeccable/
+.agents/skills/impeccable/.impeccable/
+# Large source media (web assets live in public/images)
+/media/
+
