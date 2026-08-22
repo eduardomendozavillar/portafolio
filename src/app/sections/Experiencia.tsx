@@ -6,13 +6,13 @@ import { experience } from "@/data/experience";
 export function Experiencia() {
   return (
     <section id="experiencia" className="border-b border-line">
-      <Container className="py-20 md:py-28">
-        <SectionHeading index="04" title="Experiencia" />
+      <Container className="py-16 md:py-20">
+        <SectionHeading title="Experiencia" />
         <ol className="max-w-3xl">
           {experience.map((item) => (
             <li
               key={`${item.company}-${item.role}`}
-              className="border-t border-line py-8 first:border-t-0 md:py-10"
+              className="border-t border-line py-5 first:border-t-0 md:py-6"
             >
               <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
                 <h3 className="font-display text-xl font-semibold text-ink">

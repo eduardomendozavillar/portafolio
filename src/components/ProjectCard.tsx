@@ -1,7 +1,13 @@
-import type { Project } from "@/types/project";
+import type { Project, ProjectStatus } from "@/types/project";
+
+const STATUS_LABEL: Record<ProjectStatus, string> = {
+  production: "En producción",
+  development: "En desarrollo",
+  personal: "Personal",
+};
 
 /**
- * Presentational project card with a numbered editorial index (01, 02, …).
+ * Presentational project row: index, title + status, outcome, tech, links.
  * Pure component — no hooks, safe to render from the client list.
  */
 export function ProjectCard({
@@ -12,25 +18,36 @@ export function ProjectCard({
   index: number;
 }) {
   const number = String(index).padStart(2, "0");
+  const statusLabel = project.status ? STATUS_LABEL[project.status] : null;
 
   return (
-    <li className="border-t border-line py-8 first:border-t-0 md:py-10">
-      <div className="flex flex-col gap-4 md:flex-row md:items-baseline md:gap-8">
-        <p className="font-display text-2xl font-semibold text-accent" aria-hidden="true">
+    <li className="border-t border-line py-5 first:border-t-0 md:py-6">
+      <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:gap-6">
+        <p
+          className="font-display text-xl font-semibold text-accent md:text-2xl"
+          aria-hidden="true"
+        >
           {number}
         </p>
         <div className="min-w-0 flex-1">
-          <h3 className="font-display text-xl font-semibold text-ink">
-            {project.title}
-          </h3>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h3 className="font-display text-xl font-semibold text-ink">
+              {project.title}
+            </h3>
+            {statusLabel ? (
+              <span className="rounded-full border border-line bg-paper-raised px-2.5 py-0.5 text-xs font-medium text-ink-muted">
+                {statusLabel}
+              </span>
+            ) : null}
+          </div>
           <p className="mt-2 leading-7 text-ink-muted">{project.summary}</p>
 
           {project.technologies.length > 0 ? (
-            <ul className="mt-4 flex flex-wrap gap-2">
+            <ul className="mt-3 flex flex-wrap gap-1.5">
               {project.technologies.map((technology) => (
                 <li
                   key={technology}
-                  className="rounded-full border border-line px-3 py-1 text-xs text-ink"
+                  className="rounded-full border border-line px-2.5 py-0.5 text-xs text-ink"
                 >
                   {technology}
                 </li>
@@ -39,7 +56,7 @@ export function ProjectCard({
           ) : null}
 
           {project.links && (project.links.demo || project.links.repo) ? (
-            <ul className="mt-5 flex gap-5 text-sm font-medium">
+            <ul className="mt-4 flex gap-5 text-sm font-medium">
               {project.links.demo ? (
                 <li>
                   <a

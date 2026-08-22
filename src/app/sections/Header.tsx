@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
 
@@ -17,15 +18,14 @@ const NAV_LINKS = [
 ] as const;
 
 /**
- * Sticky header: brand + desktop anchor nav + accessible mobile menu
- * (Escape closes and returns focus; body scroll locks while open).
+ * Sticky header: brand + desktop anchor nav + Contacto CTA + accessible
+ * mobile menu (Escape closes and returns focus; body scroll locks while open).
  */
 export function Header() {
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
 
-  // Close on Escape and return focus to the toggle.
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -37,7 +37,6 @@ export function Header() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  // Lock body scroll while the mobile menu is open.
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -49,7 +48,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper/80 backdrop-blur-md">
-      <Container className="flex h-16 items-center justify-between gap-6">
+      <Container className="flex h-16 items-center justify-between gap-4 md:gap-6">
         <a
           href="#inicio"
           className="shrink-0 font-display text-lg font-semibold text-ink"
@@ -58,10 +57,9 @@ export function Header() {
           <span className="text-accent">.</span>
         </a>
 
-        {/* Desktop navigation */}
         <nav aria-label="Navegación principal" className="hidden md:block">
-          <ul className="flex items-center gap-6 text-sm font-medium text-ink-muted">
-            {NAV_LINKS.map((link) => (
+          <ul className="flex items-center gap-5 text-sm font-medium text-ink-muted lg:gap-6">
+            {NAV_LINKS.filter((link) => link.href !== "#contacto").map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -74,23 +72,26 @@ export function Header() {
           </ul>
         </nav>
 
-        {/* Social links, desktop only */}
-        <ul className="hidden shrink-0 items-center gap-4 text-sm font-medium text-ink-muted lg:flex">
-          {socials.map((social) => (
-            <li key={social.platform}>
-              <a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-accent"
-              >
-                {social.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden shrink-0 items-center gap-4 md:flex">
+          <ul className="hidden items-center gap-4 text-sm font-medium text-ink-muted lg:flex">
+            {socials.map((social) => (
+              <li key={social.platform}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-accent"
+                >
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <Button href="#contacto" className="!px-4 !py-2 text-sm">
+            Contacto
+          </Button>
+        </div>
 
-        {/* Mobile menu toggle */}
         <button
           ref={toggleRef}
           type="button"
@@ -120,7 +121,6 @@ export function Header() {
         </button>
       </Container>
 
-      {/* Mobile menu */}
       {open ? (
         <nav
           id={menuId}

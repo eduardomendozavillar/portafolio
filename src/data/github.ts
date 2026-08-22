@@ -27,6 +27,7 @@ export const featuredGitHubProjects: Project[] = [
       demo: "https://portafolio-psi-five-95.vercel.app",
       repo: "https://github.com/eduardomendozavillar/portafolio",
     },
+    status: "production",
     featured: true,
     sortOrder: -100,
     createdAt: "2026-08-13T00:00:00.000Z",
@@ -45,6 +46,7 @@ export const featuredGitHubProjects: Project[] = [
       demo: "https://taller-by.vercel.app",
       repo: "https://github.com/eduardomendozavillar/taller.by",
     },
+    status: "development",
     featured: true,
     sortOrder: -90,
     createdAt: "2026-08-15T00:00:00.000Z",
@@ -59,6 +61,7 @@ export const featuredGitHubProjects: Project[] = [
     description:
       "Proyecto en desarrollo con futuras mejoras. Panel de administración de gimnasio con registro de asistencia, planes de membresía, clases, entrenamiento del día (WOD) y vistas de comunidad, sobre React/Vite con Firebase.",
     technologies: ["React", "Vite", "Firebase", "Firestore", "Tailwind"],
+    status: "development",
     featured: true,
     sortOrder: -80,
     createdAt: "2026-08-15T00:00:00.000Z",

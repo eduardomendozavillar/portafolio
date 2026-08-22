@@ -148,4 +148,21 @@ describe("ProjectList", () => {
 
     expect(await screen.findAllByText("Portafolio personal")).toHaveLength(1);
   });
+
+  it("shows Spanish status badges for featured projects and omits them when unset", async () => {
+    mockProjectsResponse([
+      project({
+        id: "c",
+        title: "Gamma sin estado",
+        sortOrder: 3,
+      }),
+    ]);
+    render(<ProjectList />);
+
+    expect(await screen.findByText("Portafolio personal")).toBeTruthy();
+    expect(screen.getByText("En producción")).toBeTruthy();
+    expect(screen.getAllByText("En desarrollo").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText("Gamma sin estado")).toBeTruthy();
+    expect(screen.queryByText("Personal")).toBeNull();
+  });
 });

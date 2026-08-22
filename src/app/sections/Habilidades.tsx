@@ -20,20 +20,20 @@ const skillGroups = skills.reduce<Array<{ category: string; items: Skill[] }>>(
 export function Habilidades() {
   return (
     <section id="habilidades" className="border-b border-line">
-      <Container className="py-20 md:py-28">
-        <SectionHeading eyebrow="Habilidades" title="Habilidades" />
-        <dl className="grid gap-10 md:grid-cols-2">
+      <Container className="py-16 md:py-20">
+        <SectionHeading title="Habilidades" />
+        <dl className="grid gap-8 md:grid-cols-2">
           {skillGroups.map((group) => (
             <div key={group.category}>
               <dt className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
                 {group.category}
               </dt>
-              <dd className="mt-4">
-                <ul className="flex flex-wrap gap-2">
+              <dd className="mt-3">
+                <ul className="flex flex-wrap gap-1.5">
                   {group.items.map((skill) => (
                     <li
                       key={skill.name}
-                      className="rounded-full border border-line px-3.5 py-1.5 text-sm text-ink"
+                      className="rounded-full border border-line px-3 py-1 text-sm text-ink"
                     >
                       {skill.name}
                     </li>

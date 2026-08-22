@@ -6,13 +6,13 @@ import { education } from "@/data/education";
 export function Educacion() {
   return (
     <section id="educacion" className="border-b border-line">
-      <Container className="py-20 md:py-28">
-        <SectionHeading index="05" title="Educación" />
+      <Container className="py-16 md:py-20">
+        <SectionHeading title="Educación" />
         <ol className="max-w-3xl">
           {education.map((item) => (
             <li
               key={`${item.institution}-${item.degree}`}
-              className="border-t border-line py-8 first:border-t-0 md:py-10"
+              className="border-t border-line py-5 first:border-t-0 md:py-6"
             >
               <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
                 <h3 className="font-display text-xl font-semibold text-ink">
