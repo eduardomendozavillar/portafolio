@@ -96,7 +96,7 @@ export function ContactForm() {
       {status === "error" && error ? (
         <p
           role="alert"
-          className="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-700"
+          className="mb-6 rounded-md border border-red-500/40 bg-red-950/50 px-4 py-3 text-red-300"
         >
           {error}
         </p>
