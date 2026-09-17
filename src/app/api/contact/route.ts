@@ -1,6 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { NextResponse } from "next/server";
 import { getAdminFirestore } from "../../../lib/firebase/admin";
+import { sendContactNotification } from "../../../lib/email";
 import { isHoneypotFilled } from "../../../lib/honeypot";
 import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
 import { contactSchema } from "../../../lib/validation/contact";
@@ -66,6 +67,14 @@ export async function POST(request: Request): Promise<Response> {
       status: "new",
       source: "portfolio",
       createdAt: FieldValue.serverTimestamp(),
+    });
+
+    // Best-effort email notification — never block the contact response.
+    void sendContactNotification({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      message: parsed.data.message,
+      id: docRef.id,
     });
 
     return NextResponse.json({ ok: true, id: docRef.id }, { status: 201 });
