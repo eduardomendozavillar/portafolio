@@ -30,7 +30,7 @@ export async function sendContactNotification(payload: {
     const { error } = await resend.emails.send({
       from: "Portafolio <onboarding@resend.dev>",
       to: [to],
-      subject: `Nuevo mensaje de contacto — ${payload.name}`,
+      subject: `Nuevo mensaje — ${payload.name.slice(0, 50)}`,
       html: `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,7 +68,7 @@ export async function sendContactNotification(payload: {
     if (error) {
       console.error("[email] Resend error:", error.message);
     } else {
-      console.log("[email] Notification sent to", to);
+      console.log("[email] Notification sent");
     }
   } catch (err) {
     console.error("[email] Failed to send notification:", err);
