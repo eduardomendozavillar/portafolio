@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { submitContact } from "@/lib/api";
 import { HONEYPOT_FIELD } from "@/lib/honeypot";
@@ -35,6 +35,7 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const [values, setValues] = useState<FormValues>(initialValues);
+  const feedbackRef = useRef<HTMLDivElement>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -55,6 +56,10 @@ export function ContactForm() {
         setStatus("success");
         // Only clear on success — failed submissions keep their values.
         setValues(initialValues);
+        // Scroll the success message into view so the user sees it.
+        setTimeout(() => {
+          feedbackRef.current?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+        }, 0);
         return;
       }
 
@@ -62,19 +67,31 @@ export function ContactForm() {
       setError(
         response.error ?? "No se pudo enviar el mensaje. Inténtalo de nuevo.",
       );
+      setTimeout(() => {
+        feedbackRef.current?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+      }, 0);
     } catch {
       setStatus("error");
       setError(
         "No se pudo enviar el mensaje. Revisa tu conexión e inténtalo de nuevo.",
       );
+      setTimeout(() => {
+        feedbackRef.current?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+      }, 0);
     }
   }
 
   function updateField(field: keyof FormValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
+    // Clear success state when the user starts typing again so the form
+    // becomes editable and the button re-enables.
+    if (status === "success" && field !== HONEYPOT_FIELD) {
+      setStatus("idle");
+    }
   }
 
   const submitting = status === "submitting";
+  const sent = status === "success";
 
   return (
     <form
@@ -83,24 +100,26 @@ export function ContactForm() {
       className="max-w-2xl"
       aria-label="Formulario de contacto"
     >
-      {status === "success" ? (
-        <p
-          role="status"
-          className="mb-6 rounded-md border border-accent/30 bg-accent-soft px-4 py-3 text-accent"
-        >
-          ¡Gracias! Tu mensaje se envió correctamente. Te responderé a la
-          brevedad.
-        </p>
-      ) : null}
+      <div ref={feedbackRef}>
+        {status === "success" ? (
+          <p
+            role="status"
+            className="mb-6 rounded-md border border-accent/30 bg-accent-soft px-4 py-3 text-accent"
+          >
+            ¡Gracias! Tu mensaje se envió correctamente. Te responderé a la
+            brevedad.
+          </p>
+        ) : null}
 
-      {status === "error" && error ? (
-        <p
-          role="alert"
-          className="mb-6 rounded-md border border-red-500/40 bg-red-950/50 px-4 py-3 text-red-300"
-        >
-          {error}
-        </p>
-      ) : null}
+        {status === "error" && error ? (
+          <p
+            role="alert"
+            className="mb-6 rounded-md border border-red-500/40 bg-red-950/50 px-4 py-3 text-red-300"
+          >
+            {error}
+          </p>
+        ) : null}
+      </div>
 
       <div className="space-y-6">
         <div>
@@ -167,8 +186,8 @@ export function ContactForm() {
           />
         </div>
 
-        <Button type="submit" disabled={submitting}>
-          {submitting ? "Enviando…" : "Enviar mensaje"}
+        <Button type="submit" disabled={submitting || sent}>
+          {submitting ? "Enviando…" : sent ? "Mensaje enviado ✓" : "Enviar mensaje"}
         </Button>
       </div>
     </form>
