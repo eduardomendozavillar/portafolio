@@ -67,4 +67,19 @@ export const featuredGitHubProjects: Project[] = [
     createdAt: "2026-08-15T00:00:00.000Z",
     updatedAt: "2026-08-15T00:00:00.000Z",
   },
+  {
+    id: "github-sgdi",
+    title: "SGDI — Ventanilla Única de Radicación",
+    slug: "sgdi",
+    summary:
+      "Sistema institucional de gestión documental (radicación, bandeja y trazabilidad) para el Hospital Universitario Julio Méndez Barreneche, con autenticación por roles y design system gubernamental.",
+    description:
+      "Sistema de gestión documental institucional en desarrollo: Ventanilla Única de Radicación con login por roles (administración, ventanilla, jurídico y archivo), radicado de documentos con número RAD, bandeja con estados de vencimiento y trazabilidad por expediente, sobre un design system gubernamental propio con accesibilidad WCAG AA.",
+    technologies: ["Next.js", "TypeScript", "Tailwind", "Auth.js", "Prisma", "SQLite"],
+    status: "development",
+    featured: true,
+    sortOrder: -70,
+    createdAt: "2026-10-03T00:00:00.000Z",
+    updatedAt: "2026-10-03T00:00:00.000Z",
+  },
 ];
