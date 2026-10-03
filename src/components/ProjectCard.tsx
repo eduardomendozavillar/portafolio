@@ -9,19 +9,30 @@ const STATUS_LABEL: Record<ProjectStatus, string> = {
 /**
  * Presentational project row: index, title + status, outcome, tech, links.
  * Pure component — no hooks, safe to render from the client list.
+ *
+ * `attenuated` (WU-B filter): reduced opacity + slight desaturate via the
+ * `data-filtered` hook; the card stays visible and its links stay focusable —
+ * never hidden or aria-hidden.
  */
 export function ProjectCard({
   project,
   index,
+  attenuated = false,
 }: {
   project: Project;
   index: number;
+  attenuated?: boolean;
 }) {
   const number = String(index).padStart(2, "0");
   const statusLabel = project.status ? STATUS_LABEL[project.status] : null;
 
   return (
-    <li className="border-t border-line py-5 first:border-t-0 md:py-6">
+    <li
+      data-filtered={attenuated ? "true" : undefined}
+      className={`project-card border-t border-line py-5 first:border-t-0 md:py-6 ${
+        attenuated ? "opacity-50 saturate-50" : ""
+      }`}
+    >
       <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:gap-6">
         <p
           className="font-display text-xl font-semibold text-accent md:text-2xl"

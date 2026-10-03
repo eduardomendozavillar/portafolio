@@ -33,7 +33,7 @@ export function Habilidades() {
                   {group.items.map((skill) => (
                     <li
                       key={skill.name}
-                      className="rounded-full border border-line px-3 py-1 text-sm text-ink"
+                      className="skill-chip rounded-full border border-line px-3 py-1 text-sm text-ink"
                     >
                       {skill.name}
                     </li>

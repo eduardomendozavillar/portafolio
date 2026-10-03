@@ -9,6 +9,38 @@ import { ProjectCard } from "./ProjectCard";
 
 type Status = "loading" | "success" | "error";
 
+/**
+ * Union of technologies across the featured projects (WU-B): the chip row
+ * is derived purely from data, in first-appearance order.
+ */
+function featuredTechnologies() {
+  const seen = new Set<string>();
+  for (const project of featuredGitHubProjects) {
+    for (const technology of project.technologies) {
+      seen.add(technology);
+    }
+  }
+  return [...seen];
+}
+
+function chipClasses(active: boolean) {
+  return [
+    "rounded-full border px-3 py-1 text-xs font-medium",
+    "transition-colors duration-150",
+    active
+      ? "border-accent bg-accent-soft text-accent"
+      : "border-line text-ink-muted hover:border-accent hover:text-ink",
+  ].join(" ");
+}
+
+function cardMatchesTech(project: Project, activeTech: string | null) {
+  if (activeTech === null) return true;
+  const needle = activeTech.toLowerCase();
+  return project.technologies.some(
+    (technology) => technology.toLowerCase() === needle,
+  );
+}
+
 function projectIdentity(project: Project) {
   return [
     project.links?.repo?.toLowerCase(),
@@ -104,11 +136,50 @@ export function ProjectList() {
 }
 
 function ProjectItems({ projects }: { projects: Project[] }) {
+  // WU-B: tech-chip filter, single-select, chips = union of the featured
+  // projects' technologies + a "Todas" reset chip.
+  const [activeTech, setActiveTech] = useState<string | null>(null);
+  const technologies = featuredTechnologies();
+
   return (
-    <ol>
-      {projects.map((project, index) => (
-        <ProjectCard key={project.id} project={project} index={index + 1} />
-      ))}
-    </ol>
+    <div className="flex flex-col gap-5">
+      <div
+        role="group"
+        aria-label="Filtrar proyectos por tecnología"
+        className="flex flex-wrap gap-1.5"
+      >
+        <button
+          type="button"
+          aria-pressed={activeTech === null}
+          onClick={() => setActiveTech(null)}
+          className={chipClasses(activeTech === null)}
+        >
+          Todas
+        </button>
+        {technologies.map((technology) => (
+          <button
+            key={technology}
+            type="button"
+            aria-pressed={activeTech === technology}
+            onClick={() =>
+              setActiveTech(activeTech === technology ? null : technology)
+            }
+            className={chipClasses(activeTech === technology)}
+          >
+            {technology}
+          </button>
+        ))}
+      </div>
+      <ol>
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={index + 1}
+            attenuated={!cardMatchesTech(project, activeTech)}
+          />
+        ))}
+      </ol>
+    </div>
   );
 }

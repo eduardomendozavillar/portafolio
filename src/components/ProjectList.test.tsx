@@ -8,6 +8,10 @@ import type { Project } from "@/types/project";
  * RTL suite for ProjectList (task 4.3) — loading / empty / error + Reintentar,
  * and numbered project rendering. The fetch client is mocked at the fetch
  * boundary (same pattern as src/lib/api.test.ts).
+ *
+ * WU-B adds the tech-chip filter suite: chips render from the union of the
+ * featured projects' technologies; selecting a chip attenuates (never hides)
+ * non-matching cards via the `data-filtered="true"` hook + opacity classes.
  */
 
 const originalFetch = globalThis.fetch;
@@ -164,5 +168,100 @@ describe("ProjectList", () => {
     expect(screen.getAllByText("En desarrollo").length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText("Gamma sin estado")).toBeTruthy();
     expect(screen.queryByText("Personal")).toBeNull();
+  });
+
+  it("renders tech filter chips from the union of featured technologies plus a Todas reset chip", async () => {
+    mockProjectsResponse([]);
+    render(<ProjectList />);
+
+    expect(await screen.findByText("Portafolio personal")).toBeTruthy();
+
+    const group = screen.getByRole("group", {
+      name: "Filtrar proyectos por tecnología",
+    });
+    expect(group).toBeTruthy();
+
+    // Union of technologies across the featured projects (src/data/github.ts).
+    const featuredTechs = [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "Firebase",
+      "Vercel",
+      "React",
+      "Vite",
+      "Express",
+      "PostgreSQL",
+      "Gemini",
+      "Firestore",
+      "Auth.js",
+      "Prisma",
+      "SQLite",
+    ];
+    for (const tech of featuredTechs) {
+      expect(screen.getByRole("button", { name: tech })).toBeTruthy();
+    }
+
+    // Reset chip exists and starts pressed (no filter active).
+    expect(
+      screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
+    ).toBe("true");
+    for (const tech of featuredTechs) {
+      expect(
+        screen.getByRole("button", { name: tech }).getAttribute("aria-pressed"),
+      ).toBe("false");
+    }
+  });
+
+  it("attenuates non-matching cards when a chip is active and restores on second click", async () => {
+    mockProjectsResponse([]);
+    render(<ProjectList />);
+
+    expect(await screen.findByText("taller.by")).toBeTruthy();
+
+    // Only taller.by uses Gemini: the other three featured cards attenuate.
+    fireEvent.click(screen.getByRole("button", { name: "Gemini" }));
+
+    expect(
+      screen.getByRole("button", { name: "Gemini" }).getAttribute("aria-pressed"),
+    ).toBe("true");
+    expect(
+      screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
+    ).toBe("false");
+
+    const tallerCard = screen.getByText("taller.by").closest("li");
+    const sgdiCard = screen
+      .getByText("SGDI — Ventanilla Única de Radicación")
+      .closest("li");
+    expect(tallerCard?.getAttribute("data-filtered")).toBeNull();
+    expect(sgdiCard?.getAttribute("data-filtered")).toBe("true");
+    expect(sgdiCard?.className).toContain("opacity-50");
+
+    // Attenuated cards are never removed: their links remain in the document.
+    expect(screen.getAllByRole("link", { name: "Demo" }).length).toBeGreaterThan(0);
+
+    // Single-select toggle: clicking the active chip again deselects it.
+    fireEvent.click(screen.getByRole("button", { name: "Gemini" }));
+    expect(
+      screen.getByRole("button", { name: "Gemini" }).getAttribute("aria-pressed"),
+    ).toBe("false");
+    expect(document.querySelectorAll('[data-filtered="true"]').length).toBe(0);
+  });
+
+  it("restores every card through the Todas reset chip", async () => {
+    mockProjectsResponse([]);
+    render(<ProjectList />);
+
+    expect(await screen.findByText("taller.by")).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Next.js" }));
+    // Next.js matches Portafolio personal and SGDI only.
+    expect(document.querySelectorAll('[data-filtered="true"]').length).toBe(2);
+
+    fireEvent.click(screen.getByRole("button", { name: "Todas" }));
+    expect(document.querySelectorAll('[data-filtered="true"]').length).toBe(0);
+    expect(
+      screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
+    ).toBe("true");
   });
 });

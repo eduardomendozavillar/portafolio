@@ -12,7 +12,7 @@ export function Experiencia() {
           {experience.map((item) => (
             <li
               key={`${item.company}-${item.role}`}
-              className="border-t border-line py-5 first:border-t-0 md:py-6"
+              className="timeline-item border-t border-line py-5 first:border-t-0 md:py-6"
             >
               <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
                 <h3 className="font-display text-xl font-semibold text-ink">

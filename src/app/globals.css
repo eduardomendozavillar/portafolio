@@ -67,6 +67,96 @@
   }
 }
 
+/**
+ * Scroll reveal (WU-B): opacity + transform only, no geometry change.
+ * The hidden state is held by the Reveal client component and flipped once
+ * on intersect.
+ */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal-shown {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Never hide revealed content and never animate under reduced motion. */
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .reveal-shown {
+    transition: none;
+  }
+}
+
+/**
+ * Quiet hover lift for project cards (WU-B): hairline border emphasis + 2px
+ * rise, applied only on real hover-capable, fine pointers.
+ */
+@media (hover: hover) and (pointer: fine) {
+  .project-card {
+    transition:
+      transform 180ms ease-out,
+      border-color 180ms ease-out;
+  }
+
+  .project-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(
+      in oklab,
+      var(--color-line) 60%,
+      var(--color-ink-muted) 40%
+    );
+  }
+
+  /* Magnetic offset for the hero primary CTA (WU-B), driven by a tiny
+     pointermove handler in Hero.tsx via CSS custom properties. */
+  .magnetic-cta {
+    transform: translate(var(--magnet-x, 0px), var(--magnet-y, 0px));
+    transition: transform 140ms ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card:hover {
+    transform: none;
+  }
+
+  .magnetic-cta {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Quiet hover accent for skill chips and timeline rows (WU-B): existing
+   tokens only, no new colors. */
+.skill-chip,
+.timeline-item {
+  transition: border-color 160ms ease-out;
+}
+
+.skill-chip:hover,
+.timeline-item:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--color-line) 55%,
+    var(--color-accent) 45%
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
