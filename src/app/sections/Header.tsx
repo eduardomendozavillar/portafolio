@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { CommandPalette } from "@/components/CommandPalette";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
 
@@ -19,23 +20,28 @@ const NAV_LINKS = [
 
 /**
  * Sticky header: brand + desktop anchor nav + Contacto CTA + accessible
- * mobile menu (Escape closes and returns focus; body scroll locks while open).
+ * mobile menu (Escape closes and returns focus; body scroll locks while open)
+ * + the command-palette trigger (Ctrl+K / ⌘K), whose open state is owned here
+ * so the button stays in sync and receives returned focus.
  */
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
   const menuId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const paletteTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      // The command palette owns Escape while it is open.
+      if (event.key === "Escape" && !paletteOpen) {
         setOpen(false);
         toggleRef.current?.focus();
       }
     }
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, []);
+  }, [paletteOpen]);
 
   useEffect(() => {
     if (!open) return;
@@ -73,6 +79,20 @@ export function Header() {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-4 md:flex">
+          <button
+            ref={paletteTriggerRef}
+            type="button"
+            aria-haspopup="dialog"
+            aria-expanded={paletteOpen}
+            aria-label="Abrir navegación rápida (Ctrl+K)"
+            onClick={() => setPaletteOpen(true)}
+            className="inline-flex items-center gap-2 rounded-md border border-line bg-paper-raised/40 px-2.5 py-1.5 text-xs font-medium text-ink-muted transition-colors hover:border-accent hover:text-accent"
+          >
+            <span aria-hidden="true" className="inline-flex items-center gap-1">
+              <kbd className="font-display">Ctrl</kbd>
+              <kbd className="font-display">K</kbd>
+            </span>
+          </button>
           <ul className="hidden items-center gap-4 text-sm font-medium text-ink-muted lg:flex">
             {socials.map((social) => (
               <li key={social.platform}>
@@ -91,7 +111,6 @@ export function Header() {
             Contacto
           </Button>
         </div>
-
         <button
           ref={toggleRef}
           type="button"
@@ -159,6 +178,13 @@ export function Header() {
           </Container>
         </nav>
       ) : null}
+
+      <CommandPalette
+        open={paletteOpen}
+        onOpen={() => setPaletteOpen(true)}
+        onClose={() => setPaletteOpen(false)}
+        triggerRef={paletteTriggerRef}
+      />
     </header>
   );
 }
