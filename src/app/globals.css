@@ -103,6 +103,32 @@
 }
 
 /**
+ * Showcase swap (portfolio-motion): the sticky panel's image layer fades in
+ * with a slight rise every time the active project changes (keyed remount),
+ * opacity + transform only. Reduced motion: instant swap, no animation.
+ */
+@keyframes preview-in {
+  from {
+    opacity: 0;
+    transform: translateY(3%) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.preview-layer-in {
+  animation: preview-in 260ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-layer-in {
+    animation: none;
+  }
+}
+
+/**
  * Quiet hover lift for project cards (WU-B): hairline border emphasis + 2px
  * rise, applied only on real hover-capable, fine pointers.
  */

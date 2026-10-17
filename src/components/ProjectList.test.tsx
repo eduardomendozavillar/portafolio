@@ -218,7 +218,7 @@ describe("ProjectList", () => {
     mockProjectsResponse([]);
     render(<ProjectList />);
 
-    expect(await screen.findByText("taller.by")).toBeTruthy();
+    expect(await screen.findAllByText("taller.by")).toBeTruthy();
 
     // Only taller.by uses Gemini: the other three featured cards attenuate.
     fireEvent.click(screen.getByRole("button", { name: "Gemini" }));
@@ -230,10 +230,13 @@ describe("ProjectList", () => {
       screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
     ).toBe("false");
 
-    const tallerCard = screen.getByText("taller.by").closest("li");
-    const sgdiCard = screen
-      .getByText("SGDI — Ventanilla Única de Radicación")
-      .closest("li");
+    // Card lookup via the showcase hooks (the panel chip duplicates titles).
+    const tallerCard = document.querySelector(
+      '[data-project-id="github-taller-by"]',
+    );
+    const sgdiCard = document.querySelector(
+      '[data-project-id="github-sgdi"]',
+    );
     expect(tallerCard?.getAttribute("data-filtered")).toBeNull();
     expect(sgdiCard?.getAttribute("data-filtered")).toBe("true");
     expect(sgdiCard?.className).toContain("opacity-50");
@@ -253,7 +256,7 @@ describe("ProjectList", () => {
     mockProjectsResponse([]);
     render(<ProjectList />);
 
-    expect(await screen.findByText("taller.by")).toBeTruthy();
+    expect(await screen.findAllByText("taller.by")).toBeTruthy();
 
     fireEvent.click(screen.getByRole("button", { name: "Next.js" }));
     // Next.js matches Portafolio personal and SGDI only.
@@ -314,24 +317,7 @@ describe("ProjectList", () => {
     ).toBe(document.activeElement);
   });
 
-  it("shows the floating hover preview on rows with screenshots and hides it on leave", async () => {
-    // jsdom has no matchMedia at all; stub one so the desktop-only floating
-    // preview gate ("hover: hover" + "pointer: fine") opens in tests.
-    vi.stubGlobal(
-      "matchMedia",
-      (query: string) =>
-        ({
-          matches: query === "(hover: hover) and (pointer: fine)",
-          media: query,
-          addEventListener: () => undefined,
-          removeEventListener: () => undefined,
-          addListener: () => undefined,
-          removeListener: () => undefined,
-          onchange: null,
-          dispatchEvent: () => false,
-        }) as unknown as MediaQueryList,
-    );
-
+  it("renders the sticky showcase panel tracking the cover of the first card", async () => {
     mockProjectsResponse([
       project({
         id: "a",
@@ -341,21 +327,58 @@ describe("ProjectList", () => {
           { src: "/images/projects/alpha/alpha-01.webp", width: 800, height: 500 },
         ],
       }),
+      project({ id: "b", title: "Beta", sortOrder: 2 }),
     ]);
     render(<ProjectList />);
 
     expect(await screen.findByText("Alpha")).toBeTruthy();
-    expect(document.querySelector("[data-project-hover-preview]")).toBeNull();
+    const panel = document.querySelector("[data-active-project]") as HTMLElement;
+    expect(panel.getAttribute("data-active-project")).toBe("0");
+    // No scroll happens in the test: previewable[0] is the first featured
+    // project with screenshots (taller.by) after the featured merge.
+    expect((panel.querySelector("img")?.getAttribute("src") ?? "").includes("taller-by-01")).toBe(
+      true,
+    );
+    // Imageless cards never lead the panel (S5) and Alpha (fixture, no cover
+    // in panel until it scrolls) is not the panel button name either.
+    expect(screen.queryByRole("button", { name: "Ampliar vista previa de Beta" })).toBeNull();
+  });
 
-    fireEvent.pointerEnter(screen.getByText("Alpha").closest("li") as Element);
+  it("opens the lightbox from the showcase panel and returns focus to it on close", async () => {
+    render(<ProjectList />);
 
-    const preview = document.querySelector("[data-project-hover-preview]");
-    expect(preview).toBeTruthy();
+    await screen.findAllByText("taller.by");
+    fireEvent.click(
+      screen.getByRole("button", { name: "Ampliar vista previa de taller.by" }),
+    );
+    expect(screen.getByRole("dialog")).toBeTruthy();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).toBeNull();
     expect(
-      (preview?.querySelector("img")?.getAttribute("src") ?? "").includes("alpha-01"),
-    ).toBe(true);
+      screen.getByRole("button", { name: "Ampliar vista previa de taller.by" }),
+    ).toBe(document.activeElement);
+  });
 
-    fireEvent.pointerLeave(screen.getByText("Alpha").closest("li") as Element);
-    expect(document.querySelector("[data-project-hover-preview]")).toBeNull();
+  it("shows an inline mobile cover preview on cards with screenshots", async () => {
+    mockProjectsResponse([
+      project({
+        id: "a",
+        title: "Alpha",
+        sortOrder: 1,
+        images: [
+          { src: "/images/projects/alpha/alpha-01.webp", width: 800, height: 500 },
+        ],
+      }),
+      project({ id: "b", title: "Beta", sortOrder: 2 }),
+    ]);
+    render(<ProjectList />);
+
+    expect(await screen.findByText("Alpha")).toBeTruthy();
+    const alphaCover = screen.getByAltText("Captura de Alpha");
+    expect(
+      (alphaCover.closest("div")?.className ?? "").length > 0,
+    ).toBe(true);
+    expect(screen.queryByAltText("Captura de Beta")).toBeNull();
   });
 });

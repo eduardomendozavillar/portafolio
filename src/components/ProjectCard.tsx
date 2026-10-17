@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { Reveal } from "./Reveal";
 import type { Project, ProjectStatus } from "@/types/project";
 
 const STATUS_LABEL: Record<ProjectStatus, string> = {
@@ -14,26 +16,17 @@ const STATUS_LABEL: Record<ProjectStatus, string> = {
  * `data-filtered` hook; the card stays visible and its links stay focusable —
  * never hidden or aria-hidden.
  */
-export type CardPointerHandlers = {
-  onPointerEnter?: (event: React.PointerEvent<HTMLLIElement>) => void;
-  onPointerMove?: (event: React.PointerEvent<HTMLLIElement>) => void;
-  onPointerLeave?: (event: React.PointerEvent<HTMLLIElement>) => void;
-};
-
 export function ProjectCard({
   project,
   index,
   attenuated = false,
   onPreview,
-  pointer,
 }: {
   project: Project;
   index: number;
   attenuated?: boolean;
   /** Opens the project lightbox; only rendered when screenshots exist. */
   onPreview?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  /** Floating hover preview plumbing (portfolio-motion), pass-through. */
-  pointer?: CardPointerHandlers;
 }) {
   const number = String(index).padStart(2, "0");
   const statusLabel = project.status ? STATUS_LABEL[project.status] : null;
@@ -41,9 +34,10 @@ export function ProjectCard({
   return (
     <li
       data-filtered={attenuated ? "true" : undefined}
-      onPointerEnter={pointer?.onPointerEnter}
-      onPointerMove={pointer?.onPointerMove}
-      onPointerLeave={pointer?.onPointerLeave}
+      /* Showcase hooks (portfolio-motion): the sticky panel tracks the card
+         nearest the viewport center through these document-wide attributes. */
+      data-project-card={index - 1}
+      data-project-id={project.id}
       className={`project-card border-t border-line py-5 first:border-t-0 md:py-6 ${
         attenuated ? "opacity-50 saturate-50" : ""
       }`}
@@ -56,6 +50,23 @@ export function ProjectCard({
           {number}
         </p>
         <div className="min-w-0 flex-1">
+          {/* Mobile cover preview (showcase-sticky S7): on narrow screens the
+              sticky panel cannot carry the visuals, so each card shows its
+              first screenshot inline, revealed on scroll (WU-B Reveal). */}
+          {project.images && project.images.length > 0 ? (
+            <Reveal className="md:hidden">
+              <div className="overflow-hidden rounded-md border border-line bg-paper">
+                <Image
+                  src={project.images[0].src}
+                  width={project.images[0].width}
+                  height={project.images[0].height}
+                  alt={`Captura de ${project.title}`}
+                  sizes="(max-width: 767px) 100vw, 0px"
+                  className="h-auto w-full object-cover"
+                />
+              </div>
+            </Reveal>
+          ) : null}
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h3 className="font-display text-xl font-semibold text-ink">
               {project.title}

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { featuredGitHubProjects } from "@/data/github";
@@ -8,22 +7,7 @@ import { fetchProjects } from "@/lib/api";
 import type { Project } from "@/types/project";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectLightbox } from "./ProjectLightbox";
-
-/** Cursor offset so the floating preview never sits under the pointer. */
-const PREVIEW_OFFSET_PX = 24;
-
-/**
- * Floating preview target: hover-capable fine pointers only (desktop mice),
- * matching the Hero magnetic-CTA gate. Unknown matchMedia (very old or very
- * basic environments) wins the safe default: no floating preview.
- */
-function hasHoverFinePointer(): boolean {
-  return (
-    typeof window !== "undefined" &&
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(hover: hover) and (pointer: fine)").matches
-  );
-}
+import { ProjectShowcase } from "./ProjectShowcase";
 
 type Status = "loading" | "success" | "error";
 
@@ -157,28 +141,21 @@ function ProjectItems({ projects }: { projects: Project[] }) {
   // WU-B: tech-chip filter, single-select, chips = union of the featured
   // projects' technologies + a "Todas" reset chip.
   const [activeTech, setActiveTech] = useState<string | null>(null);
-  // portfolio-motion: decorative floating hover preview + preview lightbox.
-  const [hoverProject, setHoverProject] = useState<Project | null>(null);
+  // portfolio-motion: sticky showcase panel + preview lightbox.
   const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
-  const finePointer = useState(() => hasHoverFinePointer())[0];
   const previewTriggerRef = useRef<HTMLButtonElement | null>(null);
   const technologies = featuredTechnologies();
-  const hoverCover = hoverProject?.images?.[0];
-
-  const handlePointerEnter =
-    (project: Project) => (event: React.PointerEvent<HTMLLIElement>) => {
-      if (!finePointer) return;
-      moveFloatingPreview(event);
-      setHoverProject(project);
-    };
-
-  const handlePointerLeave = () => setHoverProject(null);
 
   const openLightbox =
     (project: Project) => (event: React.MouseEvent<HTMLButtonElement>) => {
       // Event handlers may read refs (house rule: never during render).
       previewTriggerRef.current = event.currentTarget;
-      setHoverProject(null);
+      setLightboxProject(project);
+    };
+
+  const openFromShowcase =
+    (project: Project, event: React.MouseEvent<HTMLButtonElement>) => {
+      previewTriggerRef.current = event.currentTarget;
       setLightboxProject(project);
     };
 
@@ -211,32 +188,28 @@ function ProjectItems({ projects }: { projects: Project[] }) {
           </button>
         ))}
       </div>
-      <ol>
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            index={index + 1}
-            attenuated={!cardMatchesTech(project, activeTech)}
-            onPreview={
-              project.images && project.images.length > 0
-                ? openLightbox(project)
-                : undefined
-            }
-            pointer={
-              project.images && project.images.length > 0 && finePointer
-                ? {
-                    onPointerEnter: handlePointerEnter(project),
-                    onPointerMove: moveFloatingPreview,
-                    onPointerLeave: handlePointerLeave,
-                  }
-                : undefined
-            }
-          />
-        ))}
-      </ol>
-
-      {finePointer && hoverCover ? <FloatingPreview image={hoverCover} /> : null}
+      {/* Showcase-sticky panel (desktop) beside the scroll-tracked list. */}
+      <div className="gap-10 md:grid md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
+        <ProjectShowcase
+          projects={projects}
+          onOpenPreview={openFromShowcase}
+        />
+        <ol>
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index + 1}
+              attenuated={!cardMatchesTech(project, activeTech)}
+              onPreview={
+                project.images && project.images.length > 0
+                  ? openLightbox(project)
+                  : undefined
+              }
+            />
+          ))}
+        </ol>
+      </div>
       {lightboxProject ? (
         <ProjectLightbox
           key={lightboxProject.id}
@@ -247,53 +220,4 @@ function ProjectItems({ projects }: { projects: Project[] }) {
       ) : null}
     </div>
   );
-}
-
-/**
- * Decorative, aria-hidden floating screenshot near the cursor. Rendered only
- * while the pointer is over a row with screenshots on a hover-capable fine
- * pointer; position follows the cursor through CSS variables updated in the
- * pointer move handler (never re-rendered per move).
- */
-function FloatingPreview({ image }: { image: NonNullable<Project["images"]>[number] }) {
-  return (
-    <div
-      data-project-hover-preview="true"
-      aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-50 hidden md:block"
-      style={{
-        transform: "translate(var(--preview-x, 0px), var(--preview-y, 0px))",
-      }}
-    >
-      <div
-        className={
-          "translate-x-6 -translate-y-1/2 overflow-hidden rounded-md border border-line " +
-          "bg-paper shadow-lg transition-opacity duration-150 [transition-delay:80ms] " +
-          "motion-reduce:transition-none"
-        }
-      >
-        <Image
-          src={image.src}
-          width={image.width}
-          height={image.height}
-          alt=""
-          sizes="320px"
-          className="h-auto w-80 object-cover"
-        />
-      </div>
-    </div>
-  );
-}
-
-/**
- * Tracks the cursor through root CSS custom properties. Values fall back to
- * 0px (top-left corner) in environments without real pointerevent coords,
- * which is only ever the case in tests and non-hover media.
- */
-function moveFloatingPreview(event: React.PointerEvent<HTMLLIElement>) {
-  if (typeof document === "undefined" || typeof event.clientX !== "number") return;
-  const x = event.clientX + PREVIEW_OFFSET_PX;
-  const y = event.clientY;
-  document.documentElement.style.setProperty("--preview-x", `${x.toFixed(0)}px`);
-  document.documentElement.style.setProperty("--preview-y", `${Math.max(y, PREVIEW_OFFSET_PX).toFixed(0)}px`);
 }
