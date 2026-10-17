@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback } from "react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/Reveal";
+import { ParallaxLayer } from "./ParallaxLayer";
 import { Button } from "@/components/ui/Button";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
@@ -61,14 +62,22 @@ export function Hero() {
 
   return (
     <section id="inicio" className="relative overflow-hidden border-b border-line">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_15%_-5%,rgba(34,211,238,0.08),transparent_55%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.22] [background-image:linear-gradient(to_right,rgba(30,41,59,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,41,59,0.4)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black_0%,transparent_80%)]"
-      />
+      {/* Parallax layers (portfolio-motion): decorative ≠ content; grid
+          settles slightly slower, text drifts up 4px against the scroll, both
+          capped ≤10px and transform-only. */}
+      <ParallaxLayer
+        maxPx={6}
+        className="pointer-events-none absolute inset-0"
+      >
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_15%_-5%,rgba(34,211,238,0.08),transparent_55%)]"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 opacity-[0.22] [background-image:linear-gradient(to_right,rgba(30,41,59,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,41,59,0.4)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black_0%,transparent_80%)]"
+        />
+      </ParallaxLayer>
 
       <Container className="relative py-16 md:py-24 lg:py-28">
         <Reveal>
@@ -87,7 +96,10 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="min-w-0 flex-1 text-center md:text-left">
+            <ParallaxLayer
+              maxPx={-4}
+              className="min-w-0 flex-1 text-center md:text-left"
+            >
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
                 {profile.role}
               </p>
@@ -143,7 +155,7 @@ export function Hero() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </ParallaxLayer>
           </div>
         </Reveal>
       </Container>
