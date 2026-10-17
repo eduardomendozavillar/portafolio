@@ -58,6 +58,7 @@ function mockProjectsResponse(list: Project[]) {
 afterEach(() => {
   globalThis.fetch = originalFetch;
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 describe("ProjectList", () => {
@@ -263,5 +264,98 @@ describe("ProjectList", () => {
     expect(
       screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
     ).toBe("true");
+  });
+
+  it("renders a Vista previa button only on cards with screenshots", async () => {
+    mockProjectsResponse([
+      project({
+        id: "a",
+        title: "Alpha",
+        sortOrder: 1,
+        images: [
+          { src: "/images/projects/alpha/alpha-01.webp", width: 800, height: 500 },
+        ],
+      }),
+      project({ id: "b", title: "Beta", sortOrder: 2 }),
+    ]);
+    render(<ProjectList />);
+
+    expect(await screen.findByText("Alpha")).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Vista previa de Alpha" })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Vista previa de Beta" })).toBeNull();
+  });
+
+  it("opens the lightbox from the Vista previa button and returns focus on close", async () => {
+    mockProjectsResponse([
+      project({
+        id: "a",
+        title: "Alpha",
+        sortOrder: 1,
+        links: { demo: "https://demo.example.com/alpha" },
+        images: [
+          { src: "/images/projects/alpha/alpha-01.webp", width: 800, height: 500 },
+          { src: "/images/projects/alpha/alpha-02.webp", width: 800, height: 500 },
+        ],
+      }),
+    ]);
+    render(<ProjectList />);
+
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Vista previa de Alpha" }),
+    );
+
+    expect(screen.getByRole("dialog").getAttribute("aria-label")).toContain("Alpha");
+    expect(screen.getByText("1 / 2")).toBeTruthy();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(
+      screen.getByRole("button", { name: "Vista previa de Alpha" }),
+    ).toBe(document.activeElement);
+  });
+
+  it("shows the floating hover preview on rows with screenshots and hides it on leave", async () => {
+    // jsdom has no matchMedia at all; stub one so the desktop-only floating
+    // preview gate ("hover: hover" + "pointer: fine") opens in tests.
+    vi.stubGlobal(
+      "matchMedia",
+      (query: string) =>
+        ({
+          matches: query === "(hover: hover) and (pointer: fine)",
+          media: query,
+          addEventListener: () => undefined,
+          removeEventListener: () => undefined,
+          addListener: () => undefined,
+          removeListener: () => undefined,
+          onchange: null,
+          dispatchEvent: () => false,
+        }) as unknown as MediaQueryList,
+    );
+
+    mockProjectsResponse([
+      project({
+        id: "a",
+        title: "Alpha",
+        sortOrder: 1,
+        images: [
+          { src: "/images/projects/alpha/alpha-01.webp", width: 800, height: 500 },
+        ],
+      }),
+    ]);
+    render(<ProjectList />);
+
+    expect(await screen.findByText("Alpha")).toBeTruthy();
+    expect(document.querySelector("[data-project-hover-preview]")).toBeNull();
+
+    fireEvent.pointerEnter(screen.getByText("Alpha").closest("li") as Element);
+
+    const preview = document.querySelector("[data-project-hover-preview]");
+    expect(preview).toBeTruthy();
+    expect(
+      (preview?.querySelector("img")?.getAttribute("src") ?? "").includes("alpha-01"),
+    ).toBe(true);
+
+    fireEvent.pointerLeave(screen.getByText("Alpha").closest("li") as Element);
+    expect(document.querySelector("[data-project-hover-preview]")).toBeNull();
   });
 });

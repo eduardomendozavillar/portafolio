@@ -14,14 +14,26 @@ const STATUS_LABEL: Record<ProjectStatus, string> = {
  * `data-filtered` hook; the card stays visible and its links stay focusable —
  * never hidden or aria-hidden.
  */
+export type CardPointerHandlers = {
+  onPointerEnter?: (event: React.PointerEvent<HTMLLIElement>) => void;
+  onPointerMove?: (event: React.PointerEvent<HTMLLIElement>) => void;
+  onPointerLeave?: (event: React.PointerEvent<HTMLLIElement>) => void;
+};
+
 export function ProjectCard({
   project,
   index,
   attenuated = false,
+  onPreview,
+  pointer,
 }: {
   project: Project;
   index: number;
   attenuated?: boolean;
+  /** Opens the project lightbox; only rendered when screenshots exist. */
+  onPreview?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  /** Floating hover preview plumbing (portfolio-motion), pass-through. */
+  pointer?: CardPointerHandlers;
 }) {
   const number = String(index).padStart(2, "0");
   const statusLabel = project.status ? STATUS_LABEL[project.status] : null;
@@ -29,6 +41,9 @@ export function ProjectCard({
   return (
     <li
       data-filtered={attenuated ? "true" : undefined}
+      onPointerEnter={pointer?.onPointerEnter}
+      onPointerMove={pointer?.onPointerMove}
+      onPointerLeave={pointer?.onPointerLeave}
       className={`project-card border-t border-line py-5 first:border-t-0 md:py-6 ${
         attenuated ? "opacity-50 saturate-50" : ""
       }`}
@@ -63,6 +78,21 @@ export function ProjectCard({
                   {technology}
                 </li>
               ))}
+            </ul>
+          ) : null}
+
+          {project.images && project.images.length > 0 && onPreview ? (
+            <ul className="mt-4 flex gap-5 text-sm font-medium">
+              <li>
+                <button
+                  type="button"
+                  onClick={onPreview}
+                  aria-label={`Vista previa de ${project.title}`}
+                  className="text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+                >
+                  Vista previa
+                </button>
+              </li>
             </ul>
           ) : null}
 
