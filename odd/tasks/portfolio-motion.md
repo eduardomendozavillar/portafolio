@@ -40,3 +40,5 @@ Preview de proyectos con imágenes (idea del usuario) + scroll progress + timeli
 - L8: Pruebas de integración ajustadas al showcase: lookups por hooks `data-project-id`/`data-project-card` (el chip del panel duplica títulos); panel previews `previewable[0]` = taller.by al no haber scroll en jsdom.
 - L9: Los 4 featured ahora tienen capturas; previewable[0] pasa a Portafolio personal (sortOrder -100); tests de panel default y dedupe actualizados (contar por data-project-id, no por texto).
 - L10: Aprobación del usuario: "bello me gusto mucho" (showcase sticky OK). Pidió: capturas del portafolio + optimizar .webp + montarlas, luego reporte y decidir deploy.
+- L11: Fixes iterativos con feedback visual del usuario: lightbox fit (2a7c51e), scrollspy de lectura + retract (38a042d), hold mientras la lista visible (26616b5).
+- L12: User: "vamos subelo a la version de diploy - lanza un subagente que valla actualizando la documentacion en github comitea - pull  y terminamos" — autorización de merge a master + push (deploy Vercel) + docs por subagente.
