@@ -108,9 +108,11 @@ export function ProjectLightbox({
     : `fixed inset-0 z-[60] bg-paper/80 backdrop-blur-sm transition-opacity duration-200 ${
         entered ? "opacity-100" : "opacity-0"
       }`;
+  // max-h + overflow-y: short viewports must be able to reach every control
+  // (the dialog scrolls its own content; the body scroll stays locked).
   const dialogClasses = reducedMotion
-    ? "fixed left-1/2 top-1/2 z-[61] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 rounded-md border border-line bg-paper-raised p-5 shadow-2xl md:p-6"
-    : `fixed left-1/2 top-1/2 z-[61] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 rounded-md border border-line bg-paper-raised p-5 shadow-2xl transition-[opacity,transform] duration-200 md:p-6 ${
+    ? "fixed left-1/2 top-1/2 z-[61] max-h-[92vh] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-md border border-line bg-paper-raised p-5 shadow-2xl md:p-6"
+    : `fixed left-1/2 top-1/2 z-[61] max-h-[92vh] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-md border border-line bg-paper-raised p-5 shadow-2xl transition-[opacity,transform] duration-200 md:p-6 ${
         entered ? "scale-100 opacity-100" : "scale-[0.98] opacity-0"
       }`;
 
@@ -165,7 +167,7 @@ export function ProjectLightbox({
               height={image.height}
               alt={`Captura ${index + 1} de ${project.title}`}
               sizes="(max-width: 56rem) 100vw, 50rem"
-              className="mx-auto h-auto max-h-[55vh] w-full object-contain"
+              className="mx-auto h-auto max-h-[50vh] w-full object-contain"
             />
           </div>
         ) : null}

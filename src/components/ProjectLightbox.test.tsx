@@ -103,4 +103,18 @@ describe("ProjectLightbox", () => {
 
     document.body.style.overflow = previous;
   });
+
+  it("fits the viewport: dialog scrolls itself and the image stays bounded", () => {
+    // Regression (user report): on short viewports the dialog grew taller
+    // than the screen — pagination controls were unreachable and the page
+    // could not scroll. The dialog must cap its height and scroll its own
+    // content; the image must shrink inside it.
+    const { container } = renderLightbox();
+    const dialog = container.querySelector('[role="dialog"]') as HTMLElement;
+
+    expect(dialog.className).toContain("max-h-[92vh]");
+    expect(dialog.className).toContain("overflow-y-auto");
+    const image = container.querySelector("img") as HTMLImageElement;
+    expect(image.className).toContain("max-h-[50vh]");
+  });
 });
