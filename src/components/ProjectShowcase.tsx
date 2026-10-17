@@ -50,10 +50,21 @@ export function ProjectShowcase({
       const nodes = document.querySelectorAll<HTMLElement>("[data-project-card]");
       if (nodes.length === 0 || previewable.length === 0) return;
       const ids = new Set(previewable.map((project) => project.id));
+      const viewportHeight = window.innerHeight || 1;
+      // While ANY part of the list is on screen, the panel always holds an
+      // image (user rule); it retracts only when the whole list is below the
+      // viewport — i.e. the section hasn't been reached yet.
+      const inView = Array.from(nodes).some(
+        (node) => node.getBoundingClientRect().top < viewportHeight,
+      );
+      if (!inView) {
+        setActive(-1);
+        return;
+      }
       // Reading-position scrollspy: the active project is the LAST card whose
       // top crossed the 35% viewport line. Forward scroll installs the next
       // project; scrolling back naturally restores the previous one.
-      const trigger = (window.innerHeight || 1) * 0.35;
+      const trigger = viewportHeight * 0.35;
       let best = -1;
       nodes.forEach((node) => {
         if (!ids.has(node.dataset.projectId ?? "")) return;
@@ -64,7 +75,13 @@ export function ProjectShowcase({
       // `best` indexes the full projects list; map back into previewable.
       const id = best >= 0 ? nodes[best]?.dataset.projectId : undefined;
       const mapped = previewable.findIndex((project) => project.id === id);
-      setActive(mapped); // -1 while nothing crossed: the panel retracts.
+      if (mapped >= 0) {
+        setActive(mapped);
+      } else {
+        // Entered the list without crossing anything yet: hold the first
+        // project (or whatever was already active) instead of retracting.
+        setActive((currentActive) => (currentActive >= 0 ? currentActive : 0));
+      }
     }
 
     update();

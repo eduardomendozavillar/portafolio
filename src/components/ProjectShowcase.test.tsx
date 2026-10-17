@@ -152,10 +152,10 @@ describe("ProjectShowcase", () => {
     );
   });
 
-  it("retracts when no card has crossed the trigger line yet", () => {
-    // All cards below the 35% line (user still above the list): the panel
-    // stays empty and shows its retracted hint instead of a stale cover.
-    stubCardRects([600, 900, 1200]);
+  it("retracts only when the list is entirely below the viewport", () => {
+    // The whole list below the viewport (user still at the hero): no image
+    // travelled yet, so the panel retracts (no stale cover, no controls).
+    stubCardRects([1500, 1800, 2100]);
     Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
 
     const { container } = render(
@@ -175,6 +175,32 @@ describe("ProjectShowcase", () => {
     expect(container.querySelector("img")).toBeNull();
     expect(container.querySelector("[data-showcase-retracted]")).toBeTruthy();
     expect(screen.queryByRole("button")).toBeNull();
+  });
+
+  it("holds the first project's cover while entering the list with nothing crossed yet", () => {
+    // List partially in view (user just reached the section) but no card has
+    // crossed the 35% reading line: the first project holds in the panel —
+    // never an empty frame mid-list (user rule: while the list is visible,
+    // the image remains).
+    stubCardRects([600, 900, 1200]);
+    Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
+
+    const { container } = render(
+      <>
+        <ProjectShowcase projects={projects} onOpenPreview={() => undefined} />
+        <ol>
+          {projects.map((item, index) => (
+            <li key={item.id} data-project-card={index} data-project-id={item.id}>
+              {item.title}
+            </li>
+          ))}
+        </ol>
+      </>,
+    );
+
+    expect(container.querySelector('[data-active-project="0"]')).toBeTruthy();
+    const img = container.querySelector("img") as HTMLImageElement;
+    expect((img.getAttribute("src") ?? "").includes("alpha-01")).toBe(true);
   });
 
   it("walks back through projects when scrolling in reverse", () => {
