@@ -69,7 +69,7 @@ describe("ProjectList", () => {
 
     render(<ProjectList />);
 
-    expect(screen.getByText("Portafolio personal")).toBeTruthy();
+    expect(screen.getAllByText("Portafolio personal").length).toBeGreaterThan(0);
     expect(screen.getByRole("status").textContent).toContain("Cargando proyectos dinámicos");
     expect(vi.mocked(globalThis.fetch)).toHaveBeenCalledWith("/api/projects", {
       cache: "no-store",
@@ -80,7 +80,7 @@ describe("ProjectList", () => {
     mockProjectsResponse([]);
     render(<ProjectList />);
 
-    expect(await screen.findByText("Portafolio personal")).toBeTruthy();
+    expect(await screen.findAllByText("Portafolio personal")).toBeTruthy();
     expect(screen.queryByText(/Todavía no hay proyectos publicados/)).toBeNull();
   });
 
@@ -97,7 +97,7 @@ describe("ProjectList", () => {
     render(<ProjectList />);
 
     const alert = await screen.findByRole("alert");
-    expect(screen.getByText("Portafolio personal")).toBeTruthy();
+    expect(screen.getAllByText("Portafolio personal").length).toBeGreaterThan(0);
     expect(alert.textContent).toContain("No se pudieron cargar los proyectos dinámicos");
     expect(screen.getByRole("button", { name: "Reintentar" })).toBeTruthy();
 
@@ -105,7 +105,7 @@ describe("ProjectList", () => {
 
     expect(await screen.findByText("Alpha")).toBeTruthy();
     expect(screen.getByText("Beta")).toBeTruthy();
-    expect(screen.getByText("Portafolio personal")).toBeTruthy();
+    expect(screen.getAllByText("Portafolio personal").length).toBeGreaterThan(0);
     expect(vi.mocked(globalThis.fetch)).toHaveBeenCalledTimes(2);
   });
 
@@ -115,7 +115,7 @@ describe("ProjectList", () => {
 
     expect(await screen.findByText("Alpha")).toBeTruthy();
     expect(screen.getByText("Beta")).toBeTruthy();
-    expect(screen.getByText("Portafolio personal")).toBeTruthy();
+    expect(screen.getAllByText("Portafolio personal").length).toBeGreaterThan(0);
 
     // Numbered editorial index (aria-hidden) 01 / 02…
     expect(screen.getByText("01")).toBeTruthy();
@@ -151,7 +151,11 @@ describe("ProjectList", () => {
 
     render(<ProjectList />);
 
-    expect(await screen.findAllByText("Portafolio personal")).toHaveLength(1);
+    // Dedupe semantic: exactly ONE card for the project (panel chip may also
+    // repeat the title text, so count showcase-hooked cards instead).
+    expect(
+      document.querySelectorAll('[data-project-id="github-portafolio"]').length,
+    ).toBe(1);
   });
 
   it("shows Spanish status badges for featured projects and omits them when unset", async () => {
@@ -164,7 +168,7 @@ describe("ProjectList", () => {
     ]);
     render(<ProjectList />);
 
-    expect(await screen.findByText("Portafolio personal")).toBeTruthy();
+    expect(await screen.findAllByText("Portafolio personal")).toBeTruthy();
     expect(screen.getByText("En producción")).toBeTruthy();
     expect(screen.getAllByText("En desarrollo").length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText("Gamma sin estado")).toBeTruthy();
@@ -175,7 +179,7 @@ describe("ProjectList", () => {
     mockProjectsResponse([]);
     render(<ProjectList />);
 
-    expect(await screen.findByText("Portafolio personal")).toBeTruthy();
+    expect(await screen.findAllByText("Portafolio personal")).toBeTruthy();
 
     const group = screen.getByRole("group", {
       name: "Filtrar proyectos por tecnología",
@@ -335,8 +339,8 @@ describe("ProjectList", () => {
     const panel = document.querySelector("[data-active-project]") as HTMLElement;
     expect(panel.getAttribute("data-active-project")).toBe("0");
     // No scroll happens in the test: previewable[0] is the first featured
-    // project with screenshots (taller.by) after the featured merge.
-    expect((panel.querySelector("img")?.getAttribute("src") ?? "").includes("taller-by-01")).toBe(
+    // project with screenshots (Portafolio personal) after the merge.
+    expect((panel.querySelector("img")?.getAttribute("src") ?? "").includes("portafolio-personal-01")).toBe(
       true,
     );
     // Imageless cards never lead the panel (S5) and Alpha (fixture, no cover
@@ -347,16 +351,16 @@ describe("ProjectList", () => {
   it("opens the lightbox from the showcase panel and returns focus to it on close", async () => {
     render(<ProjectList />);
 
-    await screen.findAllByText("taller.by");
+    await screen.findAllByText("Portafolio personal");
     fireEvent.click(
-      screen.getByRole("button", { name: "Ampliar vista previa de taller.by" }),
+      screen.getByRole("button", { name: "Ampliar vista previa de Portafolio personal" }),
     );
     expect(screen.getByRole("dialog")).toBeTruthy();
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(
-      screen.getByRole("button", { name: "Ampliar vista previa de taller.by" }),
+      screen.getByRole("button", { name: "Ampliar vista previa de Portafolio personal" }),
     ).toBe(document.activeElement);
   });
 

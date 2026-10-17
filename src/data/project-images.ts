@@ -6,6 +6,28 @@
 import type { ProjectImage } from "@/types/project";
 
 export const projectImages: Record<string, ProjectImage[]> = {
+  "portafolio-personal": [
+    {
+      "src": "/images/projects/portafolio-personal/portafolio-personal-01.webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "src": "/images/projects/portafolio-personal/portafolio-personal-02.webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "src": "/images/projects/portafolio-personal/portafolio-personal-03.webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "src": "/images/projects/portafolio-personal/portafolio-personal-04.webp",
+      "width": 1200,
+      "height": 750
+    }
+  ],
   "taller-by": [
     {
       "src": "/images/projects/taller-by/taller-by-01.webp",

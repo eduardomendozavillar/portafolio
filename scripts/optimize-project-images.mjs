@@ -9,7 +9,7 @@
  * Source folders are Windows screenshots with spaces in their names; they are
  * renamed deterministically to `<slug>-<NN>.webp` in filename order.
  */
-import { readdir, readFile, mkdir, writeFile, rm } from "node:fs/promises";
+import { readdir, mkdir, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
@@ -28,12 +28,13 @@ const QUALITY = 78;
 
 const FOLDER_TO_SLUG = {
   FITBOX: "fitbox-elite",
+  PORTAFOLIO: "portafolio-personal",
   SGDI: "sgdi",
   "TALLER.BY": "taller-by",
 };
 
 /** Serial ordering of the featured projects, matches github.ts presentation. */
-const SLUG_ORDER = ["taller-by", "fitbox-elite", "sgdi"];
+const SLUG_ORDER = ["portafolio-personal", "taller-by", "fitbox-elite", "sgdi"];
 
 function fileBaseName(slug, index) {
   return `${slug}-${String(index + 1).padStart(2, "0")}`;
