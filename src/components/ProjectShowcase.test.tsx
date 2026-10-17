@@ -78,7 +78,7 @@ function stubCardRects(tops: number[], cardHeight = 300) {
 
 describe("ProjectShowcase", () => {
   it("starts showing the first project's cover", () => {
-    stubCardRects([600, 900, 1200]);
+    stubCardRects([300, 900, 1200]); // card 0 top crossed the 35% trigger line
     Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
 
     const { container } = render(
@@ -150,5 +150,98 @@ describe("ProjectShowcase", () => {
       projects[0],
       expect.anything(),
     );
+  });
+
+  it("retracts when no card has crossed the trigger line yet", () => {
+    // All cards below the 35% line (user still above the list): the panel
+    // stays empty and shows its retracted hint instead of a stale cover.
+    stubCardRects([600, 900, 1200]);
+    Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
+
+    const { container } = render(
+      <>
+        <ProjectShowcase projects={projects} onOpenPreview={() => undefined} />
+        <ol>
+          {projects.map((item, index) => (
+            <li key={item.id} data-project-card={index} data-project-id={item.id}>
+              {item.title}
+            </li>
+          ))}
+        </ol>
+      </>,
+    );
+
+    expect(container.querySelector('[data-active-project="-1"]')).toBeTruthy();
+    expect(container.querySelector("img")).toBeNull();
+    expect(container.querySelector("[data-showcase-retracted]")).toBeTruthy();
+    expect(screen.queryByRole("button")).toBeNull();
+  });
+
+  it("walks back through projects when scrolling in reverse", () => {
+    Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
+    let offset = 0;
+    Object.defineProperty(window, "scrollY", { get: () => offset, configurable: true });
+    const tops = [600, 900, 1200];
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
+      function (this: Element) {
+        const index = Number(this.getAttribute("data-project-card") ?? -1);
+        if (index >= 0) return rect(tops[index] - offset, 300);
+        return rect(0, 100);
+      },
+    );
+    const { container } = render(
+      <>
+        <ProjectShowcase projects={projects} onOpenPreview={() => undefined} />
+        <ol>
+          {projects.map((item, index) => (
+            <li key={item.id} data-project-card={index} data-project-id={item.id}>
+              {item.title}
+            </li>
+          ))}
+        </ol>
+      </>,
+    );
+
+    offset = 600; // tops 0 / 300 / 600 → Beta is the last above the line
+    fireEvent.scroll(document);
+    expect(container.querySelector('[data-active-project="1"]')).toBeTruthy();
+
+    offset = 300; // reverse: tops 300 / 600 / 900 → only Alpha crossed again
+    fireEvent.scroll(document);
+    expect(container.querySelector('[data-active-project="0"]')).toBeTruthy();
+    const img = container.querySelector("img") as HTMLImageElement;
+    expect((img.getAttribute("src") ?? "").includes("alpha-01")).toBe(true);
+  });
+
+  it("keeps the last project once the list is fully scrolled past", () => {
+    Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
+    let offset = 0;
+    Object.defineProperty(window, "scrollY", { get: () => offset, configurable: true });
+    const tops = [600, 900, 1200];
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
+      function (this: Element) {
+        const index = Number(this.getAttribute("data-project-card") ?? -1);
+        if (index >= 0) return rect(tops[index] - offset, 300);
+        return rect(0, 100);
+      },
+    );
+    const { container } = render(
+      <>
+        <ProjectShowcase projects={projects} onOpenPreview={() => undefined} />
+        <ol>
+          {projects.map((item, index) => (
+            <li key={item.id} data-project-card={index} data-project-id={item.id}>
+              {item.title}
+            </li>
+          ))}
+        </ol>
+      </>,
+    );
+
+    offset = 2000; // every top far above the line → last project holds
+    fireEvent.scroll(document);
+    expect(container.querySelector('[data-active-project="2"]')).toBeTruthy();
+    const img = container.querySelector("img") as HTMLImageElement;
+    expect((img.getAttribute("src") ?? "").includes("gamma-01")).toBe(true);
   });
 });

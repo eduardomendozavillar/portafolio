@@ -50,22 +50,21 @@ export function ProjectShowcase({
       const nodes = document.querySelectorAll<HTMLElement>("[data-project-card]");
       if (nodes.length === 0 || previewable.length === 0) return;
       const ids = new Set(previewable.map((project) => project.id));
-      const viewportCenter = (window.innerHeight || 1) / 2;
+      // Reading-position scrollspy: the active project is the LAST card whose
+      // top crossed the 35% viewport line. Forward scroll installs the next
+      // project; scrolling back naturally restores the previous one.
+      const trigger = (window.innerHeight || 1) * 0.35;
       let best = -1;
-      let bestDistance = Number.POSITIVE_INFINITY;
       nodes.forEach((node) => {
         if (!ids.has(node.dataset.projectId ?? "")) return;
-        const rect = node.getBoundingClientRect();
-        const centerDistance = Math.abs(rect.top + rect.height / 2 - viewportCenter);
-        if (centerDistance < bestDistance) {
-          bestDistance = centerDistance;
-          best = Number(node.dataset.projectCard ?? -1);
-        }
+        if (node.getBoundingClientRect().top > trigger) return;
+        const cardIndex = Number(node.dataset.projectCard ?? -1);
+        if (cardIndex > best) best = cardIndex;
       });
       // `best` indexes the full projects list; map back into previewable.
       const id = best >= 0 ? nodes[best]?.dataset.projectId : undefined;
       const mapped = previewable.findIndex((project) => project.id === id);
-      if (mapped >= 0) setActive(mapped);
+      setActive(mapped); // -1 while nothing crossed: the panel retracts.
     }
 
     update();
@@ -79,8 +78,30 @@ export function ProjectShowcase({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects.length]);
 
-  const current = previewable[Math.min(active, previewable.length - 1)];
-  if (!current?.images?.length) return null;
+  const current = active >= 0 ? previewable[active] : undefined;
+
+  // Nothing crossed the line yet: the panel retracts (no stale cover, no
+  // controls, just a quiet hint). It re-installs as soon as the user scrolls
+  // into the first project card.
+  if (!current?.images?.length) {
+    return (
+      <aside
+        data-active-project={-1}
+        className="relative hidden md:block md:sticky md:top-28 md:self-start"
+      >
+        <div
+          data-showcase-retracted="true"
+          className={
+            (reducedMotion ? "absolute inset-0" : "preview-retract absolute inset-0") +
+            " grid place-items-center rounded-md border border-dashed border-line bg-paper-raised text-xs text-ink-muted"
+          }
+        >
+          <span aria-hidden="true">Las vistas de los proyectos aparecen acá</span>
+        </div>
+      </aside>
+    );
+  }
+
   const image = current.images[0];
 
   const layerClasses = reducedMotion

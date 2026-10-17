@@ -122,8 +122,29 @@
   animation: preview-in 260ms ease-out both;
 }
 
+/**
+ * Showcase retract (portfolio-motion): before the first project card crosses
+ * the reading line the panel shows a quiet empty state instead of a stale
+ * cover — the empty state settles with a small backward settle animation.
+ */
+@keyframes preview-retract {
+  from {
+    opacity: 0;
+    transform: translateY(-2%) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.preview-retract {
+  animation: preview-retract 220ms ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .preview-layer-in {
+  .preview-layer-in,
+  .preview-retract {
     animation: none;
   }
 }

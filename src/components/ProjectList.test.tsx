@@ -1,5 +1,30 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
+
+/** Viewing stub for the showcase reading-line logic (35% trigger). */
+function stubShowcaseRects(viewportHeight = 1000) {
+  Object.defineProperty(window, "innerHeight", {
+    value: viewportHeight,
+    configurable: true,
+  });
+  return vi
+    .spyOn(Element.prototype, "getBoundingClientRect")
+    .mockImplementation(function (this: Element) {
+      const index = Number(this.getAttribute("data-project-card") ?? -1);
+      if (index >= 0) return {
+        top: index === 0 ? 200 : 500 + index * 200,
+        height: 300,
+        bottom: 500,
+        width: 800,
+        left: 0,
+        right: 800,
+        x: 0,
+        y: 200,
+        toJSON: () => undefined,
+      } as unknown as DOMRect;
+      return { top: 999999, height: 0, bottom: 999999, width: 0, left: 0, right: 0, x: 0, y: 0, toJSON: () => undefined } as unknown as DOMRect;
+    });
+}
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ProjectList } from "./ProjectList";
 import type { Project } from "@/types/project";
@@ -333,6 +358,7 @@ describe("ProjectList", () => {
       }),
       project({ id: "b", title: "Beta", sortOrder: 2 }),
     ]);
+    stubShowcaseRects();
     render(<ProjectList />);
 
     expect(await screen.findByText("Alpha")).toBeTruthy();
@@ -349,6 +375,7 @@ describe("ProjectList", () => {
   });
 
   it("opens the lightbox from the showcase panel and returns focus to it on close", async () => {
+    stubShowcaseRects();
     render(<ProjectList />);
 
     await screen.findAllByText("Portafolio personal");
