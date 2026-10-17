@@ -3,7 +3,9 @@
  * Intrinsic dimensions let the project preview render `next/image` without
  * layout shift. Keys are project slugs (see src/data/github.ts).
  */
-export const projectImages = {
+import type { ProjectImage } from "@/types/project";
+
+export const projectImages: Record<string, ProjectImage[]> = {
   "taller-by": [
     {
       "src": "/images/projects/taller-by/taller-by-01.webp",

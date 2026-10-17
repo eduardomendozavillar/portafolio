@@ -5,6 +5,14 @@
  */
 export type ProjectStatus = "production" | "development" | "personal";
 
+/** One preview screenshot, with intrinsic dimensions for `next/image`. */
+export type ProjectImage = {
+  /** Site-rooted path of the optimized `.webp` asset. */
+  src: string;
+  width: number;
+  height: number;
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -19,6 +27,8 @@ export type Project = {
   };
   /** Optional maturity badge for recruiter scan (API may omit). */
   status?: ProjectStatus;
+  /** Optional preview screenshots (API/remote records may omit). */
+  images?: ProjectImage[];
   featured: boolean;
   sortOrder: number;
   /** ISO-8601 timestamp. */

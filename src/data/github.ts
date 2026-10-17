@@ -1,4 +1,10 @@
+import { projectImages } from "@/data/project-images";
 import type { Project } from "@/types/project";
+
+/** Attaches the generated screenshot manifest to a featured project. */
+function withImages(project: Project): Project {
+  return { ...project, images: projectImages[project.slug ?? ""] };
+}
 
 export const githubActivity = {
   title: "Actividad pública reciente",
@@ -14,7 +20,7 @@ export const githubActivity = {
 };
 
 export const featuredGitHubProjects: Project[] = [
-  {
+  withImages({
     id: "github-portafolio",
     title: "Portafolio personal",
     slug: "portafolio-personal",
@@ -32,8 +38,8 @@ export const featuredGitHubProjects: Project[] = [
     sortOrder: -100,
     createdAt: "2026-08-13T00:00:00.000Z",
     updatedAt: "2026-08-13T00:00:00.000Z",
-  },
-  {
+  }),
+  withImages({
     id: "github-taller-by",
     title: "taller.by",
     slug: "taller-by",
@@ -51,8 +57,8 @@ export const featuredGitHubProjects: Project[] = [
     sortOrder: -90,
     createdAt: "2026-08-15T00:00:00.000Z",
     updatedAt: "2026-08-15T00:00:00.000Z",
-  },
-  {
+  }),
+  withImages({
     id: "github-fitbox-elite",
     title: "FitBox Elite",
     slug: "fitbox-elite",
@@ -66,8 +72,8 @@ export const featuredGitHubProjects: Project[] = [
     sortOrder: -80,
     createdAt: "2026-08-15T00:00:00.000Z",
     updatedAt: "2026-08-15T00:00:00.000Z",
-  },
-  {
+  }),
+  withImages({
     id: "github-sgdi",
     title: "SGDI — Ventanilla Única de Radicación",
     slug: "sgdi",
@@ -81,5 +87,5 @@ export const featuredGitHubProjects: Project[] = [
     sortOrder: -70,
     createdAt: "2026-10-03T00:00:00.000Z",
     updatedAt: "2026-10-03T00:00:00.000Z",
-  },
+  }),
 ];
