@@ -24,6 +24,7 @@ Preview de proyectos con imágenes (idea del usuario) + scroll progress + timeli
 - T8 (S1-S5): tests RED→GREEN por regla (17 nuevos), suite 95 pass/4 skip, tsc 0, lint 0 errores, build OK, smoke SSR marcadores + assets webp 200. Pendiente: revisión visual del usuario antes de push.
 - T9 (S7): ProjectShowcase sticky desktop (panel con imagen activa fade-in por cambio de proyecto activo vía scroll-centro) + botón que abre el lightbox existente. Commit: `324c282`.
 - T10 (S6,S7): mobile inline: imagen de tapa por card con reveal on-scroll. Commit: `324c282`.
+- T10b (S1): capturas del propio portafolio via `scripts/capture-portfolio-shots.mjs` (puppeteer-core + Chrome del sistema, server producción en 3050) para "Portafolio personal" + webp. Commit: `f2e8833`.
 - T11 (S6): remover FloatingPreview + plumbing de pointer en ProjectCard/ProjectList y su test (descartado por S6). Commit: `324c282`.
 - T12 (S6,S7,S4): RED→GREEN (showcase activo por stub de rects, panel a mobile, reduced-motion), suite 100 pass/4 skip, tsc 0, lint 0, build OK, smoke SSR (panel + hooks presentes, hover flotante ausente). Pendiente: revisión visual del usuario antes de merge/push.
 
@@ -37,3 +38,5 @@ Preview de proyectos con imágenes (idea del usuario) + scroll progress + timeli
 - L6: User: "sinceramente no me gusto nada lo de la imagen que podemos hacer porpuesta mas animadas/interactivas que tenga animacion quando hacemos scroll - li idea de las imagen es que tenga una vista previa" → T3 (hover flotante) queda descartado; S6/S7/T9-T12 agregados.
 - L7: Usuario eligió "A — Showcase sticky" de 4 propuestas (A sticky showcase, B cards expanden con view-timeline, C cinta horizontal, D focus-scroll suave).
 - L8: Pruebas de integración ajustadas al showcase: lookups por hooks `data-project-id`/`data-project-card` (el chip del panel duplica títulos); panel previews `previewable[0]` = taller.by al no haber scroll en jsdom.
+- L9: Los 4 featured ahora tienen capturas; previewable[0] pasa a Portafolio personal (sortOrder -100); tests de panel default y dedupe actualizados (contar por data-project-id, no por texto).
+- L10: Aprobación del usuario: "bello me gusto mucho" (showcase sticky OK). Pidió: capturas del portafolio + optimizar .webp + montarlas, luego reporte y decidir deploy.
