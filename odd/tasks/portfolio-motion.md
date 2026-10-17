@@ -9,6 +9,8 @@ Preview de proyectos con imágenes (idea del usuario) + scroll progress + timeli
 - S3: Decisión (elección del usuario en options): "Combo completo: Preview + scroll progress + timeline draw-in + parallax hero (más grande, en slices)".
 - S4: Todo respeta `prefers-reduced-motion` (consistencia con el floor existente).
 - S5: Cards de proyectos sin imágenes quedan como hoy (graceful degradation).
+- S6: User: "sinceramente no me gusto nada lo de la imagen que podemos hacer porpuesta mas animadas/interactivas que tenga animacion cuando hacemos scroll - li idea de las imagen es que tenga una vista previa" — el hover flotante se descarta; las imágenes quedan como vista previa animada por scroll.
+- S7: Decisión (choice del usuario): "A — Showcase sticky": panel sticky con la imagen del proyecto activo que cambia animado mientras se scrollea la lista; mobile inline.
 
 ## Tasks
 
@@ -20,6 +22,10 @@ Preview de proyectos con imágenes (idea del usuario) + scroll progress + timeli
 - T6 (S3): timeline draw-in en Experiencia (línea accent scaleY por scroll + Reveal por item). Commit: `c4c9741`.
 - T7 (S3): parallax sutil en Hero (capas grid/fondo/texto, ≤10px, transform-only). Commit: `7fbe599`.
 - T8 (S1-S5): tests RED→GREEN por regla (17 nuevos), suite 95 pass/4 skip, tsc 0, lint 0 errores, build OK, smoke SSR marcadores + assets webp 200. Pendiente: revisión visual del usuario antes de push.
+- T9 (S7): ProjectShowcase sticky desktop (panel con imagen activa fade-in por cambio de proyecto activo vía scroll-centro) + botón que abre el lightbox existente. Commit: `324c282`.
+- T10 (S6,S7): mobile inline: imagen de tapa por card con reveal on-scroll. Commit: `324c282`.
+- T11 (S6): remover FloatingPreview + plumbing de pointer en ProjectCard/ProjectList y su test (descartado por S6). Commit: `324c282`.
+- T12 (S6,S7,S4): RED→GREEN (showcase activo por stub de rects, panel a mobile, reduced-motion), suite 100 pass/4 skip, tsc 0, lint 0, build OK, smoke SSR (panel + hooks presentes, hover flotante ausente). Pendiente: revisión visual del usuario antes de merge/push.
 
 ## Log
 
@@ -28,3 +34,6 @@ Preview de proyectos con imágenes (idea del usuario) + scroll progress + timeli
 - L3: User: "Deje las imagenes dentro de la carpeta /img recuerda que debemos optimizarla a .webp" (arranque autorizado; imágenes: FITBOX×6, SGDI×4, TALLER.BY×5, PNG).
 - L4: Decisión: portafolio-personal no tiene capturas → sin preview (S5); usuario puede sumarla después.
 - L5: Verificación end-to-end del branch feat/portfolio-motion: 6 commits work-unit (145a52b assets, 504007b data, f97b8f5 preview, 39aac97 progress, c4c9741 timeline, 7fbe599 parallax). RAW PNG de /img quedan sin trackear (los webp optimizados son los assets del repo).
+- L6: User: "sinceramente no me gusto nada lo de la imagen que podemos hacer porpuesta mas animadas/interactivas que tenga animacion quando hacemos scroll - li idea de las imagen es que tenga una vista previa" → T3 (hover flotante) queda descartado; S6/S7/T9-T12 agregados.
+- L7: Usuario eligió "A — Showcase sticky" de 4 propuestas (A sticky showcase, B cards expanden con view-timeline, C cinta horizontal, D focus-scroll suave).
+- L8: Pruebas de integración ajustadas al showcase: lookups por hooks `data-project-id`/`data-project-card` (el chip del panel duplica títulos); panel previews `previewable[0]` = taller.by al no haber scroll en jsdom.
