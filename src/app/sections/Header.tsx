@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { CommandPalette } from "@/components/CommandPalette";
+import { ScrollProgress } from "./ScrollProgress";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
 
@@ -178,6 +179,8 @@ export function Header() {
           </Container>
         </nav>
       ) : null}
+
+      <ScrollProgress />
 
       <CommandPalette
         open={paletteOpen}
