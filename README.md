@@ -18,7 +18,7 @@ Spanish UI copy; identifiers and code are English.
 ## What's on the site
 
 - **Hero** — profile photo, role thesis, and CTAs
-- **Projects** — featured work with maturity badges (En producción / En desarrollo)
+- **Projects** — featured work with maturity badges (En producción / En desarrollo), a sticky screenshot showcase that follows the reading position, and per-project preview lightboxes
 - **About** — real CV narrative
 - **Skills** — languages, frontend, backend, AI, data, tools
 - **Experience** — work history with dates and descriptions
@@ -27,6 +27,30 @@ Spanish UI copy; identifiers and code are English.
 
 Static sections render from typed constants (`src/data/`); projects and contact
 messages are stored in Firestore and accessed through Route Handlers.
+
+---
+
+## Motion & project previews
+
+Subtle, scroll-driven interactions (all respect `prefers-reduced-motion`; the
+SSR HTML is never hidden, so content is visible without JS):
+
+- **Reading progress** — 2px accent bar under the sticky header
+- **Showcase sticky panel** (desktop) — the active project's screenshot
+  installs in the panel as its card crosses the 35% viewport reading line;
+  holds while the list is visible, retracts only before the list is reached;
+  swaps animate with a short fade/rise
+- **Preview lightbox** — “Vista previa” (card) / “Ampliar vista previa”
+  (panel) opens a keyboard-accessible gallery: Esc/arrows navigation, focus
+  trap + focus return, body scroll lock; on mobile each card shows its cover
+  inline with a scroll reveal
+- **Timeline draw-in** — accent line grows with scroll in Experience, with
+  per-item reveals
+- **Hero parallax** — capped ≤10px, transform-only layers
+
+Project screenshots are optimized webp assets under
+`public/images/projects/<slug>/`; the typed manifest (`src/data/project-images.ts`)
+provides intrinsic dimensions (no layout shift).
 
 ---
 
@@ -67,6 +91,8 @@ automatically.
 | `npm test` | Vitest run (`--passWithNoTests`) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run verify` | `npm test && npm run lint && npm run build` |
+| `node scripts/capture-portfolio-shots.mjs` | Capture clean section screenshots of the site itself into `img/PORTAFOLIO/` (puppeteer-core with system Chrome against a production server — never the dev overlay) |
+| `node scripts/optimize-project-images.mjs` | Convert raw PNGs in `img/` to optimized webp (`max 1200px, q78`) under `public/images/projects/` and regenerate the typed manifest |
 
 ---
 
