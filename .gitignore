@@ -54,3 +54,6 @@ dev-server.log
 # Large source media (web assets live in public/images)
 /media/
 
+
+# Raw screenshot sources (webp assets in public/ are the tracked ones)
+/img/

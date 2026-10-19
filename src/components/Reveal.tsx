@@ -17,7 +17,9 @@ type RevealProps = {
  *
  * No-JS safety: the parent (server) HTML is never hidden — the hidden state
  * only exists while this client component's own render holds it, and flips to
- * visible when the block first intersects the viewport (~0.15 threshold).
+ * visible once at least 15% of the block enters the viewport (threshold
+ * 0.15; blocks taller than ~6.6× the viewport could never reach it — not a
+ * case at section/item scale).
  *
  * Layout shift safety: only `opacity`/`transform` animate; no geometry.
  *
