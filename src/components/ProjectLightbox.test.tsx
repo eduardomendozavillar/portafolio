@@ -46,9 +46,9 @@ beforeEach(() => {
 
 describe("ProjectLightbox", () => {
   it("renders the project dialog with cover image, counter and meta", () => {
-    const { container } = renderLightbox();
+    renderLightbox();
 
-    expect(container.querySelector('[role="dialog"]')).toBeTruthy();
+    expect(document.querySelector('body > div.fixed [role="dialog"]')).toBeTruthy();
     expect(screen.getByRole("dialog").getAttribute("aria-modal")).toBe("true");
     expect(screen.getByText("1 / 2")).toBeTruthy();
     expect((screen.getByRole("img").getAttribute("src") ?? "").includes("test-01")).toBe(true);
@@ -93,6 +93,18 @@ describe("ProjectLightbox", () => {
     expect(container).toBeDefined();
   });
 
+  it("mounts into document.body so fixed positioning is not trapped by transformed ancestors", () => {
+    // Regression (production report): rendered inside the section's Reveal
+    // wrapper (a transform ancestor), the fixed overlay/dialog resolved
+    // percentages against the section — the dialog landed mid-page, half
+    // below the fold. Portaling to <body> restores viewport anchoring.
+    const { baseElement } = renderLightbox();
+
+    const overlay = baseElement.querySelector("body > div.fixed") ?? document.querySelector("body > div.fixed");
+    expect(overlay).toBeTruthy();
+    expect(overlay?.parentElement).toBe(document.body);
+  });
+
   it("locks body scroll while open", () => {
     const previous = document.body.style.overflow;
     document.body.style.overflow = "";
@@ -109,12 +121,12 @@ describe("ProjectLightbox", () => {
     // than the screen — pagination controls were unreachable and the page
     // could not scroll. The dialog must cap its height and scroll its own
     // content; the image must shrink inside it.
-    const { container } = renderLightbox();
-    const dialog = container.querySelector('[role="dialog"]') as HTMLElement;
+    renderLightbox();
+    const dialog = document.querySelector('body > div.fixed [role="dialog"]') as HTMLElement;
 
     expect(dialog.className).toContain("max-h-[92vh]");
     expect(dialog.className).toContain("overflow-y-auto");
-    const image = container.querySelector("img") as HTMLImageElement;
+    const image = dialog.querySelector("img") as HTMLImageElement;
     expect(image.className).toContain("max-h-[50vh]");
   });
 });

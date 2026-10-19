@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Project } from "@/types/project";
 
 function prefersReducedMotion(): boolean {
@@ -116,7 +117,12 @@ export function ProjectLightbox({
         entered ? "scale-100 opacity-100" : "scale-[0.98] opacity-0"
       }`;
 
-  return (
+  // Portal to <body>: this component is rendered deep inside the projects
+  // section's Reveal wrapper — a transform ancestor, which (per CSS spec)
+  // becomes the containing block for fixed descendants. Without the portal,
+  // top-50%/translate centered the dialog against the SECTION, dropping half
+  // of it below the fold. Portaling restores true viewport anchoring.
+  return createPortal(
     <div
       className={overlayClasses}
       onClick={(event) => {
@@ -236,6 +242,7 @@ export function ProjectLightbox({
           </ul>
         ) : null}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
