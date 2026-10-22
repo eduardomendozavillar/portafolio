@@ -154,6 +154,20 @@ describe("CommandPalette", () => {
     expect(await screen.findByText("Copiado ✓")).toBeTruthy();
   });
 
+  it("lists the 'Descargar CV' action with the CV path", () => {
+    render(<Header />);
+
+    fireEvent.keyDown(document, { key: "k", ctrlKey: true });
+    const input = screen.getByLabelText(
+      "Buscar sección o proyecto",
+    ) as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: "cv" } });
+
+    const option = screen.getByRole("button", { name: /Descargar CV/ });
+    expect(option.textContent).toContain("CV_Eduardo_Mendoza_Ingeniero_IA.pdf");
+  });
+
   it("executes an action on click and keeps focus inside the dialog on Tab", () => {
     const scrollSpy = installScrollIntoViewMock();
     const target = addSectionTarget("contacto");

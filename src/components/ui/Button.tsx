@@ -12,6 +12,8 @@ type ButtonProps = {
   onClick?: () => void;
   disabled?: boolean;
   "aria-label"?: string;
+  /** Anchor-only extra attributes, e.g. download for file links. */
+  download?: string | boolean;
 };
 
 const baseClasses =

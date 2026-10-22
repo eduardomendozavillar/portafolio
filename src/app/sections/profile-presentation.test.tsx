@@ -169,4 +169,12 @@ describe("Hero", () => {
 
     expect(profile.tagline).toContain("inteligencia artificial");
   });
+
+  it("offers the CV as a same-document download next to the CTAs", () => {
+    render(<Hero />);
+
+    const cv = screen.getByRole("link", { name: "Descargar CV" });
+    expect(cv.getAttribute("href")).toBe("/CV_Eduardo_Mendoza_Ingeniero_IA.pdf");
+    expect(cv.getAttribute("download")).not.toBeNull();
+  });
 });

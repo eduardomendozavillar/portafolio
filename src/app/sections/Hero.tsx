@@ -129,6 +129,13 @@ export function Hero() {
                 <Button href="#contacto" variant="outline">
                   Contáctame
                 </Button>
+                <Button
+                  href="/CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
+                  variant="outline"
+                  download="CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
+                >
+                  Descargar CV
+                </Button>
                 <ul className="flex items-center gap-4 text-sm font-medium text-ink-muted sm:ml-2">
                   {socials.map((social) => (
                     <li key={social.platform}>

@@ -237,6 +237,22 @@ function PaletteDialog({
         });
       },
     },
+    {
+      id: "descargar-cv",
+      title: "Descargar CV",
+      keywords: ["cv", "currículum", "resume", "pdf", "hoja de vida"],
+      group: "Contacto" as const,
+      hint: "/CV_Eduardo_Mendoza_Ingeniero_IA.pdf",
+      run: () => {
+        // Same-origin download via a temporary anchor (trusted path constant).
+        const anchor = document.createElement("a");
+        anchor.href = "/CV_Eduardo_Mendoza_Ingeniero_IA.pdf";
+        anchor.download = "CV_Eduardo_Mendoza_Ingeniero_IA.pdf";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      },
+    },
     ...socials.map((social) => ({
       id: `abrir-${social.platform}`,
       title: `Abrir ${social.label}`,

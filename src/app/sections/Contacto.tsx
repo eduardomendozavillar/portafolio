@@ -30,6 +30,17 @@ export function Contacto() {
             .
           </p>
         ) : null}
+        <p className="mb-6 text-sm text-ink-muted">
+          Preferís el CV en un documento: {""}
+          <a
+            href="/CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
+            download="CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
+            className="font-medium text-ink underline decoration-line decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+          >
+            Descargar CV
+          </a>
+          .
+        </p>
         <ContactForm />
       </Container>
     </section>
