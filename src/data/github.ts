@@ -59,21 +59,6 @@ export const featuredGitHubProjects: Project[] = [
     updatedAt: "2026-08-15T00:00:00.000Z",
   }),
   withImages({
-    id: "github-fitbox-elite",
-    title: "FitBox Elite",
-    slug: "fitbox-elite",
-    summary:
-      "App de gestión de gimnasio: dashboard de socios, clases, membresías, WOD del día y comunidad, con autenticación y datos en Firestore.",
-    description:
-      "Proyecto en desarrollo con futuras mejoras. Panel de administración de gimnasio con registro de asistencia, planes de membresía, clases, entrenamiento del día (WOD) y vistas de comunidad, sobre React/Vite con Firebase.",
-    technologies: ["React", "Vite", "Firebase", "Firestore", "Tailwind"],
-    status: "development",
-    featured: true,
-    sortOrder: -80,
-    createdAt: "2026-08-15T00:00:00.000Z",
-    updatedAt: "2026-08-15T00:00:00.000Z",
-  }),
-  withImages({
     id: "github-sgdi",
     title: "SGDI — Ventanilla Única de Radicación",
     slug: "sgdi",
@@ -88,4 +73,19 @@ export const featuredGitHubProjects: Project[] = [
     createdAt: "2026-10-03T00:00:00.000Z",
     updatedAt: "2026-10-03T00:00:00.000Z",
   }),
+  {
+    id: "github-optimizador",
+    title: "Optimizador de Excel — Gestión de inventario de activos",
+    slug: "optimizador-excel",
+    summary:
+      "Aplicación web local para gestionar el inventario de activos institucional: importación desde hojas Excel oficiales, asistente de ronda anual área por área y exportación fiel a Excel verificada celda a celda.",
+    description:
+      "Import de hojas Excel oficiales con fidelidad tal-cual (valores por formato), asistente de ronda anual con precarga del año anterior, altas/bajas con validación, exportación Excel verificada celda a celda y reportes HTML solo-públicos; 77 activos gestionados por ronda, guard de cierre de edición 77/77, E2E 19/19 y review RDD nativa aprobada.",
+    technologies: ["Node.js", "Fastify", "better-sqlite3", "React", "Vite", "Tailwind CSS"],
+    status: "development",
+    featured: true,
+    sortOrder: -60,
+    createdAt: "2026-10-22T00:00:00.000Z",
+    updatedAt: "2026-10-22T00:00:00.000Z",
+  },
 ];

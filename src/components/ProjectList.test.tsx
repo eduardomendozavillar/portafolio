@@ -223,10 +223,13 @@ describe("ProjectList", () => {
       "Express",
       "PostgreSQL",
       "Gemini",
-      "Firestore",
       "Auth.js",
       "Prisma",
       "SQLite",
+      "Node.js",
+      "Fastify",
+      "better-sqlite3",
+      "Tailwind CSS",
     ];
     for (const tech of featuredTechs) {
       expect(screen.getByRole("button", { name: tech })).toBeTruthy();
