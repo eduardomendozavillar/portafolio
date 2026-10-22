@@ -100,6 +100,16 @@ export function Hero() {
               maxPx={-4}
               className="min-w-0 flex-1 text-center md:text-left"
             >
+              <p
+                data-availability="true"
+                className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-muted"
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-2 w-2 rounded-full bg-green-500 animate-pulse motion-reduce:animate-none"
+                />
+                Disponible para nuevas oportunidades
+              </p>
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
                 {profile.role}
               </p>

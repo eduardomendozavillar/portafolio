@@ -28,9 +28,39 @@ const NAV_LINKS = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  // Scrollspy (portfolio-recruiter): the nav link of the section sitting at
+  // the reading line (35% viewport) is highlighted — aria-current + accent.
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const menuId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const paletteTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const ids = NAV_LINKS.map((link) => link.href.slice(1));
+
+    function update() {
+      const trigger = (window.innerHeight || 1) * 0.35;
+      let best: string | null = null;
+      for (const id of ids) {
+        const section = document.getElementById(id);
+        if (!section) continue;
+        if (section.getBoundingClientRect().top > trigger) continue;
+        best = id;
+      }
+      // Document order = nav order, so the last section past the line wins.
+      // Deferred: react-hooks rule (no sync setState in effect bodies).
+      const defer = setTimeout(() => setActiveSection(best), 0);
+      void defer;
+    }
+
+    update();
+    document.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      document.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -66,16 +96,25 @@ export function Header() {
 
         <nav aria-label="Navegación principal" className="hidden md:block">
           <ul className="flex items-center gap-5 text-sm font-medium text-ink-muted lg:gap-6">
-            {NAV_LINKS.filter((link) => link.href !== "#contacto").map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="transition-colors hover:text-accent"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {NAV_LINKS.filter((link) => link.href !== "#contacto").map((link) => {
+              const id = link.href.slice(1);
+              const active = activeSection === id;
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    aria-current={active ? "true" : undefined}
+                    className={
+                      active
+                        ? "text-accent underline decoration-accent decoration-2 underline-offset-8"
+                        : "transition-colors hover:text-accent"
+                    }
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -109,7 +148,7 @@ export function Header() {
             ))}
           </ul>
           <Button href="#contacto" className="!px-4 !py-2 text-sm">
-            Contacto
+            Contratame
           </Button>
         </div>
         <button

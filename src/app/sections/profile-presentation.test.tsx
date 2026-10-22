@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Hero } from "./Hero";
@@ -58,6 +58,62 @@ function expectNewTabAnchor(anchor: HTMLAnchorElement) {
 }
 
 describe("Header", () => {
+  it("hires: desktop CTA labelled Contratame linking to #contacto", () => {
+    render(<Header />);
+
+    const hire = screen.getByRole("link", { name: "Contratame" });
+    expect(hire.getAttribute("href")).toBe("#contacto");
+  });
+
+  it("marks the section at the reading line as current while scrolling", async () => {
+    const { container } = render(<Header />);
+
+    // No scroll yet: no section is current.
+    expect(document.querySelector('[aria-current="true"]')).toBeNull();
+
+    // Isolated header test: install the section elements the scrollspy reads.
+    for (const id of ["inicio", "sobre-mi", "habilidades", "proyectos"]) {
+      const section = document.createElement("section");
+      section.id = id;
+      document.body.appendChild(section);
+    }
+
+    // Simulate scrolling into the second section (skills crossed the line).
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
+      function (this: Element) {
+        const tops: Record<string, number> = {
+          inicio: -400,
+          "sobre-mi": -100,
+          habilidades: 200,
+          proyectos: 1200,
+        };
+        const id = this.id;
+        return {
+          top: tops[id] ?? 9999,
+          height: 400,
+          bottom: (tops[id] ?? 9999) + 400,
+          width: 100,
+          left: 0,
+          right: 100,
+          x: 0,
+          y: tops[id] ?? 0,
+          toJSON: () => undefined,
+        } as unknown as DOMRect;
+      },
+    );
+    Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
+
+    fireEvent.scroll(document);
+
+    // The scrollspy defers its first setState (react-hooks rule); wait for it.
+    await waitFor(() => {
+      expect(document.querySelector('[aria-current="true"]')).toBeTruthy();
+    });
+    const current = document.querySelector('[aria-current="true"]') as HTMLElement;
+    expect(current.textContent).toContain("Habilidades");
+    expect(container).toBeTruthy();
+  });
+
   it("renders the real name as the brand linking to the hero anchor", () => {
     render(<Header />);
 
@@ -74,13 +130,13 @@ describe("Header", () => {
     }
   });
 
-  it("renders a desktop Contacto CTA to the contact section", () => {
+  it("renders a desktop CTA to the contact section", () => {
     render(<Header />);
 
-    const contactLinks = screen.getAllByRole("link", { name: "Contacto" });
-    expect(
-      contactLinks.some((link) => link.getAttribute("href") === "#contacto"),
-    ).toBe(true);
+    const hire = screen.getAllByRole("link", { name: "Contratame" });
+    expect(hire.some((link) => link.getAttribute("href") === "#contacto")).toBe(
+      true,
+    );
   });
 
   it("renders the exact social URLs in new-tab anchors", () => {
@@ -121,6 +177,15 @@ describe("Footer", () => {
 });
 
 describe("Hero", () => {
+  it("shows the availability badge with a pulse dot", () => {
+    render(<Hero />);
+
+    const badge = document.querySelector("[data-availability]") as HTMLElement;
+    expect(badge).toBeTruthy();
+    expect(badge.textContent).toContain("Disponible para nuevas oportunidades");
+    expect(badge.querySelector("span")?.className).toContain("animate-pulse");
+  });
+
   it("renders the role eyebrow, real name and call to actions", () => {
     render(<Hero />);
 
