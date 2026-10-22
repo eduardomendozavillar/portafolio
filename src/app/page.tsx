@@ -4,6 +4,7 @@ import { Educacion } from "./sections/Educacion";
 import { Experiencia } from "./sections/Experiencia";
 import { Habilidades } from "./sections/Habilidades";
 import { Hero } from "./sections/Hero";
+import { IntroSplash } from "./sections/IntroSplash";
 import { Proyectos } from "./sections/Proyectos";
 import { SobreMi } from "./sections/SobreMi";
 
@@ -15,6 +16,7 @@ import { SobreMi } from "./sections/SobreMi";
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
+      <IntroSplash />
       <Hero />
       <Reveal className="w-full">
         <Proyectos />

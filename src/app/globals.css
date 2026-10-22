@@ -150,6 +150,42 @@
 }
 
 /**
+ * Intro splash (portfolio-recruiter): the load moment. Content rises in,
+ * the progress bar sweeps; reduced motion hides the whole splash before
+ * first paint (a blocking, animated intro is exactly what that preference
+ * opts out of). The no-JS case is covered by the component's <noscript>.
+ */
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.intro-bar {
+  animation: intro-bar 1000ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-intro-splash] {
+    display: none !important;
+  }
+}
+
+/**
  * Quiet hover lift for project cards (WU-B): hairline border emphasis + 2px
  * rise, applied only on real hover-capable, fine pointers.
  */
