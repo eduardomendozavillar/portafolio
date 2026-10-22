@@ -5,15 +5,19 @@ export type EducationItem = {
   period: string;
 };
 
-/** Real CV entries (Spanish; most recent first). */
+/**
+ * Real CV v2 entries (2026-10-21, source of truth; most recent first).
+ * The especialización appears in the CV header as "(en curso)" — no year is
+ * invented. Secundaria is not declared in the CV and was removed.
+ */
 export const education: EducationItem[] = [
   {
     degree: "Especialización en Inteligencia Artificial",
     institution: "Corporación Unificada Nacional de Educación Superior — CUN",
-    period: "(En curso) 2027",
+    period: "En curso",
   },
   {
-    degree: "Ingeniería de Sistemas",
+    degree: "Profesional en Ingeniería de Sistemas",
     institution: "Corporación Unificada Nacional de Educación Superior — CUN",
     period: "2026",
   },
@@ -31,10 +35,5 @@ export const education: EducationItem[] = [
     degree: "Técnico en Desarrollo de Software",
     institution: "Servicio Nacional de Aprendizaje — SENA",
     period: "2019",
-  },
-  {
-    degree: "Educación secundaria",
-    institution: "I.E.D Líbano 2000",
-    period: "2018",
   },
 ];

@@ -6,27 +6,24 @@ export type ExperienceItem = {
   description: string;
 };
 
-/** Real CV entries (Spanish, truthful; most recent first). */
+/**
+ * Real CV v2 entries (2026-10-21, source of truth; most recent first).
+ * Only the two jobs the CV declares — the old "Mantenimiento de
+ * computadores 2019—2021" row does not exist in the CV and was removed.
+ */
 export const experience: ExperienceItem[] = [
   {
     role: "Apoyo administrativo",
-    company: "Hospital Universitario Julio Méndez Barreneche",
+    company: "E.S.E Hospital Universitario Julio Méndez Barreneche",
     period: "2022 — Actualidad",
     description:
-      "Soporte técnico y administrativo a los sistemas de información del hospital: gestión del archivo de gestión, elaboración de informes y acompañamiento a los procesos operativos del área.",
-  },
-  {
-    role: "Mantenimiento de computadores",
-    company: "Hospital Universitario Julio Méndez Barreneche",
-    period: "2019 — 2021",
-    description:
-      "Soporte técnico a usuarios, instalación de sistemas operativos Windows y Linux, diagnóstico de hardware y configuración de redes básicas.",
+      "Soporte técnico y mantenimiento de hardware y software, contribuyendo a la continuidad operativa y a la gestión de incidentes del hospital. Lideré proyectos de optimización de equipos, priorizando tareas y recursos para cumplir plazos con calidad. De forma personal, desarrollé durante ~6 meses el sistema de gestión documental SGDI (detalle en Proyectos).",
   },
   {
     role: "Encuestador y digitador de información",
-    company: "NATURAL SOAPS S.A.S",
+    company: "Natural Soaps S.A.S",
     period: "2019 — 2020",
     description:
-      "Presentaciones persuasivas y contenidos alineados con la marca, apoyando la comunicación comercial y el registro ordenado de información.",
+      "Colaboré con equipos multidisciplinarios en la definición y documentación de requisitos técnicos, alineados a estándares de calidad. Apoyé la gestión y actualización de sistemas de información, cuidando la precisión de datos, la documentación y el control de versiones.",
   },
 ];
