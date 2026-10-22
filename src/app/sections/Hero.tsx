@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useCallback } from "react";
 import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/Reveal";
 import { ParallaxLayer } from "./ParallaxLayer";
 import { Button } from "@/components/ui/Button";
 import { profile } from "@/data/profile";
@@ -80,7 +79,10 @@ export function Hero() {
       </ParallaxLayer>
 
       <Container className="relative py-16 md:py-24 lg:py-28">
-        <Reveal>
+          {/* No Reveal wrapper: the hero is the first viewport — the intro
+              splash IS its entrance (portfolio-recruiter). Revealing it via
+              IntersectionObserver painted nothing until hydration, pushing
+              LCP ~2.2s (elementRenderDelay). Hero paints with SSR instead. */}
           <div className="flex flex-col items-center gap-10 md:flex-row md:items-center md:gap-12 lg:gap-16">
             <div className="shrink-0">
               <div className="relative h-36 w-36 overflow-hidden rounded-full ring-2 ring-accent/30 sm:h-44 sm:w-44 md:h-52 md:w-52 lg:h-56 lg:w-56">
@@ -174,7 +176,6 @@ export function Hero() {
               </ul>
             </ParallaxLayer>
           </div>
-        </Reveal>
       </Container>
     </section>
   );

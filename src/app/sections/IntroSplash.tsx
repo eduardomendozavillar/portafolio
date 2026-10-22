@@ -130,6 +130,7 @@ export function IntroSplash() {
             width={224}
             height={224}
             priority
+            sizes="112px"
             className="h-full w-full object-cover"
           />
         </div>
