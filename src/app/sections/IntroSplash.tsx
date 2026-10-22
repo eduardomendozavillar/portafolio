@@ -149,7 +149,7 @@ export function IntroSplash() {
           className="mt-2 h-0.5 w-40 overflow-hidden rounded-full bg-line"
           role="presentation"
         >
-          <div className="intro-bar h-full w-full origin-left scale-x-0 bg-accent" />
+          <div className="intro-bar h-full w-full origin-left bg-accent" />
         </div>
       </div>
     </div>
