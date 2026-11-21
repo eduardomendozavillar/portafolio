@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "comments": [
+    {
+      "id": "m1x3inny",
+      "file": "06-marco-red.html",
+      "selector": "#stack",
+      "excerpt": "// STACK STACK TÉCNICO TS TypeScript Nx Next.js Re React No Node.js Fa Fastify Pg PostgreSQL SQL SQLite FB Firebase RAG RAG MCP MCP Dk Docker Vc Vercel Frontend Next.js React.js TypeScript Tailwind CSS Angular Backend Node.js Express Fastify FastAPI APIs REST IA / Datos LLMs locales y cloud RAG Agen",
+      "comment": "esta genial si lo complementamos con mas iconos",
+      "createdAt": "2026-11-21T03:37:41.643Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:39:17.080Z",
+      "resolvedAt": "2026-11-21T03:40:30.471Z",
+      "resolution": "Stack: 18 tiles con iconos monograma coloreados por marca; Proyectos: cards interactivas con preview zoom + flechas animadas + hover glow; Fondo: figuras wireframe de nodos (rojo/bone) flotando detrás del contenido."
+    },
+    {
+      "id": "kkyd88g6",
+      "file": "06-marco-red.html",
+      "selector": "#proyectos",
+      "excerpt": "// PROYECTOS PROYECTOS DESTACADOS EN PRODUCCIÓN SGDI — Ventanilla Única de Radicación Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA. detalle del caso → EN PRODUCCIÓN Portafolio personal Este sitio:",
+      "comment": "esto depornto mas intetactivo mas dinamico",
+      "createdAt": "2026-11-21T03:38:28.333Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:39:17.080Z",
+      "resolvedAt": "2026-11-21T03:40:30.471Z",
+      "resolution": "Stack: 18 tiles con iconos monograma coloreados por marca; Proyectos: cards interactivas con preview zoom + flechas animadas + hover glow; Fondo: figuras wireframe de nodos (rojo/bone) flotando detrás del contenido."
+    },
+    {
+      "id": "ejuoh7qf",
+      "file": "06-marco-red.html",
+      "selector": "body",
+      "excerpt": "EV. SOBRE MÍ EXPERIENCIA PROYECTOS EDUCACIÓN AHORA CERTIFICACIONES STACK CONTACTO ES DISPONIBLE · SANTA MARTA EDUARDO MENDOZA VILLAR FULL-STACK · IA APLICADA · RAG Ingeniero de sistemas enfocado en IA aplicada: LLMs, arquitecturas RAG y orquestación de agentes. Experiencia construyendo y desplegando",
+      "comment": "para el fondo creemos una figura x que sea geniar juvenil un que balla con lo que ya tenemos",
+      "createdAt": "2026-11-21T03:39:10.634Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:39:17.080Z",
+      "resolvedAt": "2026-11-21T03:40:30.471Z",
+      "resolution": "Stack: 18 tiles con iconos monograma coloreados por marca; Proyectos: cards interactivas con preview zoom + flechas animadas + hover glow; Fondo: figuras wireframe de nodos (rojo/bone) flotando detrás del contenido."
+    }
+  ]
+}

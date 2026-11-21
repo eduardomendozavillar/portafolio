@@ -24,6 +24,23 @@
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 30px; position: relative; z-index: 1; }
 
   /* Partículas de polvo flotante (CSS puro, decorativo). */
+  /* Figura de fondo: red de nodos juvenil (wireframe rojo) flotando lento. */
+  .figure { position: fixed; z-index: 0; pointer-events: none; opacity: 0.5; }
+  .figure.f1 { top: -60px; right: -80px; width: 420px; }
+  .figure.f2 { bottom: -80px; left: -70px; width: 360px; transform: rotate(24deg); }
+  .figure.f3 { top: 38%; left: -110px; width: 300px; transform: rotate(-18deg); opacity: 0.35; }
+  @media (prefers-reduced-motion: reduce) { .figure { animation: none; } }
+  @supports (animation: x) { @media (prefers-reduced-motion: no-preference) {
+    .figure.f1 { animation: floaty 18s ease-in-out infinite alternate; }
+    .figure.f2 { animation: floaty 24s ease-in-out infinite alternate-reverse; }
+    .figure.f3 { animation: floaty 30s ease-in-out infinite alternate; }
+    @keyframes floaty { to { transform: translateY(34px) rotate(3deg); } }
+    .figure.f2 { animation-name: floaty2; }
+    @keyframes floaty2 { from { transform: rotate(24deg); } to { transform: rotate(18deg) translateY(30px); } }
+    .figure.f3 { animation-name: floaty3; }
+    @keyframes floaty3 { from { transform: rotate(-18deg); } to { transform: rotate(-10deg) translateY(26px); } }
+  } }
+
   .dust, .dust::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
     background-image:
       radial-gradient(2px 2px at 12% 22%, rgba(237,230,224,0.5), transparent),
@@ -89,9 +106,20 @@
   h2 { font-family: var(--fd); font-size: clamp(46px, 7vw, 78px); text-transform: uppercase; line-height: 0.95; margin: 10px 0 34px; }
 
   .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
-  .tile { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); aspect-ratio: 1; display: grid; place-items: center; font-family: var(--fm); font-size: 12px; color: var(--bone-muted); text-align: center; padding: 8px; transition: border-color 160ms, transform 160ms; }
-  .tile:hover { border-color: var(--red-bright); transform: translateY(-3px); }
-  .tile b { font-size: 22px; display: block; margin-bottom: 4px; color: var(--bone); }
+  .tile { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); aspect-ratio: 1; display: grid; place-items: center; align-content: center; gap: 6px; font-family: var(--fm); font-size: 11.5px; color: var(--bone-muted); text-align: center; padding: 10px 6px; transition: border-color 160ms, transform 160ms, box-shadow 160ms; }
+  .tile:hover { border-color: var(--red-bright); transform: translateY(-4px); box-shadow: 0 8px 24px -10px rgba(179,43,30,0.5); }
+  .icon { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; font-weight: 900; font-size: 15px; color: #fff; letter-spacing: 0.02em; }
+  .icon svg { width: 22px; height: 22px; }
+  /* Monogramas con el color de cada marca (iconos sin assets externos). */
+  .i-ts { background: #3178C6; } .i-nx { background: #000; outline: 1px solid var(--line); }
+  .i-re { background: #087EA4; } .i-no { background: #539E43; }
+  .i-fa { background: #0B7B5B; } .i-fi { background: #21759B; }
+  .i-pg { background: #336791; } .i-sq { background: #003B57; }
+  .i-fb { background: #FFA000; color: #1a1512; } .i-ra { background: var(--red); }
+  .i-mc { background: #6D4AFF; } .i-dk { background: #1D63ED; }
+  .i-vc { background: #000; outline: 1px solid var(--line); } .i-gm { background: #8E44AD; }
+  .i-aj { background: #DD0031; } .i-tw { background: #06B6D4; color: #0b0b0f; }
+  .i-ex { background: #475569; } .i-vt { background: #729B1B; }
 
   .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
   .ccard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 16px; }
@@ -100,11 +128,18 @@
   .ccard .tag { border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; color: var(--bone-muted); }
 
   .pcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .pcard { border: 1px solid var(--line); border-left: 4px solid var(--red); border-radius: 12px; background: var(--bg-2); padding: 20px; }
+  .pcard { position: relative; overflow: hidden; border: 1px solid var(--line); border-left: 4px solid var(--red); border-radius: 12px; background: var(--bg-2); padding: 20px; transition: transform 200ms, border-color 200ms, box-shadow 200ms; }
+  .pcard:hover { transform: translateY(-4px); border-color: var(--red-bright); box-shadow: 0 14px 40px -18px rgba(179,43,30,0.55); }
+  .pcard .shot { position: relative; margin: -20px -20px 14px; aspect-ratio: 16/6.5; background: linear-gradient(135deg, #221f1c, #191613 60%, rgba(179,43,30,0.25)); display: grid; place-items: center; overflow: hidden; }
+  .pcard .shot::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 6px, rgba(0,0,0,0.25) 6px 7px); opacity: 0.4; }
+  .pcard .shot span { font-family: var(--fd); font-size: 26px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(237,230,224,0.85); transition: transform 260ms; }
+  .pcard:hover .shot span { transform: scale(1.08); }
   .pcard .meta { font-family: var(--fm); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-bright); }
   .pcard h3 { font-size: 17px; font-weight: 800; margin: 8px 0 6px; }
   .pcard p { font-size: 13.5px; color: var(--bone-muted); }
-  .pcard .link { display: inline-block; margin-top: 10px; font-family: var(--fm); font-size: 12px; color: var(--red-bright); }
+  .pcard .link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--fm); font-size: 12px; color: var(--red-bright); }
+  .pcard .link i { font-style: normal; display: inline-block; transition: transform 180ms; }
+  .pcard:hover .link i { transform: translateX(5px); }
 
   .marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 10px 0; margin-top: 40px; }
   .marquee .track { display: flex; gap: 40px; width: max-content; font-family: var(--fd); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--bone-muted); animation: scrollm 30s linear infinite; }
@@ -125,6 +160,17 @@
 </style>
 </head>
 <body>
+<svg class="figure f1" viewBox="0 0 300 220" fill="none" stroke="rgba(179,43,30,0.55)" stroke-width="1.4" aria-hidden="true">
+  <path d="M20 180 L110 40 L200 150 L280 30 L200 150 L110 40 L20 180 L280 30" stroke-linejoin="round"/>
+  <circle cx="110" cy="40" r="4" fill="#ED6A5B"/><circle cx="280" cy="30" r="3.5" fill="#EDE6E0"/><circle cx="20" cy="180" r="3" fill="#B32B1E"/><circle cx="200" cy="150" r="4" fill="#ED6A5B"/>
+</svg>
+<svg class="figure f2" viewBox="0 0 260 200" fill="none" stroke="rgba(237,230,224,0.22)" stroke-width="1.3" aria-hidden="true">
+  <path d="M130 10 L250 90 L170 190 L20 150 Z"/><path d="M130 10 L170 190 M250 90 L20 150"/>
+  <circle cx="130" cy="10" r="3" fill="#EDE6E0"/><circle cx="170" cy="190" r="3" fill="#ED6A5B"/>
+</svg>
+<svg class="figure f3" viewBox="0 0 240 180" fill="none" stroke="rgba(179,43,30,0.4)" stroke-width="1.3" aria-hidden="true">
+  <path d="M10 90 L90 10 L230 60 L160 170 Z"/><circle cx="90" cy="10" r="3" fill="#ED6A5B"/><circle cx="230" cy="60" r="3" fill="#EDE6E0"/><circle cx="160" cy="170" r="3" fill="#B32B1E"/>
+</svg>
 <div class="dust" aria-hidden="true"></div>
 
 <header>
@@ -168,10 +214,10 @@
   <p class="eyebrow">// proyectos</p>
   <h2>Proyectos destacados</h2>
   <div class="pcards">
-    <article class="pcard"><p class="meta">En producción</p><h3>SGDI — Ventanilla Única de Radicación</h3><p>Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA.</p><span class="link">detalle del caso →</span></article>
-    <article class="pcard"><p class="meta">En producción</p><h3>Portafolio personal</h3><p>Este sitio: Next.js 16, 122 pruebas automatizadas, Lighthouse 90+ y despliegue continuo en Vercel.</p><span class="link">verificar →</span></article>
-    <article class="pcard"><p class="meta">En desarrollo</p><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><span class="link">verificar →</span></article>
-    <article class="pcard"><p class="meta">En desarrollo</p><h3>Optimizador de Excel</h3><p>Inventario institucional: importación desde hojas Excel oficiales, ronda anual y exportación fiel verificada celda a celda.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><div class="shot"><span>SGDI</span></div><p class="meta">En producción</p><h3>SGDI — Ventanilla Única de Radicación</h3><p>Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA.</p><a class="link" href="#">detalle del caso <i>→</i></a></article>
+    <article class="pcard"><div class="shot"><span>Portafolio</span></div><p class="meta">En producción</p><h3>Portafolio personal</h3><p>Este sitio: Next.js 16, 122 pruebas automatizadas, Lighthouse 90+ y despliegue continuo en Vercel.</p><a class="link" href="#">ver en vivo <i>→</i></a></article>
+    <article class="pcard"><div class="shot"><span>Taller.by</span></div><p class="meta">En desarrollo</p><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><a class="link" href="#">verificar <i>→</i></a></article>
+    <article class="pcard"><div class="shot"><span>Optimizador</span></div><p class="meta">En desarrollo</p><h3>Optimizador de Excel</h3><p>Inventario institucional: importación desde hojas Excel oficiales, ronda anual y exportación fiel verificada celda a celda.</p><a class="link" href="#">verificar <i>→</i></a></article>
   </div>
 </section>
 
@@ -200,18 +246,24 @@
   <p class="eyebrow">// stack</p>
   <h2>Stack técnico</h2>
   <div class="tiles">
-    <div class="tile"><b>TS</b>TypeScript</div>
-    <div class="tile"><b>Nx</b>Next.js</div>
-    <div class="tile"><b>Re</b>React</div>
-    <div class="tile"><b>No</b>Node.js</div>
-    <div class="tile"><b>Fa</b>Fastify</div>
-    <div class="tile"><b>Pg</b>PostgreSQL</div>
-    <div class="tile"><b>SQL</b>SQLite</div>
-    <div class="tile"><b>FB</b>Firebase</div>
-    <div class="tile"><b>RAG</b>RAG</div>
-    <div class="tile"><b>MCP</b>MCP</div>
-    <div class="tile"><b>Dk</b>Docker</div>
-    <div class="tile"><b>Vc</b>Vercel</div>
+    <div class="tile"><span class="icon i-ts">TS</span>TypeScript</div>
+    <div class="tile"><span class="icon i-nx">N</span>Next.js</div>
+    <div class="tile"><span class="icon i-re">Re</span>React</div>
+    <div class="tile"><span class="icon i-no">No</span>Node.js</div>
+    <div class="tile"><span class="icon i-fi">Fi</span>Fastify</div>
+    <div class="tile"><span class="icon i-ex">Ex</span>Express</div>
+    <div class="tile"><span class="icon i-fa">FA</span>FastAPI</div>
+    <div class="tile"><span class="icon i-pg">Pg</span>PostgreSQL</div>
+    <div class="tile"><span class="icon i-sq">Sq</span>SQLite</div>
+    <div class="tile"><span class="icon i-fb">Fb</span>Firebase</div>
+    <div class="tile"><span class="icon i-gm">Gm</span>Gemini</div>
+    <div class="tile"><span class="icon i-ra">RAG</span>RAG</div>
+    <div class="tile"><span class="icon i-mc">MC</span>MCP</div>
+    <div class="tile"><span class="icon i-dk">Dk</span>Docker</div>
+    <div class="tile"><span class="icon i-vc">Vc</span>Vercel</div>
+    <div class="tile"><span class="icon i-aj">An</span>Angular</div>
+    <div class="tile"><span class="icon i-tw">Tw</span>Tailwind</div>
+    <div class="tile"><span class="icon i-vt">Vt</span>Vitest</div>
   </div>
   <div class="cards">
     <div class="ccard"><h3>Frontend</h3><div class="tags"><span class="tag">Next.js</span><span class="tag">React.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind CSS</span><span class="tag">Angular</span></div></div>
