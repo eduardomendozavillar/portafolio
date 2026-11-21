@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "chosen": "02-neon-dashboard.html",
+  "handoffs": {
+    "01-home.html": {
+      "status": "in_progress",
+      "queued": false,
+      "sentAt": "2026-11-21T01:38:16.448Z",
+      "startedAt": "2026-11-21T01:38:27.111Z",
+      "implementedAt": null,
+      "feature": "odd/tasks/portfolio-rebrand.md",
+      "note": "Implementando el rebrand en el stack real (slice 1: tokens charcoal/bone/red + Anton/Manrope + hero accent rojo)"
+    },
+    "02-neon-dashboard.html": {
+      "status": "implemented",
+      "queued": false,
+      "sentAt": "2026-11-21T02:02:31.859Z",
+      "startedAt": "2026-11-21T02:02:31.859Z",
+      "implementedAt": "2026-11-21T02:19:47.420Z",
+      "note": "Rebrand 02 Neon Dashboard implementado en el stack real: tokens violeta/cyan, Anton+Manrope, eyebrows //, glass cards, certificaciones y heatmap con datos reales. Preview corriendo en :3050",
+      "previewUrl": "http://localhost:3050/"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "title": "Rebrand home — Eduardo Mendoza Villar",
+  "brief": "Rebrand completo del portafolio (decisión aprobada por el usuario): paleta charcoal #1C1C1C / bone #EDE6E0 / barber red #B32B1E, tipografía Anton (display) + Manrope (body), eyebrows estilo dev (// proyectos), hero adaptado al nuevo accent manteniendo composición, nueva sección // certificaciones (4 destacadas del CV + ver todas), card heatmap de actividad GitHub con violeta neon (estilo Andrea). El hero actual le gusta: solo cambia el accent. Información intacta (CV v2 verbatim). Referencias: portafoliomarcolagunes.netlify.app, dashboard de Andrea López, paleta del sitio barber.",
+  "feature": "odd/tasks/portfolio-rebrand.md",
+  "artboards": [
+    {
+      "file": "01-home.html",
+      "title": "01 · Charcoal/Bone/Red sobrio",
+      "tradeoff": "Identidad única con un solo accent (rojo) y cards discretas; desaprobada por el usuario — se ve plano y low-contrast",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "02-neon-dashboard.html",
+      "title": "02 · Neon Dashboard (Andrea)",
+      "tradeoff": "Casi negro con violeta/cyan neon y glass cards, heatmap protagonista; pierde el rojo barber como identidad (queda solo en CTAs)",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "03-bone-poster.html",
+      "title": "03 · Bone Poster (barber alto contraste)",
+      "tradeoff": "Anton gigante tipo poster, bloques alternados bone/charcoal, rojo heavy y stripe barber; máximo punch tipográfico pero más ruidoso",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "05-barber-strict.html",
+      "title": "05 · Barber Strict (solo 3 colores)",
+      "tradeoff": "Estrictamente Charcoal #1C1C1C + Bone #EDE6E0 + Barber Red #B32B1E — sin violeta/cyan; heatmap y marquee en rojo; la identidad más fiel a la paleta elegida",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "04-neon-poster.html",
+      "title": "04 · Neon Poster (mezcla 02+03)",
+      "tradeoff": "El punch tipográfico del poster (Anton gigante, outline strokes, marquee) con el neón violeta/cyan y el heatmap del dashboard; la más equilibrada de las cuatro",
+      "width": 1440,
+      "height": 900
+    }
+  ]
+}
