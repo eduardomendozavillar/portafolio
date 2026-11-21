@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { CommandPalette } from "@/components/CommandPalette";
 import { ScrollProgress } from "./ScrollProgress";
-import { profile } from "@/data/profile";
+
 import { socials } from "@/data/socials";
 
 /** Anchor links shared by the desktop nav and the mobile menu. */
@@ -90,7 +90,7 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between gap-4 md:gap-6">
         <a
           href="#inicio"
-          aria-label={profile.name}
+          aria-label="EV. — volver al inicio"
           className="shrink-0 rounded-lg border border-line bg-paper-raised px-3 py-1.5 font-display text-[15px] uppercase tracking-[0.08em] text-ink"
         >
           EV<span className="text-accent">.</span>
