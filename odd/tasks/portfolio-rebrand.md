@@ -14,7 +14,12 @@ Rebrand completo de la interfaz (decisión del usuario tras análisis de referen
 - S8: Nada de PII público (sin teléfono); ubicación ciudad OK.
 - S9: Tests y Lighthouse ≥90 en cada slice; revisión visual del usuario antes de push.
 
-## Decisions (ask_user)
+## Decisions (ask_user) — rebrand 06 implementación
+
+- D4: Dirección final elegida en canvas: **06 · Marco Style · Red Edition** (comentarios del usuario aplicados sobre el artboard: iconos SVG de marca, spotlight en certificaciones, figuras wireframe de fondo, dial giratorio horario/antihorario, tiles X-Y, MCP dedupe, punto rojo en chip, SDD fuera → stack IA ODD·RDD·MCP·Skills, preview sin nombres duplicados).
+- D5: Implementación M1-M5 (commits 3d2fd13→e12eca2): tokens cálidos #161310/#1C1915, BackgroundFigures + partículas, Reveal bidireccional, header/footer mono con logo EV, hero split con dial (foto real, anillo giratorio, arco, glow) + terminal whoami, Habilidades con 18 tiles BrandIcon SVG + marquee animado + FX (tilt/spotlight por delegación, reduced-motion), pcards con mini-navegador y captura real, sección Ahora, orden de página y nav tipo Marco.
+- D6: Gates rebrand 06: suite 122/4, tsc 0, build OK; a11y **100** (aria-label del logo corregido); Lighthouse móvil local con varianza ±20 por carga de máquina (60-95 mismas condiciones) — el gate definitivo se mide en producción tras el push (referencia estable actual: perf 94, LCP 2.3s).
+- D7: Comentario de canvas p8upcn1x (imagen Gemini para el perfil) queda ABIERTO: el archivo `Gemini_Generated_Image_x1l4csx1l4csx1l4.jpg` no llegó ni existe en disco; el artboard y el sitio usan la foto real del perfil con tratamiento poster — el swap a la imagen de Gemini es un cambio de un solo token cuando el usuario la provea.
 
 - D1: Hero "con nuevo accent" (no intacto-cyan).
 - D2: Tipografía "Anton + Manrope".
