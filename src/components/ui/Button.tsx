@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type Variant = "primary" | "outline";
+type Variant = "primary" | "outline" | "bone";
 
 type ButtonProps = {
   children: ReactNode;
@@ -21,11 +21,13 @@ const baseClasses =
   "text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60";
 
 const variantClasses: Record<Variant, string> = {
-  /* CTA de contratación: rojo barber con glow (rebrand 02). */
+  /* CTA de contratación: barber red con esquinas cortadas (rebrand 05). */
   primary:
-    "bg-cta text-cta-contrast shadow-[0_0_22px_-4px_rgba(179,43,30,0.5)] hover:bg-cta/90",
+    "bg-cta text-cta-contrast [clip-path:polygon(9px_0,100%_0,100%_calc(100%-9px),calc(100%-9px)_100%,0_100%,0_9px)] hover:bg-cta/90",
+  bone:
+    "bg-ink text-paper hover:bg-ink/90",
   outline:
-    "border border-line bg-paper-raised/40 text-ink hover:border-accent hover:text-accent",
+    "border-2 border-line text-ink hover:border-accent hover:text-accent",
 };
 
 /** Button/link primitive in the Circuit Night style. */

@@ -85,7 +85,7 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b-[3px] border-accent bg-paper/80 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between gap-4 md:gap-6">
         <a
           href="#inicio"
@@ -96,7 +96,7 @@ export function Header() {
         </a>
 
         <nav aria-label="Navegación principal" className="hidden md:block">
-          <ul className="flex items-center gap-5 text-sm font-medium text-ink-muted lg:gap-6">
+          <ul className="flex items-center gap-5 text-[13px] font-bold uppercase tracking-[0.05em] text-ink-muted lg:gap-6">
             {NAV_LINKS.filter((link) => link.href !== "#contacto").map((link) => {
               const id = link.href.slice(1);
               const active = activeSection === id;

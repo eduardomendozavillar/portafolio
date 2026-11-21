@@ -105,7 +105,7 @@ export function Hero() {
               <p
                 data-availability="true"
                 data-status-chip="true"
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-paper-raised/60 px-3 py-1 text-xs font-medium text-ink-muted"
+                className="inline-flex items-center gap-2 border-2 border-accent px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-ink"
               >
                 <span
                   aria-hidden="true"
@@ -151,7 +151,7 @@ export function Hero() {
                 </Button>
                 <Button
                   href="/CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
-                  variant="outline"
+                  variant="bone"
                   download="CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
                 >
                   Descargar CV

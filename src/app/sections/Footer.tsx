@@ -5,7 +5,7 @@ import { socials } from "@/data/socials";
 /** Footer: social profile links (open in a new tab) + copyright. */
 export function Footer() {
   return (
-    <footer className="border-t border-line">
+    <footer className="border-t-[3px] border-accent">
       <Container className="flex flex-col items-start justify-between gap-6 py-10 md:flex-row md:items-center">
         <p className="text-sm text-ink-muted">
           © {new Date().getFullYear()} {profile.name}. Todos los derechos

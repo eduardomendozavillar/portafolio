@@ -28,10 +28,7 @@ export function ActivityHeatmap() {
 
   return (
     <div
-      className="rounded-2xl border border-accent/30 bg-paper-raised/50 p-5 backdrop-blur-sm md:p-6"
-      style={{
-        boxShadow: "0 0 40px -18px var(--color-accent)",
-      }}
+      className="rounded-sm border border-line border-l-4 border-l-accent bg-paper-raised p-5 md:p-6"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <p className="text-sm text-ink-muted">

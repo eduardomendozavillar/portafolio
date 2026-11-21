@@ -46,6 +46,30 @@ export function Proyectos() {
           </a>
         </aside>
         <ProjectList />
+        <div
+          aria-hidden="true"
+          className="mt-8 overflow-hidden border-y-[3px] border-accent bg-paper-raised py-2.5"
+        >
+          <p className="whitespace-nowrap font-display text-lg uppercase tracking-[0.12em] text-ink-muted">
+            {[
+              "Next.js",
+              "TypeScript",
+              "RAG",
+              "LLMs",
+              "Agentes",
+              "SQL",
+              "FastAPI",
+              "Docker",
+              "Vercel",
+            ]
+              .map((tech, index) => (
+                <span key={tech}>
+                  {index > 0 ? <span className="text-accent"> · </span> : null}
+                  {tech}
+                </span>
+              ))}
+          </p>
+        </div>
       </Container>
     </section>
   );
