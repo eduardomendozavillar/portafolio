@@ -90,7 +90,7 @@ export function Habilidades() {
             <div
               key={group.category}
               data-fx-spotlight
-              className="relative overflow-hidden rounded-xl border border-line bg-paper-raised/50 px-5 py-4"
+              data-fx-reveal className="relative overflow-hidden rounded-xl border border-line bg-paper-raised/50 px-5 py-4"
             >
               <dt className="text-sm font-bold text-ink">{group.category}</dt>
               <dd className="mt-3">

@@ -15,7 +15,7 @@ export function Ahora() {
           description="En qué estoy y dónde me encontrás."
         />
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-xl border border-line border-l-4 border-l-accent bg-paper-raised px-5 py-5">
+          <div data-fx-reveal className="rounded-xl border border-line border-l-4 border-l-accent bg-paper-raised px-5 py-5">
             <h3 className="text-sm font-bold uppercase tracking-[0.08em] text-accent">
               Qué estoy construyendo
             </h3>
@@ -25,7 +25,7 @@ export function Ahora() {
               Excel en su ronda anual.
             </p>
           </div>
-          <div className="rounded-xl border border-line border-l-4 border-l-accent bg-paper-raised px-5 py-5">
+          <div data-fx-reveal className="rounded-xl border border-line border-l-4 border-l-accent bg-paper-raised px-5 py-5">
             <h3 className="text-sm font-bold uppercase tracking-[0.08em] text-accent">
               Dónde estoy
             </h3>
