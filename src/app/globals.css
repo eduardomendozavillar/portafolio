@@ -9,10 +9,10 @@
 
 :root {
   /* Surfaces & text */
-  --background: #1c1c1c; /* paper / base (charcoal) */
+  --background: #161310; /* paper / base (charcoal cálido, dirección 06) */
   --foreground: #ede6e0; /* ink (bone white) */
-  --color-paper: #1c1c1c;
-  --color-paper-raised: #242424;
+  --color-paper: #161310;
+  --color-paper-raised: #1c1915;
   --color-ink: #ede6e0;
   --color-ink-muted: rgba(237, 230, 224, 0.72);
   --color-line: rgba(237, 230, 224, 0.15);
@@ -181,6 +181,44 @@
 .level-3 {
   background: var(--color-accent);
   box-shadow: 0 0 8px rgba(179, 43, 30, 0.6);
+}
+
+/**
+ * Ambient background (rebrand 06): floating dust + wireframe node figures
+ * drifting slowly. Decorative only; fully static under reduced motion.
+ */
+.bg-dust, .bg-dust::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(2px 2px at 12% 22%, rgba(237,230,224,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 78% 12%, rgba(237,230,224,0.4), transparent),
+    radial-gradient(2.5px 2.5px at 44% 68%, rgba(237,230,224,0.28), transparent),
+    radial-gradient(1.5px 1.5px at 88% 52%, rgba(179,43,30,0.5), transparent),
+    radial-gradient(2px 2px at 22% 82%, rgba(237,230,224,0.3), transparent),
+    radial-gradient(1.5px 1.5px at 60% 38%, rgba(179,43,30,0.35), transparent),
+    radial-gradient(2px 2px at 33% 48%, rgba(237,230,224,0.22), transparent),
+    radial-gradient(1.5px 1.5px at 70% 78%, rgba(237,230,224,0.3), transparent);
+}
+.bg-dust::after { transform: translate3d(14px, -10px, 0) scale(1.06); opacity: 0.7; }
+.bg-figure { position: fixed; z-index: 0; pointer-events: none; opacity: 0.5; }
+.bg-figure-1 { top: -60px; right: -80px; width: 420px; }
+.bg-figure-2 { bottom: -80px; left: -70px; width: 360px; transform: rotate(24deg); }
+.bg-figure-3 { top: 38%; left: -110px; width: 300px; transform: rotate(-18deg); opacity: 0.35; }
+@media (prefers-reduced-motion: reduce) {
+  .bg-dust, .bg-dust::after { display: none; }
+  .bg-figure { animation: none; }
+}
+@supports (animation: x) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bg-dust { animation: bg-drift 26s ease-in-out infinite alternate; }
+    .bg-dust::after { animation: bg-drift 34s ease-in-out infinite alternate-reverse; }
+    .bg-figure-1 { animation: bg-float 18s ease-in-out infinite alternate; }
+    .bg-figure-2 { animation: bg-float-2 24s ease-in-out infinite alternate-reverse; }
+    .bg-figure-3 { animation: bg-float-3 30s ease-in-out infinite alternate; }
+    @keyframes bg-drift { to { transform: translate3d(-18px, 14px, 0); } }
+    @keyframes bg-float { to { transform: translateY(34px) rotate(3deg); } }
+    @keyframes bg-float-2 { from { transform: rotate(24deg); } to { transform: rotate(18deg) translateY(30px); } }
+    @keyframes bg-float-3 { from { transform: rotate(-18deg); } to { transform: rotate(-10deg) translateY(26px); } }
+  }
 }
 
 /**

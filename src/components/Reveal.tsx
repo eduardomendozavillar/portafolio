@@ -43,12 +43,11 @@ export function Reveal({ children, className = "" }: RevealProps) {
       return;
     }
 
+    // Rebrand 06: bidirectional — the block animates in when it enters the
+    // viewport AND re-animates when scrolling back out (user request).
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setRevealed(true);
-          observer.disconnect();
-        }
+        setRevealed(entries.some((entry) => entry.isIntersecting));
       },
       { threshold: 0.15 },
     );
