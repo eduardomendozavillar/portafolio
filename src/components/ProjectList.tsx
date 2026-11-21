@@ -194,7 +194,7 @@ function ProjectItems({ projects }: { projects: Project[] }) {
           projects={projects}
           onOpenPreview={openFromShowcase}
         />
-        <ol>
+        <ol className="space-y-4">
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}

@@ -158,8 +158,8 @@ export function CommandPalette({
         entered ? "opacity-100" : "opacity-0"
       }`;
   const dialogClasses = reducedMotion
-    ? "fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-md border border-line bg-paper-raised shadow-2xl"
-    : `fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-md border border-line bg-paper-raised shadow-2xl transition-[opacity,transform] duration-200 ${
+    ? "fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-line bg-paper-raised/90 shadow-2xl backdrop-blur-xl"
+    : `fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-line bg-paper-raised/90 shadow-2xl backdrop-blur-xl transition-[opacity,transform] duration-200 ${
         entered ? "scale-100 opacity-100" : "scale-[0.98] opacity-0"
       }`;
 

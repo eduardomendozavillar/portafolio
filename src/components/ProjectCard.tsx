@@ -38,7 +38,7 @@ export function ProjectCard({
          nearest the viewport center through these document-wide attributes. */
       data-project-card={index - 1}
       data-project-id={project.id}
-      className={`project-card border-t border-line py-5 first:border-t-0 md:py-6 ${
+      className={`project-card px-5 py-5 md:py-6 ${
         attenuated ? "opacity-50 saturate-50" : ""
       }`}
     >

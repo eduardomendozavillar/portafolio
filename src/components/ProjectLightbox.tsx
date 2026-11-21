@@ -112,8 +112,8 @@ export function ProjectLightbox({
   // max-h + overflow-y: short viewports must be able to reach every control
   // (the dialog scrolls its own content; the body scroll stays locked).
   const dialogClasses = reducedMotion
-    ? "fixed left-1/2 top-1/2 z-[61] max-h-[92vh] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-md border border-line bg-paper-raised p-5 shadow-2xl md:p-6"
-    : `fixed left-1/2 top-1/2 z-[61] max-h-[92vh] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-md border border-line bg-paper-raised p-5 shadow-2xl transition-[opacity,transform] duration-200 md:p-6 ${
+    ? "fixed left-1/2 top-1/2 z-[61] max-h-[92vh] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-line bg-paper-raised/90 p-5 shadow-2xl backdrop-blur-xl md:p-6"
+    : `fixed left-1/2 top-1/2 z-[61] max-h-[92vh] w-[min(94vw,56rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-line bg-paper-raised/90 p-5 shadow-2xl backdrop-blur-xl transition-[opacity,transform] duration-200 md:p-6 ${
         entered ? "scale-100 opacity-100" : "scale-[0.98] opacity-0"
       }`;
 

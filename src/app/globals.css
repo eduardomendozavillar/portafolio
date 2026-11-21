@@ -198,23 +198,33 @@
 }
 
 /**
- * Quiet hover lift for project cards (WU-B): hairline border emphasis + 2px
- * rise, applied only on real hover-capable, fine pointers.
+ * Project cards (rebrand 02): glass blocks — translucent raised surface with
+ * blur, violet border emphasis on hover + 2px rise, only on hover-capable
+ * fine pointers.
  */
+.project-card {
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-paper-raised) 45%, transparent);
+  backdrop-filter: blur(8px);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .project-card {
     transition:
       transform 180ms ease-out,
-      border-color 180ms ease-out;
+      border-color 180ms ease-out,
+      box-shadow 180ms ease-out;
   }
 
   .project-card:hover {
     transform: translateY(-2px);
     border-color: color-mix(
       in oklab,
-      var(--color-line) 60%,
-      var(--color-ink-muted) 40%
+      var(--color-line) 35%,
+      var(--color-accent) 65%
     );
+    box-shadow: 0 0 28px -10px var(--color-accent);
   }
 
   /* Magnetic offset for the hero primary CTA (WU-B), driven by a tiny
