@@ -25,9 +25,9 @@
       "queued": false,
       "sentAt": "2026-11-21T04:17:42.365Z",
       "startedAt": null,
-      "implementedAt": "2026-11-21T04:40:19.102Z",
+      "implementedAt": "2026-11-21T04:49:44.739Z",
       "feature": "odd/tasks/portfolio-rebrand.md",
-      "note": "Implementación de la 06 COMPLETA en el stack real (29 commits en feat/portfolio-rebrand): partículas, dial con foto real girando, terminal, tiles de marca, pcards, certificaciones, heatmap, sección Ahora, orden Marco. Preview: http://localhost:3050",
+      "note": "Imagen Gemini del usuario integrada (crop del retrato → profile-dial.webp) en el dial del hero. Implementación completa + comentario resuelto. Preview: http://localhost:3050",
       "previewUrl": "http://localhost:3050/"
     }
   }
