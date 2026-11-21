@@ -116,10 +116,13 @@ describe("Header", () => {
     expect(container).toBeTruthy();
   });
 
-  it("renders the real name as the brand linking to the hero anchor", () => {
+  it("renders the EV brand monogram linking to the hero anchor", () => {
     render(<Header />);
 
-    const brand = screen.getByRole("link", { name: new RegExp(profile.name) });
+    // Rebrand 06: the brand is the "EV." monogram; the accessible name keeps
+    // the visible "EV." prefix (label-content-name rule) and states the goal.
+    const brand = screen.getByRole("link", { name: /EV\. — volver al inicio/ });
+    expect(brand.textContent).toContain("EV");
     expect(brand.getAttribute("href")).toBe("#inicio");
     expect(screen.getByRole("banner")).toBeTruthy();
   });
@@ -204,13 +207,14 @@ describe("Hero", () => {
     ).toBe("#contacto");
   });
 
-  it("renders the profile photo with Spanish alt text", () => {
+  it("renders the dial photo with Spanish alt text", () => {
     render(<Hero />);
 
     const photo = screen.getByRole("img", {
       name: `Foto de perfil de ${profile.name}`,
     });
-    expect(photo.getAttribute("src")).toBe("/images/profile.webp");
+    // Rebrand 06: the dial uses the barber-red portrait (Gemini poster crop).
+    expect(photo.getAttribute("src")).toBe("/images/profile-dial.webp");
   });
 
   it("renders social links near the CTAs as new-tab anchors", () => {
