@@ -112,7 +112,7 @@ export function Hero() {
               <span aria-hidden="true" className="dial-arc" />
               <span aria-hidden="true" className="dial-glow" />
               <Image
-                src="/images/profile-dial.webp"
+                src="/images/profile-dial-v7.webp"
                 alt={`Foto de perfil de ${profile.name}`}
                 width={360}
                 height={360}
