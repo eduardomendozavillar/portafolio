@@ -138,7 +138,7 @@ export function IntroSplash() {
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-accent">
             {profile.role}
           </p>
-          <p className="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
+          <p className="mt-2 bg-gradient-to-r from-white via-accent to-teal bg-clip-text font-display text-3xl font-semibold uppercase tracking-[0.01em] text-transparent sm:text-4xl">
             {profile.name}
           </p>
         </div>
@@ -149,7 +149,7 @@ export function IntroSplash() {
           className="mt-2 h-0.5 w-40 overflow-hidden rounded-full bg-line"
           role="presentation"
         >
-          <div className="intro-bar h-full w-full origin-left bg-accent" />
+          <div className="intro-bar h-full w-full origin-left bg-gradient-to-r from-accent to-teal" />
         </div>
       </div>
     </div>

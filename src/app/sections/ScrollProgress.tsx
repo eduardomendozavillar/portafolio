@@ -37,7 +37,7 @@ export function ScrollProgress() {
       ref={barRef}
       aria-hidden="true"
       data-progress="0"
-      className="absolute bottom-0 left-0 h-0.5 w-0 bg-accent [transition:width_80ms_linear] motion-reduce:transition-none"
+      className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-accent to-teal [transition:width_80ms_linear] motion-reduce:transition-none"
     />
   );
 }

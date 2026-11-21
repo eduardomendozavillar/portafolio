@@ -70,7 +70,7 @@ export function Hero() {
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_15%_-5%,rgba(179,43,30,0.14),transparent_55%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_-5%,rgba(139,92,246,0.16),transparent_55%)]"
         />
         <div
           aria-hidden="true"
@@ -104,7 +104,8 @@ export function Hero() {
             >
               <p
                 data-availability="true"
-                className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-muted"
+                data-status-chip="true"
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-paper-raised/60 px-3 py-1 text-xs font-medium text-ink-muted"
               >
                 <span
                   aria-hidden="true"
@@ -112,10 +113,10 @@ export function Hero() {
                 />
                 Disponible para nuevas oportunidades
               </p>
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
+              <p className="text-sm font-medium uppercase tracking-[0.2em] text-teal">
                 {profile.role}
               </p>
-              <h1 className="mt-4 font-display text-4xl font-semibold tracking-[-0.02em] leading-[1.08] text-ink sm:text-5xl md:text-6xl lg:text-7xl">
+              <h1 className="mt-4 bg-gradient-to-r from-white via-accent to-teal bg-clip-text font-display text-4xl font-semibold uppercase tracking-[0.01em] leading-[1.08] text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
                 {profile.name}
               </h1>
               <div className="mt-6 md:border-l-2 md:border-accent md:pl-6">

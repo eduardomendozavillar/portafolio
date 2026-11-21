@@ -106,8 +106,8 @@ export function Header() {
                     aria-current={active ? "true" : undefined}
                     className={
                       active
-                        ? "whitespace-nowrap text-accent underline decoration-accent decoration-2 underline-offset-8"
-                        : "whitespace-nowrap transition-colors hover:text-accent"
+                        ? "whitespace-nowrap rounded-full border border-accent/40 bg-accent-soft px-3 py-1 text-ink"
+                        : "whitespace-nowrap transition-colors hover:text-ink"
                     }
                   >
                     {link.label}
