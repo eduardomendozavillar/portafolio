@@ -96,6 +96,18 @@
       "sentAt": "2026-11-21T03:48:42.232Z",
       "resolvedAt": "2026-11-21T03:49:23.528Z",
       "resolution": "Interactividad total: spotlight que sigue el cursor en header+nav, reveals bidireccionales (bajan/suben con re-animación), tilt 3D en los tiles del stack, parallax en las figuras — efectos GSAP-style con APIs nativas (sin CDN)."
+    },
+    {
+      "id": "jnf4g4i6",
+      "file": "06-marco-red.html",
+      "selector": "#inicio > div:nth-of-type(2) > div:nth-of-type(1) > img",
+      "excerpt": "Foto de perfil de Eduardo Mendoza Villar",
+      "comment": "toma la imagen que tienez rediseñala para este nuevo portafolio",
+      "createdAt": "2026-11-21T03:50:35.981Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:50:36.002Z",
+      "resolvedAt": "2026-11-21T03:51:14.055Z",
+      "resolution": "Foto real del perfil incrustada (webp 360px optimizado como data-URI) con tratamiento poster: dial con arco rojo girando, glow interior y ajuste de saturación/contraste."
     }
   ]
 }
