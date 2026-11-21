@@ -14,16 +14,17 @@
   --color-paper: #1c1c1c;
   --color-paper-raised: #242424;
   --color-ink: #ede6e0;
-  --color-ink-muted: rgba(237, 230, 224, 0.62);
+  --color-ink-muted: rgba(237, 230, 224, 0.72);
   --color-line: rgba(237, 230, 224, 0.15);
 
-  /* Accent (barber red) — the third color that makes it unforgettable */
-  --color-accent: #b32b1e;
+  /* Accent — barber red, lightened for AA text contrast on charcoal
+     (deep #B32B1E remains in --color-cta for fills). */
+  --color-accent: #ed6a5b;
   --color-accent-soft: rgba(179, 43, 30, 0.18);
   --color-accent-contrast: #ffffff;
 
   /* Aliases kept for compatibility (red edition: no secondary hues) */
-  --color-accent-2: #b32b1e;
+  --color-accent-2: #ed6a5b;
   --color-accent-2-soft: rgba(179, 43, 30, 0.18);
   --color-cta: #b32b1e;
   --color-cta-contrast: #ffffff;
