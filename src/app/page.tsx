@@ -5,6 +5,7 @@ import { Experiencia } from "./sections/Experiencia";
 import { Habilidades } from "./sections/Habilidades";
 import { Hero } from "./sections/Hero";
 import { IntroSplash } from "./sections/IntroSplash";
+import { Certificaciones } from "./sections/Certificaciones";
 import { Proyectos } from "./sections/Proyectos";
 import { SobreMi } from "./sections/SobreMi";
 
@@ -21,6 +22,7 @@ export default function Home() {
       <Reveal className="w-full">
         <Proyectos />
       </Reveal>
+      <Certificaciones />
       <Reveal className="w-full">
         <SobreMi />
       </Reveal>

@@ -24,6 +24,7 @@ type PaletteAction = {
 const SECTIONS = [
   { label: "Sobre mí", id: "sobre-mi", keywords: ["about"] },
   { label: "Proyectos", id: "proyectos", keywords: ["projects"] },
+  { label: "Certificaciones", id: "certificaciones", keywords: ["certificados", "certs", "credentials"] },
   { label: "Habilidades", id: "habilidades", keywords: ["skills"] },
   { label: "Experiencia", id: "experiencia", keywords: ["work"] },
   { label: "Educación", id: "educacion", keywords: ["education"] },

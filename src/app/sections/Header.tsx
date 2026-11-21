@@ -12,6 +12,7 @@ import { socials } from "@/data/socials";
 const NAV_LINKS = [
   { label: "Inicio", href: "#inicio" },
   { label: "Proyectos", href: "#proyectos" },
+  { label: "Certificaciones", href: "#certificaciones" },
   { label: "Sobre mí", href: "#sobre-mi" },
   { label: "Habilidades", href: "#habilidades" },
   { label: "Experiencia", href: "#experiencia" },
