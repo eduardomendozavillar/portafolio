@@ -149,6 +149,25 @@
   footer a { color: var(--bone); text-decoration: underline; text-decoration-color: var(--red-bright); text-underline-offset: 4px; }
 
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .tiles { grid-template-columns: repeat(3, 1fr); } .cards { grid-template-columns: 1fr 1fr; } .pcards, .now { grid-template-columns: 1fr; } nav { display: none; } }
+  /* Spotlight del header: brillo que sigue al cursor (rebrand interactiva). */
+  header { position: sticky; }
+  header::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 300ms;
+    background: radial-gradient(340px 130px at var(--mx, 50%) var(--my, 50%), rgba(179,43,30,0.22), transparent 70%); }
+  header:hover::before { opacity: 1; }
+  header nav a { position: relative; transition: color 150ms; }
+  header nav a::after { content: ""; position: absolute; inset: -6px -12px; border-radius: 6px; opacity: 0; pointer-events: none;
+    background: radial-gradient(60px 30px at var(--lx, 50%) 50%, rgba(237,230,224,0.12), transparent); transition: opacity 150ms; }
+  header nav a:hover::after { opacity: 1; }
+
+  /* Reveals bidireccionales (GSAP-style con IntersectionObserver nativo):
+     entran al bajar y se re-animan al subir. */
+  .rv { opacity: 0; transform: translateY(34px); transition: opacity 700ms cubic-bezier(.2,.7,.2,1), transform 700ms cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv[data-d="1"] { transition-delay: 80ms; } .rv[data-d="2"] { transition-delay: 160ms; } .rv[data-d="3"] { transition-delay: 240ms; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+
+  /* Tilt 3D de los tiles del stack (siguiendo el cursor). */
+  .tile { transform-style: preserve-3d; will-change: transform; }
 </style>
 </head>
 <body>
@@ -268,5 +287,54 @@
 </section>
 
 <footer><span>© 2026 Eduardo Mendoza Villar</span><span><a>GitHub</a> · <a>LinkedIn</a> · <a>Descargar CV</a> · Santa Marta, Colombia</span></footer>
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+
+  // Spotlight del header siguiendo al cursor.
+  var header = document.querySelector("header");
+  header.addEventListener("pointermove", function (e) {
+    var r = header.getBoundingClientRect();
+    header.style.setProperty("--mx", (e.clientX - r.left) + "px");
+    header.style.setProperty("--my", (e.clientY - r.top) + "px");
+    var link = e.target.closest("nav a");
+    if (link) {
+      var lr = link.getBoundingClientRect();
+      link.style.setProperty("--lx", (e.clientX - lr.left) + "px");
+    }
+  });
+
+  // Reveals bidireccionales: entra al bajar, se re-animan al subir.
+  var targets = document.querySelectorAll("section .eyebrow, section h2, .pcard, .tile, .term, .ncard, .ccard, .heat");
+  targets.forEach(function (el, i) {
+    el.classList.add("rv");
+    el.dataset.d = String(i % 3 + 1);
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { en.target.classList.toggle("in", en.isIntersecting); });
+  }, { threshold: 0.18 });
+  targets.forEach(function (el) { io.observe(el); });
+
+  // Tilt 3D de los tiles (gsap-feel).
+  document.querySelectorAll(".tile").forEach(function (tile) {
+    tile.addEventListener("pointermove", function (e) {
+      var r = tile.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      tile.style.transform = "translateY(-4px) rotateX(" + (-y * 10).toFixed(1) + "deg) rotateY(" + (x * 12).toFixed(1) + "deg)";
+    });
+    tile.addEventListener("pointerleave", function () { tile.style.transform = ""; });
+  });
+
+  // Parallax suave en las figuras de fondo (gsap scroll-feel).
+  var figs = document.querySelectorAll(".figure");
+  var onScroll = function () {
+    var y = window.scrollY;
+    figs.forEach(function (f, i) { f.style.marginTop = ((i % 2 ? -1 : 1) * y * (0.06 + i * 0.03)).toFixed(1) + "px"; });
+  };
+  document.addEventListener("scroll", onScroll, { passive: true });
+})();
+</script>
 </body>
 </html>

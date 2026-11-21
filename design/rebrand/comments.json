@@ -48,6 +48,54 @@
       "sentAt": "2026-11-21T03:43:27.534Z",
       "resolvedAt": "2026-11-21T03:44:38.558Z",
       "resolution": "Iconos monograma reemplazados por SVG vectoriales de marca inline (TypeScript, Next.js, React, Node, Vercel triángulo, Docker, Angular, Tailwind olas, Gemini sparkle, MCP gradiente, Firebase llama, Vitest check…) con tiles más grandes y hover glow."
+    },
+    {
+      "id": "egd7s1q7",
+      "file": "06-marco-red.html",
+      "selector": "#stack",
+      "excerpt": "// STACK STACK TÉCNICO TypeScript Next.js React Node.js ex Express Fastify FastAPI PostgreSQL SQLite Firebase Gemini MCP Docker Vercel Angular Tailwind Vitest Frontend Next.js React.js TypeScript Tailwind CSS Angular Backend Node.js Express Fastify FastAPI APIs REST IA / Datos LLMs locales y cloud R",
+      "comment": "ahora has la interactiva",
+      "createdAt": "2026-11-21T03:45:04.011Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:48:42.232Z",
+      "resolvedAt": "2026-11-21T03:49:23.528Z",
+      "resolution": "Interactividad total: spotlight que sigue el cursor en header+nav, reveals bidireccionales (bajan/suben con re-animación), tilt 3D en los tiles del stack, parallax en las figuras — efectos GSAP-style con APIs nativas (sin CDN)."
+    },
+    {
+      "id": "bbvffa5e",
+      "file": "06-marco-red.html",
+      "selector": "body",
+      "excerpt": "EV. SOBRE MÍ EXPERIENCIA PROYECTOS EDUCACIÓN AHORA CERTIFICACIONES STACK CONTACTO ES DISPONIBLE · SANTA MARTA EDUARDO MENDOZA VILLAR FULL-STACK · IA APLICADA · RAG Ingeniero de sistemas enfocado en IA aplicada: LLMs, arquitecturas RAG y orquestación de agentes. Experiencia construyendo y desplegando",
+      "comment": "para poda la plagina podemos hacer el scroll que cuando valla bajando y subiendo tena animaciones",
+      "createdAt": "2026-11-21T03:45:38.142Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:48:42.232Z",
+      "resolvedAt": "2026-11-21T03:49:23.528Z",
+      "resolution": "Interactividad total: spotlight que sigue el cursor en header+nav, reveals bidireccionales (bajan/suben con re-animación), tilt 3D en los tiles del stack, parallax en las figuras — efectos GSAP-style con APIs nativas (sin CDN)."
+    },
+    {
+      "id": "agl5ta2c",
+      "file": "06-marco-red.html",
+      "selector": "body > header > div",
+      "excerpt": "EV. SOBRE MÍ EXPERIENCIA PROYECTOS EDUCACIÓN AHORA CERTIFICACIONES STACK CONTACTO ES",
+      "comment": "tenga un splotlight",
+      "createdAt": "2026-11-21T03:47:38.599Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:48:42.232Z",
+      "resolvedAt": "2026-11-21T03:49:23.528Z",
+      "resolution": "Interactividad total: spotlight que sigue el cursor en header+nav, reveals bidireccionales (bajan/suben con re-animación), tilt 3D en los tiles del stack, parallax en las figuras — efectos GSAP-style con APIs nativas (sin CDN)."
+    },
+    {
+      "id": "20wijgq2",
+      "file": "06-marco-red.html",
+      "selector": "body",
+      "excerpt": "EV. SOBRE MÍ EXPERIENCIA PROYECTOS EDUCACIÓN AHORA CERTIFICACIONES STACK CONTACTO ES DISPONIBLE · SANTA MARTA EDUARDO MENDOZA VILLAR FULL-STACK · IA APLICADA · RAG Ingeniero de sistemas enfocado en IA aplicada: LLMs, arquitecturas RAG y orquestación de agentes. Experiencia construyendo y desplegando",
+      "comment": "gsap scroll",
+      "createdAt": "2026-11-21T03:48:36.976Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:48:42.232Z",
+      "resolvedAt": "2026-11-21T03:49:23.528Z",
+      "resolution": "Interactividad total: spotlight que sigue el cursor en header+nav, reveals bidireccionales (bajan/suben con re-animación), tilt 3D en los tiles del stack, parallax en las figuras — efectos GSAP-style con APIs nativas (sin CDN)."
     }
   ]
 }
