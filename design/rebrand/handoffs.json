@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "chosen": "02-neon-dashboard.html",
+  "chosen": "06-marco-red.html",
   "handoffs": {
     "01-home.html": {
       "status": "in_progress",
@@ -19,6 +19,14 @@
       "implementedAt": "2026-11-21T02:19:47.420Z",
       "note": "Rebrand 02 Neon Dashboard implementado en el stack real: tokens violeta/cyan, Anton+Manrope, eyebrows //, glass cards, certificaciones y heatmap con datos reales. Preview corriendo en :3050",
       "previewUrl": "http://localhost:3050/"
+    },
+    "06-marco-red.html": {
+      "status": "sent",
+      "queued": false,
+      "sentAt": "2026-11-21T04:17:42.365Z",
+      "startedAt": null,
+      "implementedAt": null,
+      "feature": "odd/tasks/portfolio-rebrand.md"
     }
   }
 }
