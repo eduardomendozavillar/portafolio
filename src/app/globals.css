@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
 /*
- * Rebrand (portfolio-rebrand) — Barber-Charcoal identity:
- * charcoal black base, bone white type, barber red signal accent.
+ * Rebrand (portfolio-rebrand) — Neon Dashboard identity (dirección 02):
+ * near-black base, violet/cyan neon accents, red reserved for CTAs.
  * Semantic token names stay stable; only values change so components
  * keep using paper / ink / accent utilities.
  */
 
 :root {
   /* Surfaces & text */
-  --background: #1c1c1c; /* paper / base */
-  --foreground: #ede6e0; /* ink (bone white) */
-  --color-paper: #1c1c1c;
-  --color-paper-raised: #262626;
-  --color-ink: #ede6e0;
-  --color-ink-muted: rgba(237, 230, 224, 0.62);
-  --color-line: rgba(237, 230, 224, 0.14);
+  --background: #0b0b0f; /* paper / base */
+  --foreground: #f2f2f7; /* ink */
+  --color-paper: #0b0b0f;
+  --color-paper-raised: #14141c;
+  --color-ink: #f2f2f7;
+  --color-ink-muted: rgba(242, 242, 247, 0.55);
+  --color-line: rgba(255, 255, 255, 0.09);
 
-  /* Accent (barber red) */
-  --color-accent: #b32b1e;
-  --color-accent-soft: rgba(179, 43, 30, 0.16);
-  --color-accent-contrast: #ffffff;
+  /* Accent (violet neon) — links, nav activa, focus, chips */
+  --color-accent: #8b5cf6;
+  --color-accent-soft: rgba(139, 92, 246, 0.18);
+  --color-accent-contrast: #0b0b0f;
+
+  /* Secondary accents */
+  --color-accent-2: #22d3ee; /* cyan: eyebrows, código */
+  --color-accent-2-soft: rgba(34, 211, 238, 0.14);
+  --color-cta: #b32b1e; /* red: solo CTAs de contratación */
+  --color-cta-contrast: #ffffff;
 }
 
 @theme inline {
@@ -34,7 +40,11 @@
   --color-accent: var(--color-accent);
   --color-accent-soft: var(--color-accent-soft);
   --color-accent-contrast: var(--color-accent-contrast);
-  --color-teal: var(--color-accent);
+  --color-accent-2: var(--color-accent-2);
+  --color-accent-2-soft: var(--color-accent-2-soft);
+  --color-cta: var(--color-cta);
+  --color-cta-contrast: var(--color-cta-contrast);
+  --color-teal: var(--color-accent-2);
 
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
