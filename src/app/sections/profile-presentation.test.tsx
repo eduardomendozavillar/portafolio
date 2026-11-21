@@ -214,7 +214,7 @@ describe("Hero", () => {
       name: `Foto de perfil de ${profile.name}`,
     });
     // Rebrand 06: the dial uses the barber-red portrait (Gemini poster crop).
-    expect(photo.getAttribute("src")).toBe("/images/profile-dial.webp");
+    expect(photo.getAttribute("src")).toBe("/images/profile-dial-v7.webp");
   });
 
   it("renders social links near the CTAs as new-tab anchors", () => {

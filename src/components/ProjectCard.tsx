@@ -50,47 +50,43 @@ export function ProjectCard({
           {number}
         </p>
         <div className="min-w-0 flex-1">
-          {/* Desktop chrome preview (rebrand 06): mini-navegador con la
-             captura real del proyecto dentro. */}
+          {/* Capturas protagonistas (rebrand 10): la captura real ocupa el
+             protagonismo en todas las medidas, con overlay de acciones
+             rápidas al hover (decorativo para AT: los links reales siguen
+             visibles en el cuerpo de la card). */}
           {project.images && project.images.length > 0 ? (
-            <div
-              aria-hidden="true"
-              className="mb-4 hidden overflow-hidden rounded-lg border border-line bg-black/30 md:block"
-            >
-              <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
-                <span className="h-2 w-2 rounded-full bg-accent" />
-                <span className="h-2 w-2 rounded-full bg-line" />
-                <span className="h-2 w-2 rounded-full bg-line" />
-                <span className="ml-2 font-mono text-[10.5px] text-ink-muted">
-                  {project.slug ?? project.id}
-                </span>
-              </div>
+            <div className="shotbox relative mb-4 overflow-hidden rounded-lg border border-line bg-black/30">
               <Image
                 src={project.images[0].src}
                 width={project.images[0].width}
                 height={project.images[0].height}
                 alt=""
-                sizes="(min-width: 768px) 480px, 0px"
-                className="h-auto w-full object-cover object-top"
+                sizes="(min-width: 768px) 520px, 100vw"
+                className="h-auto max-h-52 w-full object-cover object-top"
               />
-            </div>
-          ) : null}
-          {/* Mobile cover preview (showcase-sticky S7): on narrow screens the
-              sticky panel cannot carry the visuals, so each card shows its
-              first screenshot inline, revealed on scroll (WU-B Reveal). */}
-          {project.images && project.images.length > 0 ? (
-            <Reveal className="md:hidden">
-              <div className="overflow-hidden rounded-md border border-line bg-paper">
-                <Image
-                  src={project.images[0].src}
-                  width={project.images[0].width}
-                  height={project.images[0].height}
-                  alt={`Captura de ${project.title}`}
-                  sizes="(max-width: 767px) 100vw, 0px"
-                  className="h-auto w-full object-cover"
-                />
+              <div className="pointer-events-none absolute inset-0 flex items-end justify-center gap-2.5 bg-gradient-to-t from-black/85 via-black/25 to-transparent pb-4 opacity-0 transition-[opacity,translate] duration-200 translate-y-3 group-hover/card:pointer-events-auto group-hover/card:opacity-100 group-hover/card:translate-y-0">
+                {project.links?.demo ? (
+                  <a
+                    href={project.links.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto rounded-md bg-ink px-3.5 py-2 text-[11.5px] font-extrabold uppercase tracking-[0.05em] text-paper"
+                  >
+                    Ver en vivo
+                  </a>
+                ) : null}
+                {project.links?.repo ? (
+                  <a
+                    href={project.links.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto rounded-md border border-ink/40 px-3.5 py-2 text-[11.5px] font-bold uppercase tracking-[0.05em] text-ink"
+                  >
+                    Código
+                  </a>
+                ) : null}
               </div>
-            </Reveal>
+            </div>
           ) : null}
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h3 className="font-display text-xl font-semibold text-ink">

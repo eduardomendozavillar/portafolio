@@ -43,6 +43,14 @@ function cardMatchesTech(project: Project, activeTech: string | null) {
   );
 }
 
+function cardMatchesEstado(
+  project: Project,
+  activeEstado: "todas" | "production" | "development",
+) {
+  if (activeEstado === "todas") return true;
+  return project.status === activeEstado;
+}
+
 function projectIdentity(project: Project) {
   return [
     project.links?.repo?.toLowerCase(),
@@ -141,6 +149,9 @@ function ProjectItems({ projects }: { projects: Project[] }) {
   // WU-B: tech-chip filter, single-select, chips = union of the featured
   // projects' technologies + a "Todas" reset chip.
   const [activeTech, setActiveTech] = useState<string | null>(null);
+  // Rebrand 10: maturity filter (Capturas protagonistas artboard) combined
+  // with the tech filter — a card shows when it passes both.
+  const [activeEstado, setActiveEstado] = useState<"todas" | "production" | "development">("todas");
   // portfolio-motion: sticky showcase panel + preview lightbox.
   const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
   const previewTriggerRef = useRef<HTMLButtonElement | null>(null);
@@ -159,8 +170,41 @@ function ProjectItems({ projects }: { projects: Project[] }) {
       setLightboxProject(project);
     };
 
+  const prodCount = projects.filter((project) => project.status === "production").length;
+  const devCount = projects.filter((project) => project.status === "development").length;
+
   return (
     <div className="flex flex-col gap-5">
+      {/* Resumen (rebrand 10 · capturas protagonistas). */}
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-line bg-paper-raised px-5 py-3.5 text-[13px] text-ink-muted">
+        <span><b className="font-display text-2xl font-normal text-accent">{projects.length}</b> proyectos</span>
+        <span><b className="font-display text-2xl font-normal text-accent">{prodCount}</b> en producción</span>
+        <span><b className="font-display text-2xl font-normal text-accent">{devCount}</b> en desarrollo</span>
+      </div>
+      {/* Filtro por madurez (rebrand 10). */}
+      <div
+        role="group"
+        aria-label="Filtrar proyectos por estado"
+        className="flex flex-wrap gap-1.5"
+      >
+        {(
+          [
+            { label: "Todas", value: "todas" },
+            { label: "En producción", value: "production" },
+            { label: "En desarrollo", value: "development" },
+          ] as const
+        ).map((chip) => (
+          <button
+            key={chip.value}
+            type="button"
+            aria-pressed={activeEstado === chip.value}
+            onClick={() => setActiveEstado(chip.value)}
+            className={chipClasses(activeEstado === chip.value)}
+          >
+            {chip.label}
+          </button>
+        ))}
+      </div>
       <div
         role="group"
         aria-label="Filtrar proyectos por tecnología"
@@ -200,7 +244,7 @@ function ProjectItems({ projects }: { projects: Project[] }) {
               key={project.id}
               project={project}
               index={index + 1}
-              attenuated={!cardMatchesTech(project, activeTech)}
+              attenuated={!cardMatchesTech(project, activeTech) || !cardMatchesEstado(project, activeEstado)}
               onPreview={
                 project.images && project.images.length > 0
                   ? openLightbox(project)
