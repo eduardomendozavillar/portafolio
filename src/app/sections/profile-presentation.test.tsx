@@ -177,13 +177,14 @@ describe("Footer", () => {
 });
 
 describe("Hero", () => {
-  it("shows the availability badge with a pulse dot", () => {
+  it("shows the availability chip with a theme-tone dot", () => {
     render(<Hero />);
 
     const badge = document.querySelector("[data-availability]") as HTMLElement;
     expect(badge).toBeTruthy();
     expect(badge.textContent).toContain("Disponible para nuevas oportunidades");
-    expect(badge.querySelector("span")?.className).toContain("animate-pulse");
+    // Rebrand 05/06: the dot uses the barber-red theme tone (no green).
+    expect(badge.querySelector("span")?.className).toContain("bg-accent");
   });
 
   it("renders the role eyebrow, real name and call to actions", () => {
@@ -197,7 +198,7 @@ describe("Hero", () => {
       screen.getByRole("link", { name: "Ver proyectos" }).getAttribute("href"),
     ).toBe("#proyectos");
     expect(
-      screen.getByRole("link", { name: "Contáctame" }).getAttribute("href"),
+      screen.getByRole("link", { name: "Contactarme" }).getAttribute("href"),
     ).toBe("#contacto");
   });
 
@@ -238,7 +239,7 @@ describe("Hero", () => {
   it("offers the CV as a same-document download next to the CTAs", () => {
     render(<Hero />);
 
-    const cv = screen.getByRole("link", { name: "Descargar CV" });
+    const cv = screen.getByRole("link", { name: /Descargar CV/ });
     expect(cv.getAttribute("href")).toBe("/CV_Eduardo_Mendoza_Ingeniero_IA.pdf");
     expect(cv.getAttribute("download")).not.toBeNull();
   });

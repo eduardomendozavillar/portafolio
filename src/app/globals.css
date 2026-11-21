@@ -184,6 +184,24 @@
 }
 
 /**
+ * Hero photo dial (rebrand 06): static frame + rotating tick ring + red arc
+ * accent + inner glow; the photo is the child <img> positioned by Hero.
+ */
+.dial-ring { position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 8deg, rgba(237,230,224,0.35) 8deg 10deg, transparent 10deg 30deg, rgba(237,230,224,0.35) 30deg 32deg, transparent 32deg 60deg, rgba(237,230,224,0.35) 60deg 62deg, transparent 62deg 90deg, rgba(237,230,224,0.35) 90deg 92deg, transparent 92deg 120deg, rgba(237,230,224,0.35) 120deg 122deg, transparent 122deg 150deg, rgba(237,230,224,0.35) 150deg 152deg, transparent 152deg 180deg, rgba(237,230,224,0.35) 180deg 182deg, transparent 182deg 210deg, rgba(237,230,224,0.35) 210deg 212deg, transparent 212deg 240deg, rgba(237,230,224,0.35) 240deg 242deg, transparent 242deg 270deg, rgba(237,230,224,0.35) 270deg 272deg, transparent 272deg 300deg, rgba(237,230,224,0.35) 300deg 302deg, transparent 302deg 330deg, rgba(237,230,224,0.35) 330deg 332deg, transparent 332deg 360deg);
+  animation: dial-spin 26s ease-in-out infinite alternate;
+}
+@keyframes dial-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.dial-arc { position: absolute; inset: 16px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--color-accent); border-right-color: var(--color-accent); transform: rotate(-24deg); opacity: 0.9; }
+.dial-glow { position: absolute; inset: 34px; border-radius: 50%; box-shadow: inset 0 0 44px rgba(179,43,30,0.28); pointer-events: none; }
+.type-caret { display: inline-block; width: 9px; height: 1.05em; background: var(--color-ink); vertical-align: text-bottom; animation: type-blink 1.1s steps(1) infinite; }
+@keyframes type-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .dial-ring { animation: none; }
+  .type-caret { animation: none; }
+}
+
+/**
  * Ambient background (rebrand 06): floating dust + wireframe node figures
  * drifting slowly. Decorative only; fully static under reduced motion.
  */

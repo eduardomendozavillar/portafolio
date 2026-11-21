@@ -85,18 +85,18 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b-[3px] border-accent bg-paper/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between gap-4 md:gap-6">
         <a
           href="#inicio"
-          className="shrink-0 font-display text-lg font-semibold text-ink"
+          aria-label={profile.name}
+          className="shrink-0 rounded-lg border border-line bg-paper-raised px-3 py-1.5 font-display text-[15px] uppercase tracking-[0.08em] text-ink"
         >
-          {profile.name}
-          <span className="text-accent">.</span>
+          EV<span className="text-accent">.</span>
         </a>
 
         <nav aria-label="Navegación principal" className="hidden md:block">
-          <ul className="flex items-center gap-5 text-[13px] font-bold uppercase tracking-[0.05em] text-ink-muted lg:gap-6">
+          <ul className="flex items-center gap-5 font-mono text-[12.5px] uppercase tracking-[0.14em] text-ink-muted lg:gap-5">
             {NAV_LINKS.filter((link) => link.href !== "#contacto").map((link) => {
               const id = link.href.slice(1);
               const active = activeSection === id;
@@ -107,7 +107,7 @@ export function Header() {
                     aria-current={active ? "true" : undefined}
                     className={
                       active
-                        ? "whitespace-nowrap rounded-full border border-accent/40 bg-accent-soft px-3 py-1 text-ink"
+                        ? "whitespace-nowrap border-b-2 border-accent pb-0.5 text-ink"
                         : "whitespace-nowrap transition-colors hover:text-ink"
                     }
                   >
@@ -148,6 +148,9 @@ export function Header() {
               </li>
             ))}
           </ul>
+          <span className="hidden rounded-lg border border-line px-2.5 py-1.5 font-mono text-[12px] text-ink-muted xl:inline">
+            ES
+          </span>
           <Button href="#contacto" className="!px-4 !py-2 text-sm">
             Contratame
           </Button>
