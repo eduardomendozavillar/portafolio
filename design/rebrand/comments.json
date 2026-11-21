@@ -204,6 +204,18 @@
       "sentAt": "2026-11-21T04:09:30.049Z",
       "resolvedAt": "2026-11-21T04:09:54.486Z",
       "resolution": "Los tiles ahora se desplazan en X y Y siguiendo el cursor (hasta ±12px por eje) combinado con el tilt 3D; vuelven a su lugar al salir."
+    },
+    {
+      "id": "evxgmc0n",
+      "file": "10-proyectos-capturas.html",
+      "selector": "body > section",
+      "excerpt": "// PROYECTOS PROYECTOS DESTACADOS EN DESARROLLO SGDI — Ventanilla Única de Radicación Gestión documental institucional para el Hospital Universitario Julio Méndez Barreneche: roles, RAD y trazabilidad, con WCAG AA. Next.js Auth.js Prisma DETALLE DEL CASO → EN PRODUCCIÓN Portafolio personal Este siti",
+      "comment": "que plus podemos añadirle para hacer creear una mejor esperiencia",
+      "createdAt": "2026-11-21T13:46:57.113Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T13:46:57.134Z",
+      "resolvedAt": "2026-11-21T13:47:40.071Z",
+      "resolution": "Plus de experiencia: strip de resumen (4 proyectos · 2 producción · 122 pruebas), filtro interactivo por estado, overlay de acciones rápidas al hover de la captura (Ver demo / Código) y spotlight de cursor por card."
     }
   ]
 }
