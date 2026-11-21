@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Anton, Manrope } from "next/font/google";
+import { FX } from "@/components/FX";
 import { BackgroundFigures } from "./sections/BackgroundFigures";
 import { Footer } from "./sections/Footer";
 import { Header } from "./sections/Header";
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
         <BackgroundFigures />
+        <FX />
         <Header />
         {children}
         <Footer />
