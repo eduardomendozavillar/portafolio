@@ -23,7 +23,7 @@ export function Certificaciones() {
           {featured.map((certificate) => (
             <li
               key={certificate.title}
-              className="flex items-center gap-4 rounded-xl border border-line bg-paper-raised/50 px-5 py-4 backdrop-blur-sm"
+              data-fx-spotlight className="flex items-center gap-4 rounded-xl border border-line border-l-4 border-l-accent bg-paper-raised/50 px-5 py-4 backdrop-blur-sm"
             >
               <div className="min-w-0">
                 <p className="font-medium text-ink">{certificate.title}</p>

@@ -11,12 +11,13 @@ import { socials } from "@/data/socials";
 /** Anchor links shared by the desktop nav and the mobile menu. */
 const NAV_LINKS = [
   { label: "Inicio", href: "#inicio" },
-  { label: "Proyectos", href: "#proyectos" },
-  { label: "Certificaciones", href: "#certificaciones" },
   { label: "Sobre mí", href: "#sobre-mi" },
-  { label: "Habilidades", href: "#habilidades" },
   { label: "Experiencia", href: "#experiencia" },
+  { label: "Proyectos", href: "#proyectos" },
   { label: "Educación", href: "#educacion" },
+  { label: "Ahora", href: "#ahora" },
+  { label: "Certificaciones", href: "#certificaciones" },
+  { label: "Habilidades", href: "#habilidades" },
   { label: "Contacto", href: "#contacto" },
 ] as const;
 

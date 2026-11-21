@@ -43,11 +43,13 @@ vi.mock("next/image", () => ({
 
 const NAV_LINKS = [
   "#inicio",
-  "#proyectos",
   "#sobre-mi",
-  "#habilidades",
   "#experiencia",
+  "#proyectos",
   "#educacion",
+  "#ahora",
+  "#certificaciones",
+  "#habilidades",
   "#contacto",
 ];
 

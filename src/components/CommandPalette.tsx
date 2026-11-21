@@ -23,11 +23,12 @@ type PaletteAction = {
 /** Section anchors — the same ids the header nav links to. */
 const SECTIONS = [
   { label: "Sobre mí", id: "sobre-mi", keywords: ["about"] },
+  { label: "Experiencia", id: "experiencia", keywords: ["work"] },
   { label: "Proyectos", id: "proyectos", keywords: ["projects"] },
+  { label: "Educación", id: "educacion", keywords: ["education"] },
+  { label: "Ahora", id: "ahora", keywords: ["now", "building"] },
   { label: "Certificaciones", id: "certificaciones", keywords: ["certificados", "certs", "credentials"] },
   { label: "Habilidades", id: "habilidades", keywords: ["skills"] },
-  { label: "Experiencia", id: "experiencia", keywords: ["work"] },
-  { label: "Educación", id: "educacion", keywords: ["education"] },
   { label: "Contacto", id: "contacto", keywords: ["contact"] },
 ] as const;
 

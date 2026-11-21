@@ -50,6 +50,31 @@ export function ProjectCard({
           {number}
         </p>
         <div className="min-w-0 flex-1">
+          {/* Desktop chrome preview (rebrand 06): mini-navegador con la
+             captura real del proyecto dentro. */}
+          {project.images && project.images.length > 0 ? (
+            <div
+              aria-hidden="true"
+              className="mb-4 hidden overflow-hidden rounded-lg border border-line bg-black/30 md:block"
+            >
+              <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
+                <span className="h-2 w-2 rounded-full bg-accent" />
+                <span className="h-2 w-2 rounded-full bg-line" />
+                <span className="h-2 w-2 rounded-full bg-line" />
+                <span className="ml-2 font-mono text-[10.5px] text-ink-muted">
+                  {project.slug ?? project.id}
+                </span>
+              </div>
+              <Image
+                src={project.images[0].src}
+                width={project.images[0].width}
+                height={project.images[0].height}
+                alt=""
+                sizes="(min-width: 768px) 480px, 0px"
+                className="h-auto w-full object-cover object-top"
+              />
+            </div>
+          ) : null}
           {/* Mobile cover preview (showcase-sticky S7): on narrow screens the
               sticky panel cannot carry the visuals, so each card shows its
               first screenshot inline, revealed on scroll (WU-B Reveal). */}
