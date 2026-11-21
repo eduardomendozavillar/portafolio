@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>07 — Cinema Scroll (scroll-scrubbed)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Dirección 07: cine narrativo — secciones full-viewport con reveals
+     scrubbed por scroll (CSS scroll-timeline nativo), títulos Anton gigantes
+     que se deslizan, sticky panels. Degradación: sin soporte, todo visible. */
+  :root {
+    --charcoal: #1C1C1C; --charcoal-2: #242424;
+    --bone: #EDE6E0; --bone-muted: rgba(237,230,224,0.72);
+    --line: rgba(237,230,224,0.15); --red: #B32B1E; --red-bright: #ED6A5B;
+    --fd: "Anton", "Arial Narrow", Impact, sans-serif;
+    --fb: "Manrope", "Segoe UI", system-ui, sans-serif;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body { background: var(--charcoal); color: var(--bone); font-family: var(--fb); line-height: 1.55; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 12px 28px; background: linear-gradient(180deg, rgba(28,28,28,0.9), transparent); }
+  .brand { font-family: var(--fd); font-size: 18px; text-transform: uppercase; }
+  .brand em { color: var(--red-bright); font-style: normal; }
+  .progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--red); }
+  @supports (animation-timeline: scroll()) {
+    .progress { animation: grow linear both; animation-timeline: scroll(root); }
+    @keyframes grow { to { transform: scaleX(1); } }
+  }
+
+  .scene { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+  .scene .wrap { width: 100%; }
+  .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 10% cover 40%; }
+  @keyframes rise { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .reveal, .progress { animation: none; } .reveal { opacity: 1; transform: none; } .progress { transform: scaleX(var(--progress, 0)); } }
+
+  .kicker { font-family: var(--fd); color: var(--red-bright); font-size: 15px; text-transform: uppercase; letter-spacing: 0.16em; }
+  h1 { font-family: var(--fd); font-size: clamp(64px, 11vw, 140px); line-height: 0.9; text-transform: uppercase; }
+  h1 .ghost { display: block; color: transparent; -webkit-text-stroke: 2px var(--bone); }
+  h2 { font-family: var(--fd); font-size: clamp(46px, 7vw, 84px); text-transform: uppercase; line-height: 0.94; }
+  h2 .ghost { color: transparent; -webkit-text-stroke: 1.5px var(--bone); }
+  .lede { max-width: 560px; color: var(--bone-muted); font-size: 17px; margin-top: 18px; }
+  .cta { display: inline-block; margin-top: 22px; background: var(--red); color: #fff; padding: 13px 28px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; clip-path: polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px); }
+  .status { position: absolute; top: 70px; left: 28px; display: inline-flex; gap: 8px; align-items: center; border: 2px solid var(--red); padding: 6px 14px; font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+
+  /* Sticky split: texto fijo a la izquierda, contenido que corre a la derecha. */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .split .left { position: sticky; top: 100px; }
+  .pcard { border: 1px solid var(--line); border-left: 5px solid var(--red); background: var(--charcoal-2); padding: 22px; margin-bottom: 18px; }
+  .pcard h3 { font-family: var(--fd); font-size: 24px; text-transform: uppercase; }
+  .pcard p { color: var(--bone-muted); font-size: 14px; margin-top: 8px; }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .tag { border: 1px solid var(--line); padding: 2px 10px; font-size: 11px; color: var(--bone-muted); }
+
+  .heat { display: grid; grid-template-columns: repeat(26, 1fr); gap: 3px; margin-top: 16px; }
+  .cell { aspect-ratio: 1; border-radius: 2px; background: rgba(179,43,30,0.12); }
+  .cell.l1 { background: rgba(179,43,30,0.42); } .cell.l2 { background: var(--red); }
+  .cell.l3 { background: var(--red); box-shadow: 0 0 8px rgba(179,43,30,0.6); }
+
+  .certs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 26px; }
+  .cert { border: 1px solid var(--line); border-top: 4px solid var(--red); background: var(--charcoal-2); padding: 16px; }
+  .cert b { font-size: 13.5px; display: block; }
+  .cert span { font-size: 11.5px; color: var(--bone-muted); }
+
+  footer { padding: 40px 28px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--bone-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<header><div class="brand">Eduardo<em>.</em></div><a class="cta" style="padding:8px 18px;font-size:12px" href="#contacto">Contratame</a></header>
+
+<section class="scene" id="inicio">
+  <p class="status"><span class="dot"></span> Disponible · Santa Marta, Colombia</p>
+  <div class="wrap">
+    <p class="kicker reveal">// ingeniero de sistemas · especialización en IA (en curso)</p>
+    <h1 class="reveal">Eduardo Mendoza<span class="ghost">Villar</span></h1>
+    <p class="lede reveal">Conecto la ingeniería de sistemas con la inteligencia artificial aplicada —LLMs, agentes y RAG— para construir sistemas claros, seguros y escalables.</p>
+    <a class="cta reveal" href="#proyectos">Ver proyectos</a>
+  </div>
+</section>
+
+<section class="scene" id="proyectos">
+  <div class="wrap split">
+    <div class="left">
+      <p class="kicker reveal">// proyectos</p>
+      <h2 class="reveal">Proyectos <span class="ghost">reales</span></h2>
+      <p class="lede reveal">Cuatro proyectos en marchando: producción, institución y experimentación — todos verificados con pruebas.</p>
+    </div>
+    <div>
+      <article class="pcard reveal"><h3>SGDI — Ventanilla Única de Radicación</h3><p>Gestión documental institucional para el Hospital Universitario Julio Méndez Barreneche: roles, RAD y trazabilidad, con WCAG AA.</p><div class="tags"><span class="tag">Next.js</span><span class="tag">Auth.js</span><span class="tag">Prisma</span></div></article>
+      <article class="pcard reveal"><h3>Portafolio personal</h3><p>Este sitio: Next.js 16, 122 pruebas automatizadas, Lighthouse 90+, despliegue continuo en Vercel.</p><div class="tags"><span class="tag">Next.js</span><span class="tag">Vercel</span></div></article>
+      <article class="pcard reveal"><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><div class="tags"><span class="tag">React</span><span class="tag">Gemini</span></div></article>
+      <article class="pcard reveal"><h3>Optimizador de Excel</h3><p>Inventario institucional con exportación fiel a Excel verificada celda a celda.</p><div class="tags"><span class="tag">Fastify</span><span class="tag">better-sqlite3</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="actividad">
+  <div class="wrap">
+    <p class="kicker reveal">// actividad</p>
+    <h2 class="reveal">En <span class="ghost">marcha</span></h2>
+    <div class="heat reveal"><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l1"></span><span class="cell"></span><span class="cell"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l2"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell l1"></span><span class="cell"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell"></span><span class="cell l1"></span></div>
+    <p class="lede reveal">19 días con actividad de desarrollo en el último año — cada celda es un día de trabajo real.</p>
+  </div>
+</section>
+
+<section class="scene" id="certificaciones">
+  <div class="wrap">
+    <p class="kicker reveal">// certificaciones</p>
+    <h2 class="reveal">Credenciales <span class="ghost">verificables</span></h2>
+    <div class="certs">
+      <div class="cert reveal"><b>AI Engineer for Developers Associate</b><span>DataCamp</span></div>
+      <div class="cert reveal"><b>AI+ Foundation</b><span>Certificados IT</span></div>
+      <div class="cert reveal"><b>AI Fundamentals</b><span>Google · Coursera</span></div>
+      <div class="cert reveal"><b>Aprende SQL</b><span>midudev</span></div>
+    </div>
+    <a class="cta reveal" href="#contacto">Descargar CV</a>
+  </div>
+</section>
+
+<section class="scene" id="contacto">
+  <div class="wrap">
+    <p class="kicker reveal">// contacto</p>
+    <h2 class="reveal">Hablemos de <span class="ghost">tu proyecto</span></h2>
+    <p class="lede reveal">Suelo responder en menos de 24 horas. También en GitHub y LinkedIn.</p>
+    <a class="cta reveal" href="#">eduardomendozavillar@gmail.com</a>
+  </div>
+</section>
+
+<footer><span>© 2026 Eduardo Mendoza Villar</span><span>GitHub · LinkedIn · Santa Marta, Colombia</span></footer>
+</body>
+</html>

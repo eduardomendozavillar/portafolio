@@ -4,37 +4,30 @@
   "feature": "odd/tasks/portfolio-rebrand.md",
   "artboards": [
     {
-      "file": "01-home.html",
-      "title": "01 · Charcoal/Bone/Red sobrio",
-      "tradeoff": "Identidad única con un solo accent (rojo) y cards discretas; desaprobada por el usuario — se ve plano y low-contrast",
-      "width": 1440,
-      "height": 900
-    },
-    {
-      "file": "02-neon-dashboard.html",
-      "title": "02 · Neon Dashboard (Andrea)",
-      "tradeoff": "Casi negro con violeta/cyan neon y glass cards, heatmap protagonista; pierde el rojo barber como identidad (queda solo en CTAs)",
-      "width": 1440,
-      "height": 900
-    },
-    {
-      "file": "03-bone-poster.html",
-      "title": "03 · Bone Poster (barber alto contraste)",
-      "tradeoff": "Anton gigante tipo poster, bloques alternados bone/charcoal, rojo heavy y stripe barber; máximo punch tipográfico pero más ruidoso",
-      "width": 1440,
-      "height": 900
-    },
-    {
       "file": "05-barber-strict.html",
-      "title": "05 · Barber Strict (solo 3 colores)",
-      "tradeoff": "Estrictamente Charcoal #1C1C1C + Bone #EDE6E0 + Barber Red #B32B1E — sin violeta/cyan; heatmap y marquee en rojo; la identidad más fiel a la paleta elegida",
+      "title": "05 · Barber Strict (implementado actualmente)",
+      "tradeoff": "La dirección en producción local: charcoal/bone/red estrictos con poster hero; reemplazable por las variantes Marco-style si el usuario las aprueba",
       "width": 1440,
       "height": 900
     },
     {
-      "file": "04-neon-poster.html",
-      "title": "04 · Neon Poster (mezcla 02+03)",
-      "tradeoff": "El punch tipográfico del poster (Anton gigante, outline strokes, marquee) con el neón violeta/cyan y el heatmap del dashboard; la más equilibrada de las cuatro",
+      "file": "06-marco-red.html",
+      "title": "06 · Marco Style · Red Edition",
+      "tradeoff": "El lenguaje visual completo de Marco (partículas, dial de foto, terminal, tiles, marquee animado) con la paleta del usuario; es la más fiel a su referencia",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "07-cinema-scroll.html",
+      "title": "07 · Cinema Scroll · Red Edition",
+      "tradeoff": "Escenas full-viewport con reveals scrubbed por scroll nativo; más cinematográfico pero menos denso en contenido por pantalla",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "08-terminal-studio.html",
+      "title": "08 · Terminal Studio · Red Edition",
+      "tradeoff": "Estética terminal/dev con ventanas y prompt whoami; muy nicho y memorable, pero menos convencional para recruiters no técnicos",
       "width": 1440,
       "height": 900
     }

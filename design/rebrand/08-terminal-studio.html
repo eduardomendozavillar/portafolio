@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>08 — Terminal Studio (dev interactivo)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Dirección 08: estudio de desarrollo — estética terminal pro: prompt que
+     escribe solo, ventanas-tarjeta con barra de título, mono para código,
+     interactividad: hover en ventanas + comando easter egg. Paleta estricta. */
+  :root {
+    --charcoal: #1C1C1C; --charcoal-2: #242424; --win: #202020;
+    --bone: #EDE6E0; --bone-muted: rgba(237,230,224,0.72);
+    --line: rgba(237,230,224,0.14); --red: #B32B1E; --red-bright: #ED6A5B;
+    --fd: "Anton", "Arial Narrow", Impact, sans-serif;
+    --fb: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --fm: "Consolas", "JetBrains Mono", "Cascadia Mono", monospace;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body { background: var(--charcoal); color: var(--bone); font-family: var(--fb); line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  header { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 12px 28px; background: var(--charcoal); border-bottom: 3px solid var(--red); }
+  .brand { font-family: var(--fm); font-size: 14px; }
+  .brand b { color: var(--red-bright); }
+  nav { display: flex; gap: 18px; font-family: var(--fm); font-size: 13px; color: var(--bone-muted); }
+  nav a:hover { color: var(--bone); }
+  .cta { background: var(--red); color: #fff; padding: 9px 20px; font-family: var(--fm); font-size: 13px; font-weight: 700; }
+
+  .term { background: #161616; border: 1px solid var(--line); border-radius: 10px; margin: 40px 0; overflow: hidden; box-shadow: 0 20px 60px -30px rgba(0,0,0,0.8); }
+  .bar { display: flex; gap: 7px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: var(--charcoal-2); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
+  .dot.r { background: var(--red); }
+  .bar span { font-family: var(--fm); font-size: 12px; color: var(--bone-muted); margin-left: 8px; }
+  .body { padding: 22px; font-family: var(--fm); font-size: 14.5px; }
+  .prompt { color: var(--red-bright); }
+  .out { color: var(--bone-muted); }
+  .caret { display: inline-block; width: 9px; height: 1.1em; background: var(--bone); vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+
+  .typer { color: var(--bone); }
+  .typer .hl { color: var(--red-bright); }
+
+  section { padding: 30px 0 70px; }
+  .head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
+  .head .cmd { font-family: var(--fm); font-size: 14px; color: var(--red-bright); }
+  .head .cmd b { color: var(--bone); }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .win { background: var(--win); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; transition: transform 180ms, border-color 180ms; }
+  .win:hover { transform: translateY(-4px); border-color: var(--red); }
+  .win .bar { padding: 8px 12px; }
+  .win .body { padding: 18px; font-family: var(--fb); }
+  .win h3 { font-size: 15.5px; font-weight: 800; }
+  .win .num { font-family: var(--fd); color: var(--red-bright); font-size: 15px; }
+  .win p { font-size: 13px; color: var(--bone-muted); margin-top: 6px; }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; font-family: var(--fm); font-size: 11px; color: var(--bone-muted); }
+  .tag { border: 1px solid var(--line); border-radius: 4px; padding: 2px 8px; }
+  .link { display: inline-block; margin-top: 10px; font-family: var(--fm); font-size: 12.5px; color: var(--red-bright); }
+
+  .heat { display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px; margin-top: 12px; }
+  .cell { aspect-ratio: 1; border-radius: 2px; background: rgba(179,43,30,0.12); }
+  .cell.l1 { background: rgba(179,43,30,0.42); } .cell.l2 { background: var(--red); }
+  .cell.l3 { background: var(--red-bright); }
+
+  .skills { display: flex; flex-wrap: wrap; gap: 7px; font-family: var(--fm); font-size: 12.5px; }
+  .sk { border: 1px solid var(--line); border-radius: 4px; padding: 5px 11px; color: var(--bone-muted); transition: all 150ms; }
+  .sk:hover { border-color: var(--red-bright); color: var(--bone); }
+
+  footer { padding: 28px; border-top: 1px solid var(--line); font-family: var(--fm); font-size: 12.5px; color: var(--bone-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  footer a { color: var(--bone); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">eduardo@portfolio<b>:~$</b></div>
+  <nav><a>./inicio</a><a>./proyectos</a><a>./certificaciones</a><a>./contacto</a></nav>
+  <a class="cta" href="#contacto">Contratame</a>
+</header>
+
+<main class="wrap">
+  <div class="term">
+    <div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>eduardo@portfolio — zsh</span></div>
+    <div class="body">
+      <p><span class="prompt">eduardo@portfolio:~$</span> <span class="typer">whoami</span></p>
+      <p class="out" style="margin-top:8px">Ingeniero de Sistemas · Especialización en IA (en curso) · Santa Marta, Colombia</p>
+      <p style="margin-top:14px"><span class="prompt">eduardo@portfolio:~$</span> <span class="typer">cat <span class="hl">perfil.txt</span></span></p>
+      <p class="out" style="margin-top:8px">Conecto la ingeniería de sistemas con la IA aplicada —LLMs, agentes y RAG—<br>para construir sistemas claros, seguros y escalables.</p>
+      <p style="margin-top:14px"><span class="prompt">eduardo@portfolio:~$</span> <span class="typer">status --disponibilidad</span></p>
+      <p class="out" style="margin-top:8px">● Disponible para nuevas oportunidades · respondo en &lt;24h</p>
+      <p style="margin-top:14px"><span class="prompt">eduardo@portfolio:~$</span> <span class="typer">./abrir-proyectos<span class="caret"></span></span></p>
+    </div>
+  </div>
+
+  <section id="proyectos">
+    <div class="head"><span class="cmd">$</span><span class="cmd"><b>ls ./proyectos --featured</b></span></div>
+    <div class="grid">
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>01 · portafolio-personal</span></div><div class="body"><span class="num">01</span><h3>Portafolio personal</h3><p>Orientado a reclutadores: Next.js 16, 122 pruebas, Lighthouse 90+, CI en Vercel.</p><div class="tags"><span class="tag">Next.js</span><span class="tag">Vercel</span></div><a class="link" href="#">cat readme.md →</a></div></article>
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>02 · taller.by</span></div><div class="body"><span class="num">02</span><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><div class="tags"><span class="tag">React</span><span class="tag">Express</span><span class="tag">Gemini</span></div><a class="link" href="#">cat readme.md →</a></div></article>
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>03 · sgdi</span></div><div class="body"><span class="num">03</span><h3>SGDI — Ventanilla Única</h3><p>Gestión documental institucional del Hospital Universitario Julio Méndez Barreneche: roles, RAD y WCAG AA.</p><div class="tags"><span class="tag">Auth.js</span><span class="tag">Prisma</span></div><a class="link" href="#">cat readme.md →</a></div></article>
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>04 · optimizador</span></div><div class="body"><span class="num">04</span><h3>Optimizador de Excel</h3><p>Inventario institucional: importación Excel oficial, ronda anual y exportación verificada celda a celda.</p><div class="tags"><span class="tag">Fastify</span><span class="tag">SQLite</span></div><a class="link" href="#">cat readme.md →</a></div></article>
+    </div>
+  </section>
+
+  <section id="actividad">
+    <div class="head"><span class="cmd">$</span><span class="cmd"><b>git log --último-año --actividad</b></span></div>
+    <div class="term"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>activity.log</span></div><div class="body">
+      <p class="out">19 días con actividad de desarrollo en el último año</p>
+      <div class="heat"><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l1"></span><span class="cell"></span><span class="cell"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span></div>
+    </div></div>
+  </section>
+
+  <section id="certificaciones">
+    <div class="head"><span class="cmd">$</span><span class="cmd"><b>ls ./certificaciones --verificables</b></span></div>
+    <div class="grid">
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>aied.pdf</span></div><div class="body"><h3>AI Engineer for Developers Associate</h3><p style="font-family:var(--fm);font-size:12px">DataCamp</p><a class="link" href="#">verificar →</a></div></article>
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>aiplus.pdf</span></div><div class="body"><h3>AI+ Foundation</h3><p style="font-family:var(--fm);font-size:12px">Certificados IT</p><a class="link" href="#">verificar →</a></div></article>
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>ai-fundamentals.pdf</span></div><div class="body"><h3>AI Fundamentals</h3><p style="font-family:var(--fm);font-size:12px">Google · Coursera</p><a class="link" href="#">verificar →</a></div></article>
+      <article class="win"><div class="bar"><span class="dot r"></span><span class="dot"></span><span class="dot"></span><span>aprende-sql.pdf</span></div><div class="body"><h3>Aprende SQL</h3><p style="font-family:var(--fm);font-size:12px">midudev</p><a class="link" href="#">verificar →</a></div></article>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="head"><span class="cmd">$</span><span class="cmd"><b>stack --instalado</b></span></div>
+    <div class="skills"><span class="sk">TypeScript</span><span class="sk">Next.js</span><span class="sk">React</span><span class="sk">Node.js</span><span class="sk">Express</span><span class="sk">Fastify</span><span class="sk">SQL</span><span class="sk">RAG</span><span class="sk">MCP</span><span class="sk">Docker</span><span class="sk">Vitest</span><span class="sk">Spec-Driven Development</span></div>
+  </section>
+</main>
+
+<footer><span>© 2026 Eduardo Mendoza Villar</span><span><a>GitHub</a> · <a>LinkedIn</a> · <a>Descargar CV</a></span></footer>
+</body>
+</html>

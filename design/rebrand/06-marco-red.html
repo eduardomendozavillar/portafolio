@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>06 — Marco Style · Red Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Dirección 06: el lenguaje visual de Marco Lagunes con la paleta del
+     usuario (charcoal #1C1C1C / bone #EDE6E0 / barber red). Partículas
+     flotantes, Anton gigante con degradado, foto con dial de marcas, terminal
+     whoami, tiles de stack, marquee animado. Reduced-motion: todo estático. */
+  :root {
+    --bg: #161310; --bg-2: #1C1915;
+    --bone: #EDE6E0; --bone-muted: rgba(237,230,224,0.6);
+    --line: rgba(237,230,224,0.12);
+    --red: #B32B1E; --red-bright: #ED6A5B; --red-wash: rgba(179,43,30,0.14);
+    --fd: "Anton", "Arial Narrow", Impact, sans-serif;
+    --fb: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --fm: "Consolas", "JetBrains Mono", monospace;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--bone); font-family: var(--fb); line-height: 1.6; overflow-x: hidden; position: relative; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 30px; position: relative; z-index: 1; }
+
+  /* Partículas de polvo flotante (CSS puro, decorativo). */
+  .dust, .dust::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(2px 2px at 12% 22%, rgba(237,230,224,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 78% 12%, rgba(237,230,224,0.4), transparent),
+      radial-gradient(2.5px 2.5px at 44% 68%, rgba(237,230,224,0.28), transparent),
+      radial-gradient(1.5px 1.5px at 88% 52%, rgba(179,43,30,0.5), transparent),
+      radial-gradient(2px 2px at 22% 82%, rgba(237,230,224,0.3), transparent),
+      radial-gradient(1.5px 1.5px at 60% 38%, rgba(179,43,30,0.35), transparent),
+      radial-gradient(2px 2px at 33% 48%, rgba(237,230,224,0.22), transparent),
+      radial-gradient(1.5px 1.5px at 70% 78%, rgba(237,230,224,0.3), transparent);
+  }
+  .dust::after { transform: translate3d(14px, -10px, 0) scale(1.06); opacity: 0.7; }
+  @media (prefers-reduced-motion: reduce) { .dust, .dust::after { display: none; } }
+  @supports (animation: x) { @media (prefers-reduced-motion: no-preference) {
+    .dust { animation: drift 26s ease-in-out infinite alternate; }
+    .dust::after { animation: drift 34s ease-in-out infinite alternate-reverse; }
+    @keyframes drift { to { transform: translate3d(-18px, 14px, 0); } }
+  } }
+
+  header { position: sticky; top: 0; z-index: 10; background: rgba(22,19,16,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 12px; padding-bottom: 12px; }
+  .logo { font-family: var(--fd); font-size: 15px; letter-spacing: 0.08em; border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; background: var(--bg-2); }
+  .logo em { color: var(--red-bright); font-style: normal; }
+  nav { display: flex; gap: 20px; font-family: var(--fm); font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-muted); }
+  nav a.on { color: var(--bone); border-bottom: 2px solid var(--red-bright); padding-bottom: 3px; }
+  .lang { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font-family: var(--fm); font-size: 12px; color: var(--bone-muted); }
+
+  .hero { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; padding: 90px 0 70px; }
+  .chip { display: inline-flex; gap: 9px; align-items: center; border: 1px solid var(--red-bright); border-radius: 999px; padding: 6px 15px; font-family: var(--fm); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone); }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+  .coords { font-family: var(--fm); font-size: 12px; letter-spacing: 0.1em; color: var(--bone-muted); margin-left: 12px; }
+  h1 { font-family: var(--fd); font-size: clamp(64px, 9.5vw, 118px); line-height: 0.9; text-transform: uppercase; letter-spacing: 0.01em; margin-top: 22px; }
+  h1 .l1 { background: linear-gradient(180deg, #fff 20%, var(--bone) 55%, rgba(237,230,224,0.35) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; display: block; }
+  h1 .l2 { display: block; color: transparent; -webkit-text-stroke: 1.5px rgba(237,230,224,0.45); }
+  .role { display: flex; align-items: center; gap: 12px; margin-top: 20px; font-family: var(--fm); font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red-bright); }
+  .role::before { content: ""; width: 34px; height: 2px; background: var(--red-bright); }
+  h2.thesis { font-family: var(--fb); font-size: 21px; font-weight: 800; line-height: 1.35; color: var(--bone); margin-top: 16px; max-width: 480px; }
+  .bio { color: var(--bone-muted); font-size: 14.5px; max-width: 520px; margin-top: 14px; }
+  .actions { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+  .btn { padding: 12px 22px; border-radius: 8px; font-weight: 700; font-size: 14px; }
+  .btn.primary { background: var(--red); color: #fff; box-shadow: 0 6px 26px -8px rgba(179,43,30,0.6); }
+  .btn.outline { border: 1px solid var(--line); background: var(--bg-2); }
+  .btn.dark { background: #000; border: 1px solid var(--line); }
+  .icons { display: flex; gap: 16px; margin-left: 8px; font-family: var(--fm); font-size: 16px; color: var(--bone-muted); }
+
+  .dial { position: relative; width: min(360px, 90%); aspect-ratio: 1; margin: 0 auto; border-radius: 50%; border: 1px solid rgba(237,230,224,0.25);
+    background: conic-gradient(from 0deg, transparent 0 8deg, rgba(237,230,224,0.35) 8deg 10deg, transparent 10deg 30deg, rgba(237,230,224,0.35) 30deg 32deg, transparent 32deg 60deg, rgba(237,230,224,0.35) 60deg 62deg, transparent 62deg 90deg, rgba(237,230,224,0.35) 90deg 92deg, transparent 92deg 120deg, rgba(237,230,224,0.35) 120deg 122deg, transparent 122deg 150deg, rgba(237,230,224,0.35) 150deg 152deg, transparent 152deg 180deg, rgba(237,230,224,0.35) 180deg 182deg, transparent 182deg 210deg, rgba(237,230,224,0.35) 210deg 212deg, transparent 212deg 240deg, rgba(237,230,224,0.35) 240deg 242deg, transparent 242deg 270deg, rgba(237,230,224,0.35) 270deg 272deg, transparent 272deg 300deg, rgba(237,230,224,0.35) 300deg 302deg, transparent 302deg 330deg, rgba(237,230,224,0.35) 330deg 332deg, transparent 332deg 360deg); }
+  .dial::before { content: ""; position: absolute; inset: 26px; border-radius: 50%; border: 1px solid rgba(237,230,224,0.15); }
+  .dial img { position: absolute; inset: 34px; width: calc(100% - 68px); height: calc(100% - 68px); border-radius: 50%; object-fit: cover; }
+
+  .term { background: #121009; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 30px 80px -40px rgba(0,0,0,0.9); }
+  .term .bar { display: flex; gap: 7px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: rgba(0,0,0,0.35); }
+  .term .b { width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
+  .term .b.r { background: var(--red); }
+  .term .t { font-family: var(--fm); font-size: 12px; color: var(--bone-muted); margin-left: 8px; }
+  .term .body { padding: 18px 20px; font-family: var(--fm); font-size: 13.5px; }
+  .term .p { color: var(--red-bright); }
+  .term .o { color: var(--bone); }
+
+  section { padding: 74px 0; position: relative; z-index: 1; }
+  .eyebrow { font-family: var(--fm); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red-bright); }
+  .eyebrow::after { content: ""; display: inline-block; width: 120px; height: 1px; background: var(--line); vertical-align: middle; margin-left: 16px; }
+  h2 { font-family: var(--fd); font-size: clamp(46px, 7vw, 78px); text-transform: uppercase; line-height: 0.95; margin: 10px 0 34px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .tile { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); aspect-ratio: 1; display: grid; place-items: center; font-family: var(--fm); font-size: 12px; color: var(--bone-muted); text-align: center; padding: 8px; transition: border-color 160ms, transform 160ms; }
+  .tile:hover { border-color: var(--red-bright); transform: translateY(-3px); }
+  .tile b { font-size: 22px; display: block; margin-bottom: 4px; color: var(--bone); }
+
+  .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .ccard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 16px; }
+  .ccard h3 { font-size: 13.5px; font-weight: 800; }
+  .ccard .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; font-family: var(--fm); font-size: 11.5px; }
+  .ccard .tag { border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; color: var(--bone-muted); }
+
+  .pcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pcard { border: 1px solid var(--line); border-left: 4px solid var(--red); border-radius: 12px; background: var(--bg-2); padding: 20px; }
+  .pcard .meta { font-family: var(--fm); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-bright); }
+  .pcard h3 { font-size: 17px; font-weight: 800; margin: 8px 0 6px; }
+  .pcard p { font-size: 13.5px; color: var(--bone-muted); }
+  .pcard .link { display: inline-block; margin-top: 10px; font-family: var(--fm); font-size: 12px; color: var(--red-bright); }
+
+  .marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 10px 0; margin-top: 40px; }
+  .marquee .track { display: flex; gap: 40px; width: max-content; font-family: var(--fd); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--bone-muted); animation: scrollm 30s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .marquee em { color: var(--red-bright); font-style: normal; }
+  @keyframes scrollm { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee .track { animation: none; } }
+
+  .now { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ncard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 18px; }
+  .ncard h3 { font-size: 14.5px; font-weight: 800; margin-bottom: 8px; }
+  .ncard p { font-size: 13.5px; color: var(--bone-muted); }
+
+  footer { padding: 36px 30px; border-top: 1px solid var(--line); font-size: 13px; color: var(--bone-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  footer a { color: var(--bone); text-decoration: underline; text-decoration-color: var(--red-bright); text-underline-offset: 4px; }
+
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .tiles { grid-template-columns: repeat(3, 1fr); } .cards { grid-template-columns: 1fr 1fr; } .pcards, .now { grid-template-columns: 1fr; } nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="dust" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <div class="logo">EV<em>.</em></div>
+    <nav><a class="on">Sobre mí</a><a>Experiencia</a><a>Proyectos</a><a>Educación</a><a>Ahora</a><a>Certificaciones</a><a>Stack</a><a>Contacto</a></nav>
+    <span class="lang">ES</span>
+  </div>
+</header>
+
+<section class="hero wrap" id="inicio">
+  <div>
+    <p class="chip"><span class="dot"></span> Disponible · Santa Marta</p>
+    <h1><span class="l1">Eduardo</span><span class="l2">Mendoza Villar</span></h1>
+    <p class="role">Full-Stack · IA aplicada · RAG</p>
+    <p class="thesis">Ingeniero de sistemas enfocado en IA aplicada: LLMs, arquitecturas RAG y orquestación de agentes.</p>
+    <p class="bio">Experiencia construyendo y desplegando aplicaciones web full-stack, incluido un sistema de gestión documental institucional (SGDI) para el Hospital Universitario Julio Méndez Barreneche. Aplico Spec-Driven Development y pruebas automatizadas.</p>
+    <div class="actions">
+      <a class="btn primary" href="#proyectos">Ver proyectos</a>
+      <a class="btn outline" href="#">⬇ Descargar CV</a>
+      <a class="btn dark" href="#contacto">Contactarme</a>
+      <span class="icons">&lt;/&gt; · ✉ · ◉</span>
+    </div>
+  </div>
+  <div>
+    <div class="dial">
+      <img alt="Foto de perfil de Eduardo Mendoza Villar" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' fill='%23202020'/%3E%3Ccircle cx='128' cy='100' r='44' fill='%23333'/%3E%3Cpath d='M40 256c8-64 48-92 88-92s80 28 88 92z' fill='%23333'/%3E%3C/svg%3E">
+    </div>
+    <div class="term" style="margin-top:22px">
+      <div class="bar"><span class="b r"></span><span class="b"></span><span class="b"></span><span class="t">eduardo@portfolio:~</span></div>
+      <div class="body">
+        <p><span class="p">$ whoami</span></p>
+        <p class="o">Eduardo Mendoza Villar — Full-Stack · IA</p>
+        <p style="margin-top:8px"><span class="p">$</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos" class="wrap">
+  <p class="eyebrow">// proyectos</p>
+  <h2>Proyectos destacados</h2>
+  <div class="pcards">
+    <article class="pcard"><p class="meta">En producción</p><h3>SGDI — Ventanilla Única de Radicación</h3><p>Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA.</p><span class="link">detalle del caso →</span></article>
+    <article class="pcard"><p class="meta">En producción</p><h3>Portafolio personal</h3><p>Este sitio: Next.js 16, 122 pruebas automatizadas, Lighthouse 90+ y despliegue continuo en Vercel.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">En desarrollo</p><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">En desarrollo</p><h3>Optimizador de Excel</h3><p>Inventario institucional: importación desde hojas Excel oficiales, ronda anual y exportación fiel verificada celda a celda.</p><span class="link">verificar →</span></article>
+  </div>
+</section>
+
+<section id="ahora" class="wrap">
+  <p class="eyebrow">// ahora</p>
+  <h2>Ahora mismo</h2>
+  <div class="now">
+    <div class="ncard"><h3>Qué estoy construyendo</h3><p>La especialización en IA y mejoras continuas del SGDI institucional.</p></div>
+    <div class="ncard"><h3>Dónde estoy</h3><p>Santa Marta, Colombia — abierto a remoto e híbrido.</p></div>
+  </div>
+</section>
+
+<section id="certificaciones" class="wrap">
+  <p class="eyebrow">// certificaciones</p>
+  <h2>Certificaciones</h2>
+  <div class="pcards" style="grid-template-columns:1fr 1fr">
+    <article class="pcard"><p class="meta">Vigente</p><h3>AI Engineer for Developers Associate</h3><p>DataCamp · verificar en línea.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">Vigente</p><h3>AI+ Foundation</h3><p>Certificados IT · verificación en línea.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">2026</p><h3>AI Fundamentals</h3><p>Google · Coursera · accomplishments verificados.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">2026</p><h3>Aprende SQL</h3><p>midudev · 29 lecciones, 112 ejercicios, 7 exámenes.</p><span class="link">verificar →</span></article>
+  </div>
+  <p style="margin-top:12px;font-size:13px;color:var(--bone-muted)">Ver todas <b style="color:var(--red-bright)">(+14 certificaciones más)</b></p>
+</section>
+
+<section id="stack" class="wrap">
+  <p class="eyebrow">// stack</p>
+  <h2>Stack técnico</h2>
+  <div class="tiles">
+    <div class="tile"><b>TS</b>TypeScript</div>
+    <div class="tile"><b>Nx</b>Next.js</div>
+    <div class="tile"><b>Re</b>React</div>
+    <div class="tile"><b>No</b>Node.js</div>
+    <div class="tile"><b>Fa</b>Fastify</div>
+    <div class="tile"><b>Pg</b>PostgreSQL</div>
+    <div class="tile"><b>SQL</b>SQLite</div>
+    <div class="tile"><b>FB</b>Firebase</div>
+    <div class="tile"><b>RAG</b>RAG</div>
+    <div class="tile"><b>MCP</b>MCP</div>
+    <div class="tile"><b>Dk</b>Docker</div>
+    <div class="tile"><b>Vc</b>Vercel</div>
+  </div>
+  <div class="cards">
+    <div class="ccard"><h3>Frontend</h3><div class="tags"><span class="tag">Next.js</span><span class="tag">React.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind CSS</span><span class="tag">Angular</span></div></div>
+    <div class="ccard"><h3>Backend</h3><div class="tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Fastify</span><span class="tag">FastAPI</span><span class="tag">APIs REST</span></div></div>
+    <div class="ccard"><h3>IA / Datos</h3><div class="tags"><span class="tag">LLMs locales y cloud</span><span class="tag">RAG</span><span class="tag">Agentes</span><span class="tag">MCP</span><span class="tag">PostgreSQL</span></div></div>
+    <div class="ccard"><h3>Herramientas</h3><div class="tags"><span class="tag">Docker</span><span class="tag">GitHub</span><span class="tag">Vercel</span><span class="tag">CLI</span></div></div>
+    <div class="ccard"><h3>Pruebas</h3><div class="tags"><span class="tag">Vitest</span><span class="tag">Pruebas E2E</span><span class="tag">Spec-Driven Development</span></div></div>
+  </div>
+  <div class="marquee" aria-hidden="true"><div class="track"><span>Next.js <em>·</em> TypeScript <em>·</em> RAG <em>·</em> LLMs <em>·</em> Agentes <em>·</em> SQL <em>·</em> FastAPI <em>·</em> Docker <em>·</em> Vercel <em>·</em>&nbsp;</span><span>Next.js <em>·</em> TypeScript <em>·</em> RAG <em>·</em> LLMs <em>·</em> Agentes <em>·</em> SQL <em>·</em> FastAPI <em>·</em> Docker <em>·</em> Vercel <em>·</em>&nbsp;</span></div></div>
+</section>
+
+<footer><span>© 2026 Eduardo Mendoza Villar</span><span><a>GitHub</a> · <a>LinkedIn</a> · <a>Descargar CV</a> · Santa Marta, Colombia</span></footer>
+</body>
+</html>
