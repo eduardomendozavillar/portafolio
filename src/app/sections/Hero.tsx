@@ -70,11 +70,11 @@ export function Hero() {
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_15%_-5%,rgba(34,211,238,0.08),transparent_55%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_15%_-5%,rgba(179,43,30,0.14),transparent_55%)]"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 opacity-[0.22] [background-image:linear-gradient(to_right,rgba(30,41,59,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,41,59,0.4)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black_0%,transparent_80%)]"
+          className="absolute inset-0 opacity-[0.22] [background-image:linear-gradient(to_right,rgba(237,230,224,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(237,230,224,0.4)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black_0%,transparent_80%)]"
         />
       </ParallaxLayer>
 
