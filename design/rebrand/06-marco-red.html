@@ -108,18 +108,10 @@
   .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
   .tile { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); aspect-ratio: 1; display: grid; place-items: center; align-content: center; gap: 6px; font-family: var(--fm); font-size: 11.5px; color: var(--bone-muted); text-align: center; padding: 10px 6px; transition: border-color 160ms, transform 160ms, box-shadow 160ms; }
   .tile:hover { border-color: var(--red-bright); transform: translateY(-4px); box-shadow: 0 8px 24px -10px rgba(179,43,30,0.5); }
-  .icon { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; font-weight: 900; font-size: 15px; color: #fff; letter-spacing: 0.02em; }
-  .icon svg { width: 22px; height: 22px; }
-  /* Monogramas con el color de cada marca (iconos sin assets externos). */
-  .i-ts { background: #3178C6; } .i-nx { background: #000; outline: 1px solid var(--line); }
-  .i-re { background: #087EA4; } .i-no { background: #539E43; }
-  .i-fa { background: #0B7B5B; } .i-fi { background: #21759B; }
-  .i-pg { background: #336791; } .i-sq { background: #003B57; }
-  .i-fb { background: #FFA000; color: #1a1512; } .i-ra { background: var(--red); }
-  .i-mc { background: #6D4AFF; } .i-dk { background: #1D63ED; }
-  .i-vc { background: #000; outline: 1px solid var(--line); } .i-gm { background: #8E44AD; }
-  .i-aj { background: #DD0031; } .i-tw { background: #06B6D4; color: #0b0b0f; }
-  .i-ex { background: #475569; } .i-vt { background: #729B1B; }
+  /* Iconos de marca: SVG vector inline (sin assets externos). */
+  .icon { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; overflow: hidden; background: rgba(255,255,255,0.04); outline: 1px solid var(--line); }
+  .icon svg { width: 26px; height: 26px; }
+  .tile:hover .icon { outline-color: rgba(237,230,224,0.3); }
 
   .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
   .ccard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 16px; }
@@ -246,24 +238,24 @@
   <p class="eyebrow">// stack</p>
   <h2>Stack técnico</h2>
   <div class="tiles">
-    <div class="tile"><span class="icon i-ts">TS</span>TypeScript</div>
-    <div class="tile"><span class="icon i-nx">N</span>Next.js</div>
-    <div class="tile"><span class="icon i-re">Re</span>React</div>
-    <div class="tile"><span class="icon i-no">No</span>Node.js</div>
-    <div class="tile"><span class="icon i-fi">Fi</span>Fastify</div>
-    <div class="tile"><span class="icon i-ex">Ex</span>Express</div>
-    <div class="tile"><span class="icon i-fa">FA</span>FastAPI</div>
-    <div class="tile"><span class="icon i-pg">Pg</span>PostgreSQL</div>
-    <div class="tile"><span class="icon i-sq">Sq</span>SQLite</div>
-    <div class="tile"><span class="icon i-fb">Fb</span>Firebase</div>
-    <div class="tile"><span class="icon i-gm">Gm</span>Gemini</div>
-    <div class="tile"><span class="icon i-ra">RAG</span>RAG</div>
-    <div class="tile"><span class="icon i-mc">MC</span>MCP</div>
-    <div class="tile"><span class="icon i-dk">Dk</span>Docker</div>
-    <div class="tile"><span class="icon i-vc">Vc</span>Vercel</div>
-    <div class="tile"><span class="icon i-aj">An</span>Angular</div>
-    <div class="tile"><span class="icon i-tw">Tw</span>Tailwind</div>
-    <div class="tile"><span class="icon i-vt">Vt</span>Vitest</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#3178C6"/><path d="M6.7 10.2h2.1V17h1.9v-6.8h2.1V8.5H6.7v1.7zm9-1.9c-1.5 0-2.4.7-2.8 1.4l1.4.9c.3-.5.7-.8 1.3-.8.6 0 1 .3 1 .8 0 .6-.5.8-1.3 1.2-1 .4-2 .9-2 2.3 0 1.3 1 2.2 2.4 2.2.9 0 1.6-.4 2-1.1l-1.3-.8c-.2.4-.5.6-1 .6-.5 0-.8-.3-.8-.7 0-.6.6-.8 1.4-1.2 1-.4 2-.9 2-2.3 0-1.4-1.1-2.5-2.7-2.5z" fill="#fff"/></svg></span>TypeScript</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#000" stroke="rgba(255,255,255,0.25)"/><path d="M8.5 16V8h1.6l4.4 5.7V8h1.5v8h-1.5l-4.5-5.9V16z" fill="#fff"/></svg></span>Next.js</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" stroke-width="1.1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" stroke-width="1.1" transform="rotate(-60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" stroke-width="1.1"/><circle cx="12" cy="12" r="2" fill="#61DAFB"/></svg></span>React</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z" fill="#539E43"/><path d="M9.4 15.5V9h1.4l3.8 5V9H16v6.5h-1.4l-3.9-5.2v5.2z" fill="#fff"/></svg></span>Node.js</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#242938"/><text x="12" y="15.5" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="9" fill="#fff" font-style="italic">ex</text></svg></span>Express</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#0B7B5B"/><path d="M6 17V7h2v8h4v2z" fill="#fff"/><path d="M13 7h2.2l1.6 4.2L18.4 7h2.1l-2.6 7.2c-.3.8-.9 1.3-1.8 1.3h-.9v-1.4h.5l.3-.8z" fill="#fff" opacity="0.85"/></svg></span>Fastify</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#009688"/><path d="M6 16c1.2-4 3-6 4-6.5-.4 2.2.6 3.5 2 3.8 2 .5 3.5-1 5-1.3.5 1.6-1 4.5-3.5 5.5-2.7 1.1-6-.2-7.5-1.5z" fill="#fff"/><circle cx="9" cy="8.5" r="1.6" fill="#fff"/></svg></span>FastAPI</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#336791"/><path d="M12 5.5c-3.2 0-5.5 1.7-5.5 3.9v5.2c0 2.2 2.3 3.9 5.5 3.9s5.5-1.7 5.5-3.9V9.4c0-2.2-2.3-3.9-5.5-3.9z" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M8 9.5c1.5-.8 3-.8 4 0s2.5.8 4 0" fill="none" stroke="#fff" stroke-width="1"/><ellipse cx="12" cy="11.5" rx="3.5" ry="1.4" fill="#fff" opacity="0.9"/></svg></span>PostgreSQL</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#003B57"/><path d="M8 17c-.6-3.2-.4-6 .6-8.5h.4c-.6 2.5-.5 5.3.2 8.5z" fill="#7FB8DF"/><rect x="6.5" y="7" width="11" height="10" rx="1.2" fill="none" stroke="#fff" stroke-width="1.1"/><path d="M10 17c1-3 .8-5.5-.4-7.5" fill="none" stroke="#fff" stroke-width="1"/></svg></span>SQLite</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1512"/><path d="M13.5 2.5l-6.7 11h4.6l-1.4 8 6.8-11.4h-4.6z" fill="#FFA000"/><path d="M16.5 3.5l-4.9 8.3h3.4l-1 5.9 5-8.6h-3.3z" fill="#FFC64D" opacity="0.75"/></svg></span>Firebase</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><defs><linearGradient id="gm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8E44AD"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><rect width="24" height="24" rx="4" fill="#111"/><path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7z" fill="url(#gm)"/></svg></span>Gemini</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1512"/><path d="M4 13c3-6 6-8 9-6 2.4 1.6 1.5 4.5 4 5.2 1.8.5 3-.6 3-2.2 2.2 2.9 1 6.8-2.4 8.6-4.6 2.4-11.2.8-13.6-5.6z" fill="url(#mcg)"/><defs><linearGradient id="mcg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#6D4AFF"/><stop offset="1" stop-color="#C77DFF"/></linearGradient></defs></svg></span>MCP</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1D63ED"/><path d="M13.4 3h-3.2v4.1H6v3.2h4.2v4.1h3.2v-4.1h4.1V7.1h-4.1z" fill="#fff" opacity="0.95"/><path d="M13.4 13.2h3.4v3.4a1.3 1.3 0 01-1.3 1.3h-2.1zM10.2 13.2H6.9v3.4a1.3 1.3 0 001.3 1.3h2z" fill="#fff" opacity="0.7"/></svg></span>Docker</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#000" stroke="rgba(255,255,255,0.2)"/><path d="M12 5l9 15.5H3z" fill="#fff"/></svg></span>Vercel</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><path d="M14.2 2L4.5 13.5h6.2L9.8 22 19.5 10h-6.4z" fill="#DD0031"/><path d="M12 2.5L5 13h4.5z" fill="#C3002F"/><path d="M14.2 2L9.5 13h5L19.5 10z" fill="#FF5252" opacity="0.8"/></svg></span>Angular</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#0b1220"/><path d="M19.6 6.3c1.2 1.7 1.9 3.6 1.7 5.7-.2 3-2.1 5.4-5.1 6.2-2.9.8-5.8-.2-7.3-2 .8-.2 1.9-.4 2.9-.9 2.5-1.2 5.7-3.4 6.4-6.2.4-1.3.3-2.3.1-2.9-.6 1.2-1.5 1.9-2.5 2.1.5.6.8 1.4.8 2.3-1-1.4-2.7-2.2-4.6-1.9-2.9.4-5 2.4-5.3 4.3-.3 2 .8 4 3.2 5.2-2.9 1-6.3-.5-7.6-3.3C1.3 11 3.6 5.5 8.2 4c3.7-1.2 9.3-.6 11.4 2.3z" fill="#38BDF8" opacity="0.9"/><path d="M17.4 10.5c.3 1.5-.4 3-1.9 3.7-2.5 1.2-5.9 3.6-6.6 6.3-.2.9 0 1.7.4 2.3-.9-.4-1.6-1.2-1.9-2.3-.6-2.1.5-5.1 3.4-7 1.9-1.2 4.4-2 6.6-3z" fill="#38BDF8"/></svg></span>Tailwind</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1512"/><path d="M18.6 3.5L9.9 12l-1.7-1.7-3.5 3.5 4.9 4.9 9-9z" fill="#729B1B"/><path d="M12.8 13.8l-2.6 2.5-1.2-1.2 2.6-2.5z" fill="#fff" opacity="0.6"/><path d="M5.5 6l3.6 3.6-1.4 1.4L4.1 7.4z" fill="#BD34FE"/></svg></span>Vitest</div>
+  </div>
   </div>
   <div class="cards">
     <div class="ccard"><h3>Frontend</h3><div class="tags"><span class="tag">Next.js</span><span class="tag">React.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind CSS</span><span class="tag">Angular</span></div></div>

@@ -36,6 +36,18 @@
       "sentAt": "2026-11-21T03:39:17.080Z",
       "resolvedAt": "2026-11-21T03:40:30.471Z",
       "resolution": "Stack: 18 tiles con iconos monograma coloreados por marca; Proyectos: cards interactivas con preview zoom + flechas animadas + hover glow; Fondo: figuras wireframe de nodos (rojo/bone) flotando detrás del contenido."
+    },
+    {
+      "id": "m5f4bxju",
+      "file": "06-marco-red.html",
+      "selector": "#stack",
+      "excerpt": "// STACK STACK TÉCNICO TS TypeScript N Next.js Re React No Node.js Fi Fastify Ex Express FA FastAPI Pg PostgreSQL Sq SQLite Fb Firebase Gm Gemini RAG RAG MC MCP Dk Docker Vc Vercel An Angular Tw Tailwind Vt Vitest Frontend Next.js React.js TypeScript Tailwind CSS Angular Backend Node.js Express Fast",
+      "comment": "los iconos esta cutres podemos mejor esta parte",
+      "createdAt": "2026-11-21T03:43:27.403Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T03:43:27.534Z",
+      "resolvedAt": "2026-11-21T03:44:38.558Z",
+      "resolution": "Iconos monograma reemplazados por SVG vectoriales de marca inline (TypeScript, Next.js, React, Node, Vercel triángulo, Docker, Angular, Tailwind olas, Gemini sparkle, MCP gradiente, Firebase llama, Vitest check…) con tiles más grandes y hover glow."
     }
   ]
 }
