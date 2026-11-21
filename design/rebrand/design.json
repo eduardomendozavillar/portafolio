@@ -25,6 +25,13 @@
       "height": 900
     },
     {
+      "file": "09-proyectos.html",
+      "title": "09 · Proyectos (artboard dedicado para comentar)",
+      "tradeoff": "Solo la sección proyectos en una página corta: fácil de ver y comentar en el canvas sin scrollear el home entero",
+      "width": 1440,
+      "height": 900
+    },
+    {
       "file": "08-terminal-studio.html",
       "title": "08 · Terminal Studio · Red Edition",
       "tradeoff": "Estética terminal/dev con ventanas y prompt whoami; muy nicho y memorable, pero menos convencional para recruiters no técnicos",
