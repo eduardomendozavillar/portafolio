@@ -25,6 +25,27 @@
       "height": 900
     },
     {
+      "file": "10-proyectos-capturas.html",
+      "title": "10 · Proyectos · Capturas protagonistas",
+      "tradeoff": "Las capturas reales son el protagonista de cada card; más impacto visual pero cards más altas",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "11-proyectos-filas.html",
+      "title": "11 · Proyectos · Filas editoriales",
+      "tradeoff": "Filas case-study alternadas con número gigante y captura al costado; elegante y narrativo pero ocupa más scroll",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "12-proyectos-carrusel.html",
+      "title": "12 · Proyectos · Carrusel snap",
+      "tradeoff": "Rail horizontal con scroll-snap nativo (arrastrable); compacto pero esconde 2 proyectos fuera de pantalla",
+      "width": 1440,
+      "height": 900
+    },
+    {
       "file": "09-proyectos.html",
       "title": "09 · Proyectos (artboard dedicado para comentar)",
       "tradeoff": "Solo la sección proyectos en una página corta: fácil de ver y comentar en el canvas sin scrollear el home entero",
