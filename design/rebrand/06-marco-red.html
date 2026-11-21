@@ -343,13 +343,15 @@
   }, { threshold: 0.18 });
   targets.forEach(function (el) { io.observe(el); });
 
-  // Tilt 3D de los tiles (gsap-feel).
+  // Tilt 3D + desplazamiento X-Y de los tiles siguiendo el cursor.
   document.querySelectorAll(".tile").forEach(function (tile) {
     tile.addEventListener("pointermove", function (e) {
       var r = tile.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width - 0.5;
       var y = (e.clientY - r.top) / r.height - 0.5;
-      tile.style.transform = "translateY(-4px) rotateX(" + (-y * 10).toFixed(1) + "deg) rotateY(" + (x * 12).toFixed(1) + "deg)";
+      tile.style.transform =
+        "translate(" + (x * 12).toFixed(1) + "px, " + (y * 12).toFixed(1) + "px)" +
+        " rotateX(" + (-y * 10).toFixed(1) + "deg) rotateY(" + (x * 12).toFixed(1) + "deg)";
     });
     tile.addEventListener("pointerleave", function () { tile.style.transform = ""; });
   });

@@ -191,6 +191,18 @@
       "sentAt": "2026-11-21T04:08:03.507Z",
       "resolvedAt": "2026-11-21T04:08:35.604Z",
       "resolution": "Dial separado de la foto: el ancho de marcas gira horario y luego antihorario (26s alternate); la foto y el arco rojo quedan fijos; reduced-motion lo congela."
+    },
+    {
+      "id": "nnwz166y",
+      "file": "06-marco-red.html",
+      "selector": "#stack",
+      "excerpt": "// STACK STACK TÉCNICO TypeScript Next.js React Node.js ex Express Fastify FastAPI PostgreSQL SQLite Firebase Gemini MCP Docker Vercel Angular Tailwind Vitest Frontend Next.js React.js TypeScript Tailwind CSS Angular Backend Node.js Express Fastify FastAPI APIs REST IA / Datos LLMs locales y cloud R",
+      "comment": "AL PASAR EL MAUSE LAS CAJAS SE MUEBAN EN X - Y",
+      "createdAt": "2026-11-21T04:09:30.019Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T04:09:30.049Z",
+      "resolvedAt": "2026-11-21T04:09:54.486Z",
+      "resolution": "Los tiles ahora se desplazan en X y Y siguiendo el cursor (hasta ±12px por eje) combinado con el tilt 3D; vuelven a su lugar al salir."
     }
   ]
 }
