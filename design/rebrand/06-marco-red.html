@@ -116,7 +116,7 @@
   .icon svg { width: 26px; height: 26px; }
   .tile:hover .icon { outline-color: rgba(237,230,224,0.3); }
 
-  .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; }
   .ccard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 16px; }
   .ccard h3 { font-size: 13.5px; font-weight: 800; }
   .ccard .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; font-family: var(--fm); font-size: 11.5px; }
@@ -125,14 +125,29 @@
   .pcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .pcard { position: relative; overflow: hidden; border: 1px solid var(--line); border-left: 4px solid var(--red); border-radius: 12px; background: var(--bg-2); padding: 20px; transition: transform 200ms, border-color 200ms, box-shadow 200ms; }
   .pcard:hover { transform: translateY(-4px); border-color: var(--red-bright); box-shadow: 0 14px 40px -18px rgba(179,43,30,0.55); }
-  .pcard .shot { position: relative; margin: -20px -20px 14px; aspect-ratio: 16/6.5; background: linear-gradient(135deg, #221f1c, #191613 60%, rgba(179,43,30,0.25)); display: grid; place-items: center; overflow: hidden; }
-  .pcard .shot::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 6px, rgba(0,0,0,0.25) 6px 7px); opacity: 0.4; }
-  .pcard .shot span { font-family: var(--fd); font-size: 26px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(237,230,224,0.85); transition: transform 260ms; }
-  .pcard:hover .shot span { transform: scale(1.08); }
+  .pcard .shot { position: relative; margin: -20px -20px 14px; aspect-ratio: 16/6.5; background: linear-gradient(135deg, #221f1c, #191613 60%, rgba(179,43,30,0.25)); overflow: hidden; }
+  .pcard .shot .chrome { display: flex; gap: 5px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  .pcard .shot .chrome i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .pcard .shot .chrome i:first-child { background: var(--red); }
+  .pcard .shot .skel { padding: 10px 12px; display: grid; gap: 6px; }
+  .pcard .shot .skel i { display: block; height: 7px; border-radius: 3px; background: rgba(237,230,224,0.14); }
+  .pcard .shot .skel i:first-child { width: 55%; background: rgba(179,43,30,0.5); }
+  .pcard .shot .skel i:nth-child(2) { width: 80%; }
+  .pcard .shot .skel i:nth-child(3) { width: 40%; }
+  .pcard:hover .shot .skel i { background: rgba(237,230,224,0.3); }
+  .pcard:hover .shot .skel i:first-child { background: var(--red-bright); }
   .pcard .meta { font-family: var(--fm); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-bright); }
   .pcard h3 { font-size: 17px; font-weight: 800; margin: 8px 0 6px; }
   .pcard p { font-size: 13.5px; color: var(--bone-muted); }
   .pcard .link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--fm); font-size: 12px; color: var(--red-bright); }
+
+  /* Certificaciones interactivas: spotlight rojo que sigue el mouse dentro
+     de cada card + elevación y flecha al hover. */
+  .pcard, .cert { --cx: 50%; --cy: 50%; }
+  .pcard::after, .cert::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 200ms;
+    background: radial-gradient(140px 90px at var(--cx) var(--cy), rgba(179,43,30,0.18), transparent 75%); }
+  .pcard:hover::after, .cert:hover::after { opacity: 1; }
+  .pcard:hover .link i { transform: translateX(5px); }
   .pcard .link i { font-style: normal; display: inline-block; transition: transform 180ms; }
   .pcard:hover .link i { transform: translateX(5px); }
 
@@ -230,10 +245,10 @@
   <p class="eyebrow">// proyectos</p>
   <h2>Proyectos destacados</h2>
   <div class="pcards">
-    <article class="pcard"><div class="shot"><span>SGDI</span></div><p class="meta">En producción</p><h3>SGDI — Ventanilla Única de Radicación</h3><p>Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA.</p><a class="link" href="#">detalle del caso <i>→</i></a></article>
-    <article class="pcard"><div class="shot"><span>Portafolio</span></div><p class="meta">En producción</p><h3>Portafolio personal</h3><p>Este sitio: Next.js 16, 122 pruebas automatizadas, Lighthouse 90+ y despliegue continuo en Vercel.</p><a class="link" href="#">ver en vivo <i>→</i></a></article>
-    <article class="pcard"><div class="shot"><span>Taller.by</span></div><p class="meta">En desarrollo</p><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><a class="link" href="#">verificar <i>→</i></a></article>
-    <article class="pcard"><div class="shot"><span>Optimizador</span></div><p class="meta">En desarrollo</p><h3>Optimizador de Excel</h3><p>Inventario institucional: importación desde hojas Excel oficiales, ronda anual y exportación fiel verificada celda a celda.</p><a class="link" href="#">verificar <i>→</i></a></article>
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En producción</p><h3>SGDI — Ventanilla Única de Radicación</h3><p>Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA.</p><a class="link" href="#">detalle del caso <i>→</i></a></article>
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En producción</p><h3>Portafolio personal</h3><p>Este sitio: Next.js 16, 122 pruebas automatizadas, Lighthouse 90+ y despliegue continuo en Vercel.</p><a class="link" href="#">ver en vivo <i>→</i></a></article>
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En desarrollo</p><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><a class="link" href="#">verificar <i>→</i></a></article>
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En desarrollo</p><h3>Optimizador de Excel</h3><p>Inventario institucional: importación desde hojas Excel oficiales, ronda anual y exportación fiel verificada celda a celda.</p><a class="link" href="#">verificar <i>→</i></a></article>
   </div>
 </section>
 
@@ -286,7 +301,8 @@
     <div class="ccard"><h3>Backend</h3><div class="tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Fastify</span><span class="tag">FastAPI</span><span class="tag">APIs REST</span></div></div>
     <div class="ccard"><h3>IA / Datos</h3><div class="tags"><span class="tag">LLMs locales y cloud</span><span class="tag">RAG</span><span class="tag">Agentes</span><span class="tag">MCP</span><span class="tag">PostgreSQL</span></div></div>
     <div class="ccard"><h3>Herramientas</h3><div class="tags"><span class="tag">Docker</span><span class="tag">GitHub</span><span class="tag">Vercel</span><span class="tag">CLI</span></div></div>
-    <div class="ccard"><h3>Pruebas</h3><div class="tags"><span class="tag">Vitest</span><span class="tag">Pruebas E2E</span><span class="tag">Spec-Driven Development</span></div></div>
+    <div class="ccard"><h3>Pruebas</h3><div class="tags"><span class="tag">Vitest</span><span class="tag">Pruebas E2E</span></div></div>
+    <div class="ccard"><h3>Desarrollo con IA</h3><div class="tags"><span class="tag">ODD</span><span class="tag">RDD</span><span class="tag">MCP</span><span class="tag">Skills</span><span class="tag">Gemini-assisted</span></div></div>
   </div>
   <div class="marquee" aria-hidden="true"><div class="track"><span>Next.js <em>·</em> TypeScript <em>·</em> RAG <em>·</em> LLMs <em>·</em> Agentes <em>·</em> SQL <em>·</em> FastAPI <em>·</em> Docker <em>·</em> Vercel <em>·</em>&nbsp;</span><span>Next.js <em>·</em> TypeScript <em>·</em> RAG <em>·</em> LLMs <em>·</em> Agentes <em>·</em> SQL <em>·</em> FastAPI <em>·</em> Docker <em>·</em> Vercel <em>·</em>&nbsp;</span></div></div>
 </section>
@@ -330,6 +346,15 @@
       tile.style.transform = "translateY(-4px) rotateX(" + (-y * 10).toFixed(1) + "deg) rotateY(" + (x * 12).toFixed(1) + "deg)";
     });
     tile.addEventListener("pointerleave", function () { tile.style.transform = ""; });
+  });
+
+  // Spotlight por tarjeta (certificaciones/proyectos): sigue el mouse.
+  document.querySelectorAll(".cert, .pcard").forEach(function (card) {
+    card.addEventListener("pointermove", function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty("--cx", (e.clientX - r.left) + "px");
+      card.style.setProperty("--cy", (e.clientY - r.top) + "px");
+    });
   });
 
   // Parallax suave en las figuras de fondo (gsap scroll-feel).

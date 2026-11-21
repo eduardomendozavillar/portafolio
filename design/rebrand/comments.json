@@ -108,6 +108,53 @@
       "sentAt": "2026-11-21T03:50:36.002Z",
       "resolvedAt": "2026-11-21T03:51:14.055Z",
       "resolution": "Foto real del perfil incrustada (webp 360px optimizado como data-URI) con tratamiento poster: dial con arco rojo girando, glow interior y ajuste de saturación/contraste."
+    },
+    {
+      "id": "p8upcn1x",
+      "file": "06-marco-red.html",
+      "selector": "#inicio > div:nth-of-type(2) > div:nth-of-type(1) > img",
+      "excerpt": "Foto de perfil de Eduardo Mendoza Villar",
+      "comment": "Gemini_Generated_Image_x1l4csx1l4csx1l4.jpg",
+      "createdAt": "2026-11-21T03:57:03.810Z",
+      "status": "open",
+      "sentAt": "2026-11-21T03:57:03.832Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "jg1wrnt7",
+      "file": "06-marco-red.html",
+      "selector": "#proyectos",
+      "excerpt": "// PROYECTOS PROYECTOS DESTACADOS SGDI EN PRODUCCIÓN SGDI — Ventanilla Única de Radicación Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA. detalle del caso → PORTAFOLIO EN PRODUCCIÓN Portafolio perso",
+      "comment": "pudes plus colocal la vista previa para no ternes 2 veces los nombre",
+      "createdAt": "2026-11-21T03:59:09.708Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T04:01:55.407Z",
+      "resolvedAt": "2026-11-21T04:02:47.985Z",
+      "resolution": "Proyectos: preview tipo mini-navegador sin repetir nombres; Certificaciones: spotlight rojo que sigue el mouse por card + hover con flecha; Stack: SDD fuera y nueva card \"Desarrollo con IA\" (ODD · RDD · MCP · Skills · Gemini-assisted)."
+    },
+    {
+      "id": "6t29gwcm",
+      "file": "06-marco-red.html",
+      "selector": "#certificaciones",
+      "excerpt": "// CERTIFICACIONES CERTIFICACIONES VIGENTE AI Engineer for Developers Associate DataCamp · verificar en línea. verificar → VIGENTE AI+ Foundation Certificados IT · verificación en línea. verificar → 2026 AI Fundamentals Google · Coursera · accomplishments verificados. verificar → 2026 Aprende SQL mi",
+      "comment": "podemos mejorar este apartado con algo interactivo por el clip del mause o solo con pasar el mause por ensima",
+      "createdAt": "2026-11-21T04:00:07.146Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T04:01:55.407Z",
+      "resolvedAt": "2026-11-21T04:02:47.985Z",
+      "resolution": "Proyectos: preview tipo mini-navegador sin repetir nombres; Certificaciones: spotlight rojo que sigue el mouse por card + hover con flecha; Stack: SDD fuera y nueva card \"Desarrollo con IA\" (ODD · RDD · MCP · Skills · Gemini-assisted)."
+    },
+    {
+      "id": "6nv9f3ev",
+      "file": "06-marco-red.html",
+      "selector": "#stack > div:nth-of-type(2) > div:nth-of-type(5)",
+      "excerpt": "Pruebas Vitest Pruebas E2E Spec-Driven Development",
+      "comment": "saca SDD SIGAMOS CON  ODD RDD MCP SKILL TDOO MI ESTACK DE DESARROOLO CON IA",
+      "createdAt": "2026-11-21T04:01:26.084Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T04:01:55.407Z",
+      "resolvedAt": "2026-11-21T04:02:47.985Z",
+      "resolution": "Proyectos: preview tipo mini-navegador sin repetir nombres; Certificaciones: spotlight rojo que sigue el mouse por card + hover con flecha; Stack: SDD fuera y nueva card \"Desarrollo con IA\" (ODD · RDD · MCP · Skills · Gemini-assisted)."
     }
   ]
 }
