@@ -1,31 +1,31 @@
 @import "tailwindcss";
 
 /*
- * Rebrand (portfolio-rebrand) — Neon Dashboard identity (dirección 02):
- * near-black base, violet/cyan neon accents, red reserved for CTAs.
- * Semantic token names stay stable; only values change so components
- * keep using paper / ink / accent utilities.
+ * Rebrand (portfolio-rebrand) — Barber Strict identity (dirección 05,
+ * aprobada): EXACTLY three colors — Charcoal #1C1C1C, Bone #EDE6E0 and
+ * Barber Red #B32B1E. No violet, no cyan. Semantic token names stay stable;
+ * only values change so components keep using paper / ink / accent utilities.
  */
 
 :root {
   /* Surfaces & text */
-  --background: #0b0b0f; /* paper / base */
-  --foreground: #f2f2f7; /* ink */
-  --color-paper: #0b0b0f;
-  --color-paper-raised: #14141c;
-  --color-ink: #f2f2f7;
-  --color-ink-muted: rgba(242, 242, 247, 0.55);
-  --color-line: rgba(255, 255, 255, 0.09);
+  --background: #1c1c1c; /* paper / base (charcoal) */
+  --foreground: #ede6e0; /* ink (bone white) */
+  --color-paper: #1c1c1c;
+  --color-paper-raised: #242424;
+  --color-ink: #ede6e0;
+  --color-ink-muted: rgba(237, 230, 224, 0.62);
+  --color-line: rgba(237, 230, 224, 0.15);
 
-  /* Accent (violet neon) — links, nav activa, focus, chips */
-  --color-accent: #8b5cf6;
-  --color-accent-soft: rgba(139, 92, 246, 0.18);
-  --color-accent-contrast: #0b0b0f;
+  /* Accent (barber red) — the third color that makes it unforgettable */
+  --color-accent: #b32b1e;
+  --color-accent-soft: rgba(179, 43, 30, 0.18);
+  --color-accent-contrast: #ffffff;
 
-  /* Secondary accents */
-  --color-accent-2: #22d3ee; /* cyan: eyebrows, código */
-  --color-accent-2-soft: rgba(34, 211, 238, 0.14);
-  --color-cta: #b32b1e; /* red: solo CTAs de contratación */
+  /* Aliases kept for compatibility (red edition: no secondary hues) */
+  --color-accent-2: #b32b1e;
+  --color-accent-2-soft: rgba(179, 43, 30, 0.18);
+  --color-cta: #b32b1e;
   --color-cta-contrast: #ffffff;
 }
 
@@ -159,6 +159,27 @@
   .preview-retract {
     animation: none;
   }
+}
+
+/**
+ * Activity heatmap (portfolio-rebrand 05): barber-red intensity levels; the
+ * component sets cell size, shape and layout.
+ */
+.level-0 {
+  background: rgba(179, 43, 30, 0.12);
+}
+
+.level-1 {
+  background: rgba(179, 43, 30, 0.42);
+}
+
+.level-2 {
+  background: var(--color-accent);
+}
+
+.level-3 {
+  background: var(--color-accent);
+  box-shadow: 0 0 8px rgba(179, 43, 30, 0.6);
 }
 
 /**

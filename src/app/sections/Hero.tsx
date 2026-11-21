@@ -70,7 +70,7 @@ export function Hero() {
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_-5%,rgba(139,92,246,0.16),transparent_55%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_-5%,rgba(179,43,30,0.18),transparent_55%)]"
         />
         <div
           aria-hidden="true"
@@ -113,12 +113,19 @@ export function Hero() {
                 />
                 Disponible para nuevas oportunidades
               </p>
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-teal">
+              <h1 className="mt-2 font-display text-5xl font-normal uppercase leading-[0.94] tracking-[0.01em] text-ink sm:text-6xl md:text-7xl lg:text-8xl">
+                {profile.name.split(" ").slice(0, -1).join(" ")}{" "}
+                <span className="text-transparent [-webkit-text-stroke:2px_var(--color-ink)]">
+                  {profile.name.split(" ").at(-1)}
+                </span>
+              </h1>
+              <div
+                aria-hidden="true"
+                className="mx-auto h-2.5 w-56 bg-[repeating-linear-gradient(-45deg,var(--color-accent)_0_16px,var(--color-ink)_16px_32px)] md:mx-0"
+              />
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-ink-muted">
                 {profile.role}
               </p>
-              <h1 className="mt-4 bg-gradient-to-r from-white via-accent to-teal bg-clip-text font-display text-4xl font-semibold uppercase tracking-[0.01em] leading-[1.08] text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
-                {profile.name}
-              </h1>
               <div className="mt-6 md:border-l-2 md:border-accent md:pl-6">
                 <p className="mx-auto max-w-2xl text-base leading-7 text-ink-muted md:mx-0 md:text-lg md:leading-8">
                   {before}

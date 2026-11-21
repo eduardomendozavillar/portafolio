@@ -64,7 +64,7 @@ export function ActivityHeatmap() {
       </div>
       <div className="mt-3 flex items-center justify-between text-[11px] text-ink-muted">
         <span>Menos</span>
-        <span className="mx-2 h-1.5 flex-1 rounded-full bg-gradient-to-r from-[rgba(139,92,246,0.12)] via-accent-soft to-accent" />
+        <span className="mx-2 h-1.5 flex-1 rounded-full bg-gradient-to-r from-[rgba(179,43,30,0.12)] via-accent-soft to-accent" />
         <span>Más</span>
       </div>
     </div>
