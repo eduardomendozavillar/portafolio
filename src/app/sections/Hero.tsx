@@ -33,7 +33,7 @@ export function Hero() {
     <section id="inicio" className="relative overflow-hidden border-b border-line">
       <Container className="relative py-20 md:py-24">
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-          <div>
+          <div className="order-2 lg:order-1">
             <p
               data-availability="true"
               data-status-chip="true"
@@ -106,7 +106,7 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center gap-7">
+          <div className="order-1 flex flex-col items-center gap-7 lg:order-2">
             <div className="dial relative mx-auto aspect-square w-full max-w-[360px]">
               <span aria-hidden="true" className="dial-ring" />
               <span aria-hidden="true" className="dial-arc" />
@@ -116,7 +116,6 @@ export function Hero() {
                 alt={`Foto de perfil de ${profile.name}`}
                 width={360}
                 height={360}
-                priority
                 sizes="(min-width: 1024px) 292px, 80vw"
                 className="absolute inset-[34px] h-[calc(100%-68px)] w-[calc(100%-68px)] rounded-full object-cover [filter:saturate(0.88)_contrast(1.08)]"
               />
