@@ -23,11 +23,7 @@ export function SectionHeading({
   return (
     <header className="mb-8 md:mb-10">
       <p className="font-mono text-[13px] text-teal">// {title.toLowerCase()}</p>
-      <h2
-        className={`font-display text-3xl font-normal uppercase tracking-[0.02em] text-ink md:text-4xl ${
-          showLabel ? "mt-2" : ""
-        }`}
-      >
+      <h2 className="mt-2 font-display text-3xl font-normal uppercase tracking-[0.02em] text-ink md:text-4xl">
         {title}
       </h2>
       {description ? (
