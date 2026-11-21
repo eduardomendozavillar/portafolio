@@ -155,6 +155,30 @@
       "sentAt": "2026-11-21T04:01:55.407Z",
       "resolvedAt": "2026-11-21T04:02:47.985Z",
       "resolution": "Proyectos: preview tipo mini-navegador sin repetir nombres; Certificaciones: spotlight rojo que sigue el mouse por card + hover con flecha; Stack: SDD fuera y nueva card \"Desarrollo con IA\" (ODD · RDD · MCP · Skills · Gemini-assisted)."
+    },
+    {
+      "id": "8g6tmjn2",
+      "file": "06-marco-red.html",
+      "selector": "#stack > div:nth-of-type(2) > div:nth-of-type(6) > div",
+      "excerpt": "ODD RDD MCP Skills Gemini-assisted",
+      "comment": "MCP ESTA DOS VECES QUITA UNO",
+      "createdAt": "2026-11-21T04:06:03.756Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T04:07:09.467Z",
+      "resolvedAt": "2026-11-21T04:07:33.076Z",
+      "resolution": "MCP duplicado quitado (queda solo en los tiles del stack); punto verde del chip reemplazado por rojo brillante del tema con halo suave."
+    },
+    {
+      "id": "7lm4mler",
+      "file": "06-marco-red.html",
+      "selector": "#inicio > div:nth-of-type(1) > p:nth-of-type(1) > span",
+      "excerpt": "",
+      "comment": "QUITA EL VERDE PON UN TONO DEL TEMA ACTAL",
+      "createdAt": "2026-11-21T04:06:33.642Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T04:07:09.467Z",
+      "resolvedAt": "2026-11-21T04:07:33.076Z",
+      "resolution": "MCP duplicado quitado (queda solo en los tiles del stack); punto verde del chip reemplazado por rojo brillante del tema con halo suave."
     }
   ]
 }
