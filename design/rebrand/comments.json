@@ -179,6 +179,18 @@
       "sentAt": "2026-11-21T04:07:09.467Z",
       "resolvedAt": "2026-11-21T04:07:33.076Z",
       "resolution": "MCP duplicado quitado (queda solo en los tiles del stack); punto verde del chip reemplazado por rojo brillante del tema con halo suave."
+    },
+    {
+      "id": "d2hccmwi",
+      "file": "06-marco-red.html",
+      "selector": "#inicio > div:nth-of-type(2) > div:nth-of-type(1)",
+      "excerpt": "",
+      "comment": "PODEMOS HACER EL MARCO SE MUEBA GIRE AL SENTIDO DEL RELOG Y LUEGO AL SENTIDO CONTRARIO",
+      "createdAt": "2026-11-21T04:08:03.478Z",
+      "status": "resolved",
+      "sentAt": "2026-11-21T04:08:03.507Z",
+      "resolvedAt": "2026-11-21T04:08:35.604Z",
+      "resolution": "Dial separado de la foto: el ancho de marcas gira horario y luego antihorario (26s alternate); la foto y el arco rojo quedan fijos; reduced-motion lo congela."
     }
   ]
 }
