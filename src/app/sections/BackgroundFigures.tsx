@@ -17,10 +17,10 @@ export function BackgroundFigures() {
         strokeWidth="1.4"
       >
         <path d="M20 180 L110 40 L200 150 L280 30 L200 150 L110 40 L20 180 L280 30" strokeLinejoin="round" />
-        <circle cx="110" cy="40" r="4" fill="#ED6A5B" />
-        <circle cx="280" cy="30" r="3.5" fill="#EDE6E0" />
-        <circle cx="20" cy="180" r="3" fill="#B32B1E" />
-        <circle cx="200" cy="150" r="4" fill="#ED6A5B" />
+        <circle cx="110" cy="40" r="4" fill="var(--color-accent)" />
+        <circle cx="280" cy="30" r="3.5" fill="var(--color-ink)" />
+        <circle cx="20" cy="180" r="3" fill="var(--color-cta)" />
+        <circle cx="200" cy="150" r="4" fill="var(--color-accent)" />
       </svg>
       <svg
         aria-hidden="true"
@@ -32,8 +32,8 @@ export function BackgroundFigures() {
       >
         <path d="M130 10 L250 90 L170 190 L20 150 Z" />
         <path d="M130 10 L170 190 M250 90 L20 150" />
-        <circle cx="130" cy="10" r="3" fill="#EDE6E0" />
-        <circle cx="170" cy="190" r="3" fill="#ED6A5B" />
+        <circle cx="130" cy="10" r="3" fill="var(--color-ink)" />
+        <circle cx="170" cy="190" r="3" fill="var(--color-accent)" />
       </svg>
       <svg
         aria-hidden="true"
@@ -44,9 +44,9 @@ export function BackgroundFigures() {
         strokeWidth="1.3"
       >
         <path d="M10 90 L90 10 L230 60 L160 170 Z" />
-        <circle cx="90" cy="10" r="3" fill="#ED6A5B" />
-        <circle cx="230" cy="60" r="3" fill="#EDE6E0" />
-        <circle cx="160" cy="170" r="3" fill="#B32B1E" />
+        <circle cx="90" cy="10" r="3" fill="var(--color-accent)" />
+        <circle cx="230" cy="60" r="3" fill="var(--color-ink)" />
+        <circle cx="160" cy="170" r="3" fill="var(--color-cta)" />
       </svg>
     </>
   );

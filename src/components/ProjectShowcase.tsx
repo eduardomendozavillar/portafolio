@@ -134,7 +134,7 @@ export function ProjectShowcase({
       data-active-project={active}
       className="pointer-events-none relative hidden md:block md:sticky md:top-28 md:self-start"
     >
-      <div className="pointer-events-auto relative rounded-md border border-line bg-paper-raised shadow-[0_24px_70px_-30px_rgba(179,43,30,0.45)]">
+      <div className="pointer-events-auto relative rounded-md border border-line bg-paper-raised shadow-[0_24px_70px_-30px_rgba(179,38,30,0.45)]">
         {/* Notch barber en la esquina superior derecha. */}
         <span
           aria-hidden="true"

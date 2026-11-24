@@ -1,32 +1,34 @@
 @import "tailwindcss";
 
 /*
- * Rebrand (portfolio-rebrand) — Barber Strict identity (dirección 05,
- * aprobada): EXACTLY three colors — Charcoal #1C1C1C, Bone #EDE6E0 and
- * Barber Red #B32B1E. No violet, no cyan. Semantic token names stay stable;
+ * Rebrand (portfolio-rebrand) — Barber Strict identity (paleta oficial del
+ * aprobada): EXACTLY three colors — Charcoal #1C1C1C, Bone #EDE6DB and
+ * Barber Red #B3261E. No barber red, no cyan. Semantic token names stay stable;
  * only values change so components keep using paper / ink / accent utilities.
  */
 
 :root {
   /* Surfaces & text */
-  --background: #161310; /* paper / base (charcoal cálido, dirección 06) */
-  --foreground: #ede6e0; /* ink (bone white) */
-  --color-paper: #161310;
-  --color-paper-raised: #1c1915;
-  --color-ink: #ede6e0;
-  --color-ink-muted: rgba(237, 230, 224, 0.72);
-  --color-line: rgba(237, 230, 224, 0.15);
+  --background: #1c1c1c; /* paper / base (charcoal black oficial) */
+  --foreground: #ede6db; /* ink (bone white oficial) */
+  --color-paper: #1c1c1c;
+  /* Superficie elevada: paso derivado del charcoal (documentado) para que
+     las cards con borde se distingan del fondo. */
+  --color-paper-raised: #262626;
+  --color-ink: #ede6db;
+  --color-ink-muted: rgba(237, 230, 219, 0.72);
+  --color-line: rgba(237, 230, 219, 0.15);
 
   /* Accent — barber red, lightened for AA text contrast on charcoal
-     (deep #B32B1E remains in --color-cta for fills). */
+     (deep #B3261E remains in --color-cta for fills). */
   --color-accent: #ed6a5b;
-  --color-accent-soft: rgba(179, 43, 30, 0.18);
+  --color-accent-soft: rgba(179, 38, 30, 0.18);
   --color-accent-contrast: #ffffff;
 
   /* Aliases kept for compatibility (red edition: no secondary hues) */
   --color-accent-2: #ed6a5b;
-  --color-accent-2-soft: rgba(179, 43, 30, 0.18);
-  --color-cta: #b32b1e;
+  --color-accent-2-soft: rgba(179, 38, 30, 0.18);
+  --color-cta: #b3261e;
   --color-cta-contrast: #ffffff;
 }
 
@@ -167,11 +169,11 @@
  * component sets cell size, shape and layout.
  */
 .level-0 {
-  background: rgba(179, 43, 30, 0.12);
+  background: rgba(179, 38, 30, 0.12);
 }
 
 .level-1 {
-  background: rgba(179, 43, 30, 0.42);
+  background: rgba(179, 38, 30, 0.42);
 }
 
 .level-2 {
@@ -180,7 +182,7 @@
 
 .level-3 {
   background: var(--color-accent);
-  box-shadow: 0 0 8px rgba(179, 43, 30, 0.6);
+  box-shadow: 0 0 8px rgba(179, 38, 30, 0.6);
 }
 
 /**
@@ -300,7 +302,7 @@
 
 /**
  * Project cards (rebrand 02): glass blocks — translucent raised surface with
- * blur, violet border emphasis on hover + 2px rise, only on hover-capable
+ * blur, barber red border emphasis on hover + 2px rise, only on hover-capable
  * fine pointers.
  */
 .project-card {
