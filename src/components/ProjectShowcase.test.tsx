@@ -142,7 +142,7 @@ describe("ProjectShowcase", () => {
     // Keyed remount layer animates in (globals.css preview-in) unless reduced.
     expect(container.querySelector('[data-showcase-layer]')).toBeTruthy();
 
-    const button = screen.getByRole("button", { name: "Ampliar vista previa de Alpha" });
+    const button = screen.getByRole("button", { name: "Vista previa" });
     expect(button.textContent).toContain("Vista previa");
     fireEvent.click(button);
     // Contract: (project clicked for, event) so the opener can return focus.

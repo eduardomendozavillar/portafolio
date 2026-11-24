@@ -202,6 +202,29 @@
 }
 
 /**
+ * Proyectos filas compactas (rebrand 14): la captura vive SOLO en el panel
+ * sticky; las filas se resaltan (relleno del número, fondo y borde rojo) al
+ * hover y cuando el panel las marca como activas.
+ */
+.project-row { border: 1px solid transparent; border-left-width: 4px; }
+.project-row .row-num { color: transparent; -webkit-text-stroke: 1.5px var(--color-accent); transition: color 160ms, -webkit-text-stroke 160ms; }
+.project-row:hover, .project-row.row-active {
+  background: var(--color-paper-raised);
+  border-color: var(--color-line);
+  border-left-color: var(--color-accent);
+}
+.project-row:hover .row-num, .project-row.row-active .row-num {
+  color: var(--color-accent);
+  -webkit-text-stroke: 0;
+}
+
+/**
+ * Panel showcase plus (rebrand 14): glow ambiental + notch barber ya
+ * definidos por clases del componente; el ancho de ticks gira (ver
+ * .dial-ring más abajo) — la capa preview-in anima el swap.
+ */
+
+/**
  * Ambient background (rebrand 06): floating dust + wireframe node figures
  * drifting slowly. Decorative only; fully static under reduced motion.
  */

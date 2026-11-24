@@ -12,16 +12,20 @@ function prefersReducedMotion(): boolean {
   );
 }
 
+const STATUS_LABEL: Record<string, string> = {
+  production: "En producción",
+  development: "En desarrollo",
+  personal: "Personal",
+};
+
 /**
- * Sticky project showcase (portfolio-motion, showcase-sticky): a desktop-only
- * panel pinned beside the project list whose image follows the active project
- * — the list card whose center sits nearest the viewport center. Swaps use a
- * short fade/slide on a keyed remount layer (globals.css `preview-in`,
- * neutralized under reduced motion).
- *
- * Active tracking is cheap and repaint-safe: one scroll listener over the
- * namespaced `[data-project-card]` nodes set by ProjectList. Projects without
- * screenshots never lead the panel (they have nothing to preview — S5).
+ * Sticky project showcase (portfolio-rebrand 14): the ONLY preview — a panel
+ * pinned beside the compact rows showing the active project's screenshot
+ * (last card whose top crossed the 35% reading line; holds while the list is
+ * visible, retracts before it). Plus layer: ambient glow, corner notch,
+ * progress dots, barber action buttons and a terminal line.
+ * Swaps use a keyed remount layer (globals.css `preview-in`), neutralized
+ * under reduced motion. Projects without screenshots never lead the panel.
  */
 export function ProjectShowcase({
   projects,
@@ -51,9 +55,6 @@ export function ProjectShowcase({
       if (nodes.length === 0 || previewable.length === 0) return;
       const ids = new Set(previewable.map((project) => project.id));
       const viewportHeight = window.innerHeight || 1;
-      // While ANY part of the list is on screen, the panel always holds an
-      // image (user rule); it retracts only when the whole list is below the
-      // viewport — i.e. the section hasn't been reached yet.
       const inView = Array.from(nodes).some(
         (node) => node.getBoundingClientRect().top < viewportHeight,
       );
@@ -61,9 +62,6 @@ export function ProjectShowcase({
         setActive(-1);
         return;
       }
-      // Reading-position scrollspy: the active project is the LAST card whose
-      // top crossed the 35% viewport line. Forward scroll installs the next
-      // project; scrolling back naturally restores the previous one.
       const trigger = viewportHeight * 0.35;
       let best = -1;
       nodes.forEach((node) => {
@@ -72,14 +70,11 @@ export function ProjectShowcase({
         const cardIndex = Number(node.dataset.projectCard ?? -1);
         if (cardIndex > best) best = cardIndex;
       });
-      // `best` indexes the full projects list; map back into previewable.
       const id = best >= 0 ? nodes[best]?.dataset.projectId : undefined;
       const mapped = previewable.findIndex((project) => project.id === id);
       if (mapped >= 0) {
         setActive(mapped);
       } else {
-        // Entered the list without crossing anything yet: hold the first
-        // project (or whatever was already active) instead of retracting.
         setActive((currentActive) => (currentActive >= 0 ? currentActive : 0));
       }
     }
@@ -130,31 +125,67 @@ export function ProjectShowcase({
       data-active-project={active}
       className="pointer-events-none relative hidden md:block md:sticky md:top-28 md:self-start"
     >
-      {/* Panel duplicate of every card's "Vista previa" button, for the
-          pointer users of the sticky panel. Distinct accessible name
-          ("Ampliar …") so assistive tech and tests can tell them apart. */}
-      <div className="pointer-events-auto relative aspect-[16/10] overflow-hidden rounded-md border border-line bg-paper-raised shadow-lg">
-        <div key={current.id} data-showcase-layer="true" className={layerClasses}>
+      <div className="pointer-events-auto relative rounded-md border border-line bg-paper-raised shadow-[0_24px_70px_-30px_rgba(179,43,30,0.45)]">
+        {/* Notch barber en la esquina superior derecha. */}
+        <span
+          aria-hidden="true"
+          className="absolute -right-3 -top-3 h-6 w-6 rounded-tr-md border-r-[3px] border-t-[3px] border-accent"
+        />
+        {/* Dots: cuál de los proyectos está mostrando el panel. */}
+        <div className="flex gap-1.5 px-4 pt-3.5" aria-hidden="true">
+          {previewable.map((project, index) => (
+            <span
+              key={project.id}
+              className={`h-1 w-6 rounded-full ${index === active ? "bg-accent" : "bg-line"}`}
+            />
+          ))}
+        </div>
+        <div
+          key={current.id}
+          data-showcase-layer="true"
+          className={layerClasses}
+        >
           <Image
             src={image.src}
             width={image.width}
             height={image.height}
             alt=""
-            sizes="(min-width: 768px) 320px"
-            className="absolute inset-0 h-full w-full object-cover"
+            sizes="(min-width: 768px) 420px"
+            className="absolute inset-0 h-full w-full object-cover object-top"
           />
-          <span className="absolute left-3 top-3 rounded-full bg-paper/90 px-2.5 py-0.5 text-xs font-medium text-ink">
-            {current.title}
-          </span>
         </div>
-        <button
-          type="button"
-          onClick={(event) => onOpenPreview(current, event)}
-          aria-label={`Ampliar vista previa de ${current.title}`}
-          className="absolute bottom-3 right-3 rounded-md bg-paper/90 px-3 py-1.5 text-sm font-medium text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
-        >
-          <span aria-hidden="true">Vista previa</span>
-        </button>
+        <div className="relative border-t border-line px-4 pb-4 pt-3">
+          <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">
+            {STATUS_LABEL[current.status ?? "development"] ?? "Proyecto"}
+          </p>
+          <p className="mt-1 text-[15px] font-bold text-ink">{current.title}</p>
+          <p className="mt-1 line-clamp-2 text-xs text-ink-muted">
+            {current.summary}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2.5">
+            <button
+              type="button"
+              onClick={(event) => onOpenPreview(current, event)}
+              className="rounded-none bg-cta px-3.5 py-1.5 text-[11.5px] font-extrabold uppercase tracking-[0.05em] text-cta-contrast [clip-path:polygon(7px_0,100%_0,100%_calc(100%-7px),calc(100%-7px)_100%,0_100%,0_7px)]"
+            >
+              Vista previa
+            </button>
+            {current.links?.demo ? (
+              <a
+                href={current.links.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-none bg-ink px-3.5 py-1.5 text-[11.5px] font-extrabold uppercase tracking-[0.05em] text-paper [clip-path:polygon(7px_0,100%_0,100%_calc(100%-7px),calc(100%-7px)_100%,0_100%,0_7px)]"
+              >
+                Ver en vivo
+              </a>
+            ) : null}
+          </div>
+          <p className="mt-3 border-t border-line pt-2 font-mono text-[11px] text-ink-muted">
+            <span className="text-accent">eduardo@portfolio:~$</span> activo:{" "}
+            {current.slug ?? current.id}
+          </p>
+        </div>
       </div>
     </aside>
   );

@@ -398,14 +398,14 @@ describe("ProjectList", () => {
 
     await screen.findAllByText("Portafolio personal");
     fireEvent.click(
-      screen.getByRole("button", { name: "Ampliar vista previa de Portafolio personal" }),
+      screen.getByRole("button", { name: "Vista previa" }),
     );
     expect(screen.getByRole("dialog")).toBeTruthy();
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(
-      screen.getByRole("button", { name: "Ampliar vista previa de Portafolio personal" }),
+      screen.getByRole("button", { name: "Vista previa" }),
     ).toBe(document.activeElement);
   });
 
