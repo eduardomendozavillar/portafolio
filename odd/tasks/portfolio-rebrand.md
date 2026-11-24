@@ -13,6 +13,8 @@ Rebrand completo de la interfaz (decisión del usuario tras análisis de referen
 - S7: Heatmap de actividad con datos GitHub reales (contributions públicas, parse del perfil sin auth; fallback graceful si GitHub no responde).
 - S8: Nada de PII público (sin teléfono); ubicación ciudad OK.
 - S9: Tests y Lighthouse ≥90 en cada slice; revisión visual del usuario antes de push.
+- S10: User: "toquemos el fondo ... llenémoslo un poco más podemos poder el logo tira un diseño solo para el fondo" → watermark "EV." gigante en outline + tira vertical del wordmark en el borde derecho, solo capa de fondo (aria-hidden, pointer-events-none). COMMIT `0f0ec3d`.
+- S11: User: "vamos activar la posibilidad de cambio de idioma de inglés a español" → toggle ES/EN de TODO el sitio (decisión de alcance del usuario: sitio completo), contenido fiel al CV v2, persistente (localStorage), `es` default. Marquee (S12 implícito del reporte "esto se movía?") COMMIT `910a83b`; scrollspy por posición + orden más-trabajado-primero COMMIT `3fa0e03` (S13 del reporte "revisa la parte del scroll... ordenar los proyos con el más trabajado"); sincronía fila-panel COMMIT `95686a3`; paleta oficial exacta COMMIT `3db83a1` (S14 del reporte de auditoría); capturas del Optimizador COMMIT `542a71b`; panel cap en flujo + última sostiene COMMIT `1cdea0e`.
 
 ## Decisions (ask_user) — rebrand 06 implementación
 
@@ -24,6 +26,15 @@ Rebrand completo de la interfaz (decisión del usuario tras análisis de referen
 - D1: Hero "con nuevo accent" (no intacto-cyan).
 - D2: Tipografía "Anton + Manrope".
 - D3: Heatmap "Sí, con datos GitHub".
+
+## Log
+
+- L9 (User): "bello papu solo falta que el con el scrol con cuerde" → sincronía fila-panel.
+- L10 (User): "papu revisa rdd la parte del scroll con los proyectos - posicion - ubicacion con el proyecto tambien vamos a ordenar los proyos con el mas trabajado con condardando con el scroll" → S13.
+- L11 (User): "esto se movia ?" (captura marquee) → el CSS del marquee nunca se commiteó → S12 fix.
+- L12 (User): "sigue pausado" → diagnóstico headless: la animación corre; reduced-motion del SO del usuario las congela (comportamiento por diseño).
+- L13 (User): "toquemos el fondo ... llenémoslo un poco más ... el logo tira un diseño solo para el fondo" → S10.
+- L14 (User): "vamos activar la posibilidad de cambio de idioma de inglés a español" → S11, alcance: sitio completo (ask_user).
 
 ## Tasks
 

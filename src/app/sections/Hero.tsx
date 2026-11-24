@@ -5,9 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
-
-/** Phrase in the thesis line rendered in accent (hero signature). */
-const EMPHASIS_PHRASE = "inteligencia artificial";
+import { useT } from "@/i18n/LanguageProvider";
 
 /**
  * Hero (portfolio-rebrand 06, Marco-style · red edition): split layout —
@@ -17,14 +15,16 @@ const EMPHASIS_PHRASE = "inteligencia artificial";
  * information stays CV-verbatim.
  */
 export function Hero() {
-  const emphasisIndex = profile.tagline.indexOf(EMPHASIS_PHRASE);
+  const t = useT();
+  const tagline = t.hero.tagline;
+  const emphasisIndex = tagline.indexOf(t.hero.emphasis);
   const [before, after] =
     emphasisIndex >= 0
       ? [
-          profile.tagline.slice(0, emphasisIndex),
-          profile.tagline.slice(emphasisIndex + EMPHASIS_PHRASE.length),
+          tagline.slice(0, emphasisIndex),
+          tagline.slice(emphasisIndex + t.hero.emphasis.length),
         ]
-      : [profile.tagline, ""];
+      : [tagline, ""];
   const nameWords = profile.name.split(" ");
   const nameHead = nameWords.slice(0, -1).join(" ");
   const nameTail = nameWords.at(-1) ?? "";
@@ -43,7 +43,7 @@ export function Hero() {
                 aria-hidden="true"
                 className="h-2 w-2 rounded-full bg-accent shadow-[0_0_0_3px_rgba(237,106,91,0.22)]"
               />
-              Disponible para nuevas oportunidades
+              {t.hero.chip}
             </p>
 
             <h1 className="mt-6 font-display text-[clamp(56px,9vw,110px)] font-normal uppercase leading-[0.9] tracking-[0.01em]">
@@ -64,30 +64,27 @@ export function Hero() {
               {before}
               {emphasisIndex >= 0 ? (
                 <em className="font-display font-normal not-italic text-accent">
-                  {EMPHASIS_PHRASE}
+                  {t.hero.emphasis}
                 </em>
               ) : null}
               {after}
             </p>
 
             <p className="mt-4 max-w-[520px] text-[14.5px] leading-7 text-ink-muted">
-              Experiencia construyendo y desplegando aplicaciones web full-stack,
-              incluido un sistema de gestión documental institucional (SGDI)
-              desarrollado de forma personal. Aplico Spec-Driven Development y
-              pruebas automatizadas.
+              {t.hero.subline}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button href="#proyectos">Ver proyectos</Button>
+              <Button href="#proyectos">{t.hero.viewProjects}</Button>
               <Button
                 href="/CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
                 variant="outline"
                 download="CV_Eduardo_Mendoza_Ingeniero_IA.pdf"
               >
-                ⬇ Descargar CV
+                {t.hero.downloadCv}
               </Button>
               <Button href="#contacto" variant="outline" className="bg-black">
-                Contactarme
+                {t.hero.contactMe}
               </Button>
               <ul className="ml-2 flex items-center gap-4 text-sm font-medium text-ink-muted">
                 {socials.map((social) => (
@@ -113,7 +110,7 @@ export function Hero() {
               <span aria-hidden="true" className="dial-glow" />
               <Image
                 src="/images/profile-dial-v7.webp"
-                alt={`Foto de perfil de ${profile.name}`}
+                alt={`${t.hero.photoAltPrefix} ${profile.name}`}
                 width={360}
                 height={360}
                 sizes="(min-width: 1024px) 292px, 80vw"
@@ -132,10 +129,10 @@ export function Hero() {
               </div>
               <div className="px-5 py-4 font-mono text-[13.5px] leading-7">
                 <p>
-                  <span className="text-accent">$ whoami</span>
+                  <span className="text-accent">{t.hero.whoamiPrompt}</span>
                 </p>
                 <p className="text-ink">
-                  {profile.name} — Full-Stack · IA aplicada
+                  {profile.name} — {t.hero.whoamiRole}
                 </p>
                 <p className="mt-1.5 text-ink-muted">
                   <span className="text-accent">$</span>{" "}
