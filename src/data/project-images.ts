@@ -108,5 +108,27 @@ export const projectImages: Record<string, ProjectImage[]> = {
       "width": 1200,
       "height": 547
     }
+  ],
+  "optimizador-excel": [
+    {
+      "src": "/images/projects/optimizador-excel/optimizador-excel-01.webp",
+      "width": 1200,
+      "height": 806
+    },
+    {
+      "src": "/images/projects/optimizador-excel/optimizador-excel-02.webp",
+      "width": 1200,
+      "height": 806
+    },
+    {
+      "src": "/images/projects/optimizador-excel/optimizador-excel-03.webp",
+      "width": 1200,
+      "height": 806
+    },
+    {
+      "src": "/images/projects/optimizador-excel/optimizador-excel-04.webp",
+      "width": 1200,
+      "height": 806
+    }
   ]
 };
