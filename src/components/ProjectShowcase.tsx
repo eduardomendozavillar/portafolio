@@ -99,7 +99,16 @@ export function ProjectShowcase({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects.length]);
 
+  // Sincronía visual: la fila del proyecto activo se resalta (relleno del
+  // número, fondo y borde rojo) en espejo del panel.
   const current = active >= 0 ? previewable[active] : undefined;
+
+  useEffect(() => {
+    const activeId = current?.id;
+    document.querySelectorAll<HTMLElement>("[data-project-card]").forEach((node) => {
+      node.classList.toggle("row-active", activeId !== undefined && node.dataset.projectId === activeId);
+    });
+  }, [current]);
 
   // Nothing crossed the line yet: the panel retracts (no stale cover, no
   // controls, just a quiet hint). It re-installs as soon as the user scrolls
