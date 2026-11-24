@@ -13,6 +13,9 @@ export type Certificate = {
   /** Declared in the CV v2 → featured in the top row. */
   featured?: boolean;
   year?: string;
+  /** English variant (S11): generic copy only; issuer names and real
+   * certificate titles (mostly English already) stay as-is. */
+  en?: Partial<Pick<Certificate, "title">>;
 };
 
 export const certificates: Certificate[] = [
@@ -115,5 +118,6 @@ export const certificates: Certificate[] = [
     title: "Certificación verificada (blockchain)",
     issuer: "certs365",
     url: "https://verify.certs365.io/?=64038b5dbbe7",
+    en: { title: "Verified certification (blockchain)" },
   },
 ];

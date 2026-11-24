@@ -3,6 +3,7 @@
 import type { FormEvent } from "react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { useT } from "@/i18n/LanguageProvider";
 import { submitContact } from "@/lib/api";
 import { HONEYPOT_FIELD } from "@/lib/honeypot";
 
@@ -32,6 +33,7 @@ const fieldClasses =
  * honeypot field (aria-hidden, tabIndex -1) catches bots server-side.
  */
 export function ContactForm() {
+  const t = useT();
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const [values, setValues] = useState<FormValues>(initialValues);
@@ -65,16 +67,14 @@ export function ContactForm() {
 
       setStatus("error");
       setError(
-        response.error ?? "No se pudo enviar el mensaje. Inténtalo de nuevo.",
+        response.error ?? t.sections.contact.errorFallback,
       );
       setTimeout(() => {
         feedbackRef.current?.scrollIntoView?.({ behavior: "smooth", block: "center" });
       }, 0);
     } catch {
       setStatus("error");
-      setError(
-        "No se pudo enviar el mensaje. Revisa tu conexión e inténtalo de nuevo.",
-      );
+      setError(t.sections.contact.errorConnection);
       setTimeout(() => {
         feedbackRef.current?.scrollIntoView?.({ behavior: "smooth", block: "center" });
       }, 0);
@@ -98,7 +98,7 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       noValidate
       className="max-w-2xl"
-      aria-label="Formulario de contacto"
+      aria-label={t.sections.contact.formAria}
     >
       <div ref={feedbackRef}>
         {status === "success" ? (
@@ -106,8 +106,7 @@ export function ContactForm() {
             role="status"
             className="mb-6 rounded-md border border-accent/30 bg-accent-soft px-4 py-3 text-accent"
           >
-            ¡Gracias! Tu mensaje se envió correctamente. Te responderé a la
-            brevedad.
+            {t.sections.contact.success}
           </p>
         ) : null}
 
@@ -124,7 +123,7 @@ export function ContactForm() {
       <div className="space-y-6">
         <div>
           <label htmlFor="nombre" className="mb-2 block text-sm font-medium text-ink">
-            Nombre
+            {t.sections.contact.fields.name}
           </label>
           <input
             id="nombre"
@@ -141,7 +140,7 @@ export function ContactForm() {
 
         <div>
           <label htmlFor="email" className="mb-2 block text-sm font-medium text-ink">
-            Correo electrónico
+            {t.sections.contact.fields.email}
           </label>
           <input
             id="email"
@@ -158,7 +157,7 @@ export function ContactForm() {
 
         <div>
           <label htmlFor="mensaje" className="mb-2 block text-sm font-medium text-ink">
-            Mensaje
+            {t.sections.contact.fields.message}
           </label>
           <textarea
             id="mensaje"
@@ -174,7 +173,7 @@ export function ContactForm() {
 
         {/* Honeypot: hidden from humans and assistive tech, off the tab order. */}
         <div aria-hidden="true" className="sr-only">
-          <label htmlFor={HONEYPOT_FIELD}>No rellenar este campo</label>
+          <label htmlFor={HONEYPOT_FIELD}>{t.sections.contact.fields.honeypot}</label>
           <input
             id={HONEYPOT_FIELD}
             name={HONEYPOT_FIELD}
@@ -187,7 +186,11 @@ export function ContactForm() {
         </div>
 
         <Button type="submit" disabled={submitting || sent}>
-          {submitting ? "Enviando…" : sent ? "Mensaje enviado ✓" : "Enviar mensaje"}
+          {submitting
+            ? t.sections.contact.submitting
+            : sent
+              ? t.sections.contact.sent
+              : t.sections.contact.submit}
         </Button>
       </div>
     </form>

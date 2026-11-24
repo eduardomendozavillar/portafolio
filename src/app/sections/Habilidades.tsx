@@ -1,21 +1,11 @@
+"use client";
+
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { BrandIcon } from "@/components/BrandIcon";
 import { skills, type Skill } from "@/data/skills";
-
-/** Skills grouped by category in first-appearance order. */
-const skillGroups = skills.reduce<Array<{ category: string; items: Skill[] }>>(
-  (groups, skill) => {
-    const group = groups.find((g) => g.category === skill.category);
-    if (group) {
-      group.items.push(skill);
-    } else {
-      groups.push({ category: skill.category, items: [skill] });
-    }
-    return groups;
-  },
-  [],
-);
+import { useLang, useT } from "@/i18n/LanguageProvider";
+import { pickLocalized } from "@/i18n/localize";
 
 /** Highlighted technologies that get a branded icon tile. */
 const HIGHLIGHT = [
@@ -58,10 +48,26 @@ const MARQUEE = [
  * the app shell (data-fx attributes).
  */
 export function Habilidades() {
+  const t = useT();
+  const { lang } = useLang();
+  // Localized first (category names only), then grouped in first-appearance
+  // order — same reduce as before, now over the language-picked entries.
+  const skillGroups = skills
+    .map((skill) => pickLocalized(skill, lang))
+    .reduce<Array<{ category: string; items: Skill[] }>>((groups, skill) => {
+      const group = groups.find((g) => g.category === skill.category);
+      if (group) {
+        group.items.push(skill);
+      } else {
+        groups.push({ category: skill.category, items: [skill] });
+      }
+      return groups;
+    }, []);
+
   return (
     <section id="habilidades" className="border-b border-line">
       <Container className="py-16 md:py-20">
-        <SectionHeading title="Habilidades" />
+        <SectionHeading title={t.sections.skills.title} />
 
         <ul
           className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6"

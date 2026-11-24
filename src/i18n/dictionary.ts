@@ -109,6 +109,46 @@ const es = {
         "Vercel",
       ],
     },
+    certifications: {
+      title: "Certificaciones",
+      description:
+        "Credenciales verificables de mi formación continua en IA, datos y cloud.",
+      verify: "Verificar",
+      viewAll: "Ver todas",
+      viewAllSuffix: "certificaciones más",
+      linkPending: "Link en camino",
+      noPublicLink: "Sin link público",
+    },
+    skills: {
+      title: "Habilidades",
+    },
+    contact: {
+      title: "Contacto",
+      description:
+        "¿Tiene un proyecto en mente o quiere conversar? Escríbame y responderé a la brevedad.",
+      alsoOn: "También en",
+      cvPreface: "Preferís el CV en un documento:",
+      downloadCv: "Descargar CV",
+      formAria: "Formulario de contacto",
+      fields: {
+        name: "Nombre",
+        email: "Correo electrónico",
+        message: "Mensaje",
+        honeypot: "No rellenar este campo",
+      },
+      submit: "Enviar mensaje",
+      submitting: "Enviando…",
+      sent: "Mensaje enviado ✓",
+      success:
+        "¡Gracias! Tu mensaje se envió correctamente. Te responderé a la brevedad.",
+      errorFallback:
+        "No se pudo enviar el mensaje. Inténtalo de nuevo.",
+      errorConnection:
+        "No se pudo enviar el mensaje. Revisa tu conexión e inténtalo de nuevo.",
+    },
+    footer: {
+      rights: "Todos los derechos reservados.",
+    },
   },
 };
 
@@ -213,6 +253,46 @@ const en: typeof es = {
         "Docker",
         "Vercel",
       ],
+    },
+    certifications: {
+      title: "Certifications",
+      description:
+        "Verifiable credentials from my continuing training in AI, data and cloud.",
+      verify: "Verify",
+      viewAll: "View all",
+      viewAllSuffix: "more certifications",
+      linkPending: "Link on the way",
+      noPublicLink: "No public link",
+    },
+    skills: {
+      title: "Skills",
+    },
+    contact: {
+      title: "Contact",
+      description:
+        "Do you have a project in mind or would like to talk? Write to me and I will reply as soon as possible.",
+      alsoOn: "Also on",
+      cvPreface: "Prefer the CV as a document:",
+      downloadCv: "Download CV",
+      formAria: "Contact form",
+      fields: {
+        name: "Name",
+        email: "Email",
+        message: "Message",
+        honeypot: "Do not fill in this field",
+      },
+      submit: "Send message",
+      submitting: "Sending…",
+      sent: "Message sent ✓",
+      success:
+        "Thank you! Your message was sent successfully. I will reply as soon as possible.",
+      errorFallback:
+        "The message could not be sent. Please try again.",
+      errorConnection:
+        "The message could not be sent. Check your connection and try again.",
+    },
+    footer: {
+      rights: "All rights reserved.",
     },
   },
 };
