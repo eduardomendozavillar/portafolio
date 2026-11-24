@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { Header } from "@/app/sections/Header";
+import { Experiencia } from "@/app/sections/Experiencia";
 import { LanguageProvider } from "./LanguageProvider";
 
 /**
@@ -17,6 +18,7 @@ function renderHeader() {
     </LanguageProvider>,
   );
 }
+
 
 afterEach(() => {
   cleanup();
@@ -40,6 +42,24 @@ describe("LanguageProvider (S11 ES/EN toggle)", () => {
     expect(screen.getByRole("link", { name: "Hire me" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Switch language to Spanish" }).textContent).toBe("EN");
     expect(document.documentElement.lang).toBe("en");
+  });
+
+  it("localizes data-driven sections: experience entries read in English", () => {
+    const { getByText, queryByText } = render(
+      <LanguageProvider>
+        <Experiencia />
+      </LanguageProvider>,
+    );
+    expect(getByText("Apoyo administrativo")).toBeTruthy();
+    cleanup();
+    window.localStorage.setItem("ev-lang", "en");
+    render(
+      <LanguageProvider>
+        <Experiencia />
+      </LanguageProvider>,
+    );
+    expect(getByText("Administrative support")).toBeTruthy();
+    expect(queryByText("Apoyo administrativo")).toBeNull();
   });
 
   it("persists the choice: a fresh provider restores EN from localStorage", () => {

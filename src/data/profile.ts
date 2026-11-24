@@ -5,6 +5,8 @@ export type Profile = {
   tagline: string;
   /** Paragraphs rendered in the Sobre mí section. */
   about: string[];
+  /** English variant (S11): faithful mirror, same facts. */
+  en?: Partial<Pick<Profile, "role" | "tagline" | "about">>;
 };
 
 export const profile: Profile = {
@@ -17,4 +19,12 @@ export const profile: Profile = {
     "Aplico metodologías de entrega acelerada y verificación de calidad como Spec-Driven Development y pruebas automatizadas. Me muevo con comodidad entre la infraestructura y el producto: del diagnóstico de hardware y redes a la construcción de aplicaciones web tipadas y mantenibles.",
     "Busco proyectos donde la ingeniería de sistemas y la inteligencia artificial se encuentren para crear soluciones claras, seguras y escalables.",
   ],
+  en: {
+    role: "Systems Engineer · Specialization in Artificial Intelligence (in progress)",
+    about: [
+      "Systems Engineer, graduated 2026, focused on applied AI: integration of LLMs (local and cloud), RAG architectures and agent orchestration. Experience building and deploying full-stack web applications, including an institutional document management system (SGDI) developed independently for the Hospital Universitario Julio Méndez Barreneche.",
+      "I apply accelerated delivery and quality-verification methodologies such as Spec-Driven Development and automated testing. I move comfortably between infrastructure and product: from hardware and network diagnostics to building typed, maintainable web applications.",
+      "I look for projects where systems engineering and artificial intelligence meet to create clear, secure and scalable solutions.",
+    ],
+  },
 };

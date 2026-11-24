@@ -1,15 +1,23 @@
+"use client";
+
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { education } from "@/data/education";
+import { useLang, useT } from "@/i18n/LanguageProvider";
+import { pickLocalized } from "@/i18n/localize";
 
-/** Educación: real CV entries rendered from the typed data. */
+/** Educación: real CV entries rendered from the typed data (ES/EN, S11). */
 export function Educacion() {
+  const t = useT();
+  const { lang } = useLang();
   return (
     <section id="educacion" className="border-b border-line">
       <Container className="py-16 md:py-20">
-        <SectionHeading title="Educación" />
+        <SectionHeading title={t.sections.education} />
         <ol className="max-w-3xl">
-          {education.map((item) => (
+          {education.map((entry) => {
+            const item = pickLocalized(entry, lang);
+            return (
             <li
               key={`${item.institution}-${item.degree}`}
               className="timeline-item border-t border-line py-5 first:border-t-0 md:py-6"
@@ -24,7 +32,8 @@ export function Educacion() {
                 {item.institution}
               </p>
             </li>
-          ))}
+            );
+          })}
         </ol>
       </Container>
     </section>

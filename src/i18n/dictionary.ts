@@ -42,6 +42,25 @@ const es = {
     whoamiPrompt: "$ whoami",
     whoamiRole: "Full-Stack · IA aplicada",
   },
+  sections: {
+    aboutMe: "Sobre mí",
+    experience: "Experiencia",
+    education: "Educación",
+    now: {
+      title: "Ahora",
+      description: "En qué estoy y dónde me encontrás.",
+      building: {
+        title: "Qué estoy construyendo",
+        body:
+          "La Especialización en Inteligencia Artificial y las mejoras continuas del SGDI institucional, junto con la Optimización de Excel en su ronda anual.",
+      },
+      where: {
+        title: "Dónde estoy",
+        body:
+          "Santa Marta, Colombia — abierto a oportunidades remotas e híbridas. Respondo en menos de 24 horas.",
+      },
+    },
+  },
 };
 
 const en: typeof es = {
@@ -78,6 +97,25 @@ const en: typeof es = {
     photoAltPrefix: "Profile photo of",
     whoamiPrompt: "$ whoami",
     whoamiRole: "Full-Stack · Applied AI",
+  },
+  sections: {
+    aboutMe: "About me",
+    experience: "Experience",
+    education: "Education",
+    now: {
+      title: "Now",
+      description: "What I'm working on and where to find me.",
+      building: {
+        title: "What I'm building",
+        body:
+          "The Specialization in Artificial Intelligence and continuous improvements to the institutional SGDI, together with the Excel Optimizer in its annual round.",
+      },
+      where: {
+        title: "Where I am",
+        body:
+          "Santa Marta, Colombia — open to remote and hybrid opportunities. I reply within 24 hours.",
+      },
+    },
   },
 };
 
