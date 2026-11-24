@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useT } from "@/i18n/LanguageProvider";
 import { useEffect, useState } from "react";
 import type { Project } from "@/types/project";
 
@@ -36,6 +37,7 @@ export function ProjectShowcase({
   /** (project, event) — the event lets ProjectList return focus on close. */
   onOpenPreview: (project: Project, event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
+  const t = useT();
   const previewable = projects.filter(
     (project) => (project.images?.length ?? 0) > 0,
   );
@@ -192,7 +194,7 @@ export function ProjectShowcase({
               onClick={(event) => onOpenPreview(current, event)}
               className="rounded-none bg-cta px-3.5 py-1.5 text-[11.5px] font-extrabold uppercase tracking-[0.05em] text-cta-contrast [clip-path:polygon(7px_0,100%_0,100%_calc(100%-7px),calc(100%-7px)_100%,0_100%,0_7px)]"
             >
-              Vista previa
+              {t.sections.projects.preview}
             </button>
             {current.links?.demo ? (
               <a
@@ -201,12 +203,12 @@ export function ProjectShowcase({
                 rel="noopener noreferrer"
                 className="rounded-none bg-ink px-3.5 py-1.5 text-[11.5px] font-extrabold uppercase tracking-[0.05em] text-paper [clip-path:polygon(7px_0,100%_0,100%_calc(100%-7px),calc(100%-7px)_100%,0_100%,0_7px)]"
               >
-                Ver en vivo
+                {t.sections.projects.live}
               </a>
             ) : null}
           </div>
           <p className="mt-3 border-t border-line pt-2 font-mono text-[11px] text-ink-muted">
-            <span className="text-accent">eduardo@portfolio:~$</span> activo:{" "}
+            <span className="text-accent">eduardo@portfolio:~$</span> {t.sections.projects.activeLine}{" "}
             {current.slug ?? current.id}
           </p>
         </div>

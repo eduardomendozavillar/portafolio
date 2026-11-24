@@ -1,9 +1,10 @@
 import type { Project, ProjectStatus } from "@/types/project";
+import { useT } from "@/i18n/LanguageProvider";
 
-const STATUS_LABEL: Record<ProjectStatus, string> = {
-  production: "En producción",
-  development: "En desarrollo",
-  personal: "Personal",
+const STATUS_KEY: Record<ProjectStatus, "production" | "development" | "personal"> = {
+  production: "production",
+  development: "development",
+  personal: "personal",
 };
 
 /**
@@ -26,7 +27,8 @@ export function ProjectCard({
   onPreview?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
   const number = String(index).padStart(2, "0");
-  const statusLabel = project.status ? STATUS_LABEL[project.status] : null;
+  const t = useT();
+  const statusLabel = project.status ? t.sections.projects[STATUS_KEY[project.status]] : null;
 
   return (
     <li
@@ -85,10 +87,10 @@ export function ProjectCard({
               <button
                 type="button"
                 onClick={onPreview}
-                aria-label={`Vista previa de ${project.title}`}
+                aria-label={`${t.sections.projects.previewOf} ${project.title}`}
                 className="text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
               >
-                Vista previa
+                {t.sections.projects.preview}
               </button>
             ) : null}
             {project.links && (project.links.demo || project.links.repo) ? (

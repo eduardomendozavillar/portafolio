@@ -2,6 +2,7 @@ import {
   contributionDays,
   contributionsActiveDays,
 } from "@/data/contributions";
+import { useT } from "@/i18n/LanguageProvider";
 
 /**
  * GitHub activity heatmap (portfolio-rebrand S7, dirección 02 style): one
@@ -10,6 +11,7 @@ import {
  * dataset is empty (generator never ran), renders nothing gracefully.
  */
 export function ActivityHeatmap() {
+  const t = useT();
   if (contributionDays.length === 0) return null;
 
   // Calendar layout: pad the first week so columns align to weekdays.
@@ -33,7 +35,7 @@ export function ActivityHeatmap() {
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <p className="text-sm text-ink-muted">
           <b className="text-lg font-bold text-accent">{contributionsActiveDays}</b>{" "}
-          días con actividad de desarrollo en el último año
+          {t.sections.projects.heatmap.legend}
         </p>
         <a
           href="https://github.com/eduardomendozavillar"
@@ -41,28 +43,28 @@ export function ActivityHeatmap() {
           rel="noopener noreferrer"
           className="text-xs font-medium text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
         >
-          Ver perfil en GitHub
+          {t.sections.projects.heatmap.viewProfile}
         </a>
       </div>
       <div
         className="mt-4 grid auto-cols-min grid-flow-col grid-rows-7 gap-[3px]"
         role="img"
-        aria-label={`Mapa de calor de contribuciones GitHub: ${contributionsActiveDays} días activos`}
+        aria-label={t.sections.projects.heatmap.imgAria.replace("{days}", String(contributionsActiveDays))}
       >
         {weeks.flatMap((week, weekIndex) =>
           week.map((day, dayIndex) => (
             <span
               key={`${weekIndex}-${dayIndex}`}
               className={`h-3 w-3 rounded-[3px] ${day ? levelClass[day.level] : "opacity-0"}`}
-              title={day && day.count > 0 ? `${day.count} contribuciones el ${day.date}` : undefined}
+              title={day && day.count > 0 ? t.sections.projects.heatmap.tooltip.replace("{count}", String(day.count)).replace("{date}", day.date) : undefined}
             />
           )),
         )}
       </div>
       <div className="mt-3 flex items-center justify-between text-[11px] text-ink-muted">
-        <span>Menos</span>
+        <span>{t.sections.projects.heatmap.less}</span>
         <span className="mx-2 h-1.5 flex-1 rounded-full bg-gradient-to-r from-[rgba(179,43,30,0.12)] via-accent-soft to-accent" />
-        <span>Más</span>
+        <span>{t.sections.projects.heatmap.more}</span>
       </div>
     </div>
   );

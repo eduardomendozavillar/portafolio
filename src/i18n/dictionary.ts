@@ -60,6 +60,55 @@ const es = {
           "Santa Marta, Colombia — abierto a oportunidades remotas e híbridas. Respondo en menos de 24 horas.",
       },
     },
+    projects: {
+      title: "Proyectos",
+      description:
+        "Una selección de trabajos que muestran cómo resuelvo problemas reales con fundamentos sólidos.",
+      activity: {
+        title: "Actividad pública reciente",
+        publicRepos: "Repos públicos",
+        since: "Desde",
+      },
+      count: {
+        projects: "proyectos",
+        production: "en producción",
+        development: "en desarrollo",
+      },
+      filterState: "Filtrar proyectos por estado",
+      filterTech: "Filtrar proyectos por tecnología",
+      all: "Todas",
+      production: "En producción",
+      development: "En desarrollo",
+      personal: "Personal",
+      previewOf: "Vista previa de",
+      preview: "Vista previa",
+      live: "Ver en vivo",
+      activeLine: "activo:",
+      states: {
+        loading: "Cargando proyectos dinámicos…",
+        error:
+          "No se pudieron cargar los proyectos dinámicos. Mientras tanto, podés ver el proyecto destacado.",
+      },
+      heatmap: {
+        legend: "días con actividad de desarrollo en el último año",
+        viewProfile: "Ver perfil en GitHub",
+        imgAria: "Mapa de calor de contribuciones GitHub: {days} días activos",
+        tooltip: "{count} contribuciones el {date}",
+        less: "Menos",
+        more: "Más",
+      },
+      marquee: [
+        "Next.js",
+        "TypeScript",
+        "RAG",
+        "LLMs",
+        "Agentes",
+        "SQL",
+        "FastAPI",
+        "Docker",
+        "Vercel",
+      ],
+    },
   },
 };
 
@@ -115,6 +164,55 @@ const en: typeof es = {
         body:
           "Santa Marta, Colombia — open to remote and hybrid opportunities. I reply within 24 hours.",
       },
+    },
+    projects: {
+      title: "Projects",
+      description:
+        "A selection of work showing how I solve real problems on solid foundations.",
+      activity: {
+        title: "Recent public activity",
+        publicRepos: "Public repos",
+        since: "Since",
+      },
+      count: {
+        projects: "projects",
+        production: "in production",
+        development: "in development",
+      },
+      filterState: "Filter projects by status",
+      filterTech: "Filter projects by technology",
+      all: "All",
+      production: "In production",
+      development: "In development",
+      personal: "Personal",
+      previewOf: "Preview of",
+      preview: "Preview",
+      live: "View live",
+      activeLine: "active:",
+      states: {
+        loading: "Loading dynamic projects…",
+        error:
+          "Dynamic projects could not be loaded. In the meantime, you can view the featured project.",
+      },
+      heatmap: {
+        legend: "days with development activity in the last year",
+        viewProfile: "View GitHub profile",
+        imgAria: "GitHub contributions heatmap: {days} active days",
+        tooltip: "{count} contributions on {date}",
+        less: "Less",
+        more: "More",
+      },
+      marquee: [
+        "Next.js",
+        "TypeScript",
+        "RAG",
+        "LLMs",
+        "Agents",
+        "SQL",
+        "FastAPI",
+        "Docker",
+        "Vercel",
+      ],
     },
   },
 };
