@@ -8,6 +8,13 @@ export function BackgroundFigures() {
   return (
     <>
       <div aria-hidden="true" className="bg-dust" />
+      {/* Wordmark de fondo (rebrand: densidad del hero): un "EV." gigante
+          en outline detrás del contenido y una tira vertical en el borde
+          derecho. Solo fondo: nunca intercepta interacción. */}
+      <div aria-hidden="true" className="bg-wordmark">EV.</div>
+      <div aria-hidden="true" className="bg-wordmark-strip">
+        {"EV. · EV. · EV. · EV. · EV. · EV. · EV. · EV."}
+      </div>
       <svg
         aria-hidden="true"
         className="bg-figure bg-figure-1"
