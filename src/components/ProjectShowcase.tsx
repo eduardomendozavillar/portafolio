@@ -55,22 +55,28 @@ export function ProjectShowcase({
       if (nodes.length === 0 || previewable.length === 0) return;
       const ids = new Set(previewable.map((project) => project.id));
       const viewportHeight = window.innerHeight || 1;
-      const inView = Array.from(nodes).some(
-        (node) => node.getBoundingClientRect().top < viewportHeight,
+      // La lista solo está "por debajo" si todas sus cards empiezan tras el
+      // viewport (el usuario todavía no llegó): ahí el panel se retrae.
+      const listBelow = Array.from(nodes).every(
+        (node) => node.getBoundingClientRect().top >= viewportHeight,
       );
-      if (!inView) {
+      if (listBelow) {
         setActive(-1);
         return;
       }
-      const trigger = viewportHeight * 0.35;
-      let best = -1;
-      nodes.forEach((node) => {
+      // Scrollspy alineado a la vista: el activo es la PRIMERA card aún
+      // visible desde arriba (su borde inferior no pasó el borde superior del
+      // viewport). Baja → instala la siguiente cuando la anterior sale;
+      // sube → vuelve a la anterior. Si toda la lista ya quedó arriba, el
+      // último proyecto sostiene el panel.
+      let firstVisible = -1;
+      nodes.forEach((node, index) => {
+        if (firstVisible >= 0) return;
         if (!ids.has(node.dataset.projectId ?? "")) return;
-        if (node.getBoundingClientRect().top > trigger) return;
-        const cardIndex = Number(node.dataset.projectCard ?? -1);
-        if (cardIndex > best) best = cardIndex;
+        if (node.getBoundingClientRect().bottom <= 0) return;
+        firstVisible = index;
       });
-      const id = best >= 0 ? nodes[best]?.dataset.projectId : undefined;
+      const id = firstVisible >= 0 ? nodes[firstVisible]?.dataset.projectId : undefined;
       const mapped = previewable.findIndex((project) => project.id === id);
       if (mapped >= 0) {
         setActive(mapped);
