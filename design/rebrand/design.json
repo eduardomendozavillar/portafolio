@@ -25,6 +25,20 @@
       "height": 900
     },
     {
+      "file": "13-proyectos-sin-panel.html",
+      "title": "13 · Proyectos SIN panel sticky (una vista previa: la captura en cada card)",
+      "tradeoff": "Elimina el panel sticky y su redundancia con las cards; cada card lleva su captura protagonista. La más simple",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "14-proyectos-solo-panel.html",
+      "title": "14 · Proyectos — el panel sticky como única vista previa",
+      "tradeoff": "Elimina las capturas de las cards (vuelven a filas compactas); el panel sticky muestra la captura grande del activo. El original de portfolio-motion",
+      "width": 1440,
+      "height": 900
+    },
+    {
       "file": "10-proyectos-capturas.html",
       "title": "10 · Proyectos · Capturas protagonistas",
       "tradeoff": "Las capturas reales son el protagonista de cada card; más impacto visual pero cards más altas",
