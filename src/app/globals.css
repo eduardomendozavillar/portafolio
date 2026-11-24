@@ -238,6 +238,35 @@
 }
 
 /**
+ * Activity wheel (S15 "plus del plus"): reloj radial de contribuciones.
+ * Mismos niveles que la grilla, en fills SVG; el brillo alto usa el acento
+ * AA-safe. La entrada escala y rota levemente (reduced-motion la mata).
+ */
+.wheel-level-0 { fill: rgba(179, 38, 30, 0.1); }
+.wheel-level-1 { fill: rgba(179, 38, 30, 0.45); }
+.wheel-level-2 { fill: var(--color-cta); }
+.wheel-level-3 { fill: var(--color-accent); }
+.wheel-level-0, .wheel-level-1, .wheel-level-2, .wheel-level-3 {
+  transition: opacity 120ms ease;
+}
+.wheel-level-0:hover, .wheel-level-1:hover, .wheel-level-2:hover, .wheel-level-3:hover {
+  opacity: 0.82;
+}
+.wheel-in {
+  animation: wheel-in 700ms ease-out both;
+}
+@keyframes wheel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) rotate(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/**
  * Panel showcase plus (rebrand 14): glow ambiental + notch barber ya
  * definidos por clases del componente; el ancho de ticks gira (ver
  * .dial-ring más abajo) — la capa preview-in anima el swap.

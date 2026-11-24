@@ -93,6 +93,10 @@ const es = {
       heatmap: {
         legend: "días con actividad de desarrollo en el último año",
         viewProfile: "Ver perfil en GitHub",
+        centerLabel: "días activos",
+        months: ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"],
+        hint: "Tocá un sector de la rueda para ver el día",
+        streak: "racha máx",
         imgAria: "Mapa de calor de contribuciones GitHub: {days} días activos",
         tooltip: "{count} contribuciones el {date}",
         less: "Menos",
@@ -239,6 +243,10 @@ const en: typeof es = {
       heatmap: {
         legend: "days with development activity in the last year",
         viewProfile: "View GitHub profile",
+        centerLabel: "active days",
+        months: ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"],
+        hint: "Tap a wheel sector to see the day",
+        streak: "best streak",
         imgAria: "GitHub contributions heatmap: {days} active days",
         tooltip: "{count} contributions on {date}",
         less: "Less",
