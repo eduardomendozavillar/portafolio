@@ -21,6 +21,36 @@ export const githubActivity = {
 
 export const featuredGitHubProjects: Project[] = [
   withImages({
+    id: "github-optimizador",
+    title: "Optimizador de Excel — Gestión de inventario de activos",
+    slug: "optimizador-excel",
+    summary:
+      "Aplicación web local para gestionar el inventario de activos institucional: importación desde hojas Excel oficiales, asistente de ronda anual área por área y exportación fiel a Excel verificada celda a celda.",
+    description:
+      "Import de hojas Excel oficiales con fidelidad tal-cual (valores por formato), asistente de ronda anual con precarga del año anterior, altas/bajas con validación, exportación Excel verificada celda a celda y reportes HTML solo-públicos; 77 activos gestionados por ronda, guard de cierre de edición 77/77, E2E 19/19 y review RDD nativa aprobada.",
+    technologies: ["Node.js", "Fastify", "better-sqlite3", "React", "Vite", "Tailwind CSS"],
+    status: "development",
+    featured: true,
+    sortOrder: -100,
+    createdAt: "2026-10-22T00:00:00.000Z",
+    updatedAt: "2026-10-22T00:00:00.000Z",
+  }),
+  withImages({
+    id: "github-sgdi",
+    title: "SGDI — Ventanilla Única de Radicación",
+    slug: "sgdi",
+    summary:
+      "Sistema institucional de gestión documental (radicación, bandeja y trazabilidad) para el Hospital Universitario Julio Méndez Barreneche, con autenticación por roles y design system gubernamental.",
+    description:
+      "Sistema de gestión documental institucional en desarrollo: Ventanilla Única de Radicación con login por roles (administración, ventanilla, jurídico y archivo), radicado de documentos con número RAD, bandeja con estados de vencimiento y trazabilidad por expediente, sobre un design system gubernamental propio con accesibilidad WCAG AA.",
+    technologies: ["Next.js", "TypeScript", "Tailwind", "Auth.js", "Prisma", "SQLite"],
+    status: "development",
+    featured: true,
+    sortOrder: -90,
+    createdAt: "2026-10-03T00:00:00.000Z",
+    updatedAt: "2026-10-03T00:00:00.000Z",
+  }),
+  withImages({
     id: "github-portafolio",
     title: "Portafolio personal",
     slug: "portafolio-personal",
@@ -35,7 +65,7 @@ export const featuredGitHubProjects: Project[] = [
     },
     status: "production",
     featured: true,
-    sortOrder: -100,
+    sortOrder: -80,
     createdAt: "2026-08-13T00:00:00.000Z",
     updatedAt: "2026-08-13T00:00:00.000Z",
   }),
@@ -54,38 +84,8 @@ export const featuredGitHubProjects: Project[] = [
     },
     status: "development",
     featured: true,
-    sortOrder: -90,
+    sortOrder: -70,
     createdAt: "2026-08-15T00:00:00.000Z",
     updatedAt: "2026-08-15T00:00:00.000Z",
   }),
-  withImages({
-    id: "github-sgdi",
-    title: "SGDI — Ventanilla Única de Radicación",
-    slug: "sgdi",
-    summary:
-      "Sistema institucional de gestión documental (radicación, bandeja y trazabilidad) para el Hospital Universitario Julio Méndez Barreneche, con autenticación por roles y design system gubernamental.",
-    description:
-      "Sistema de gestión documental institucional en desarrollo: Ventanilla Única de Radicación con login por roles (administración, ventanilla, jurídico y archivo), radicado de documentos con número RAD, bandeja con estados de vencimiento y trazabilidad por expediente, sobre un design system gubernamental propio con accesibilidad WCAG AA.",
-    technologies: ["Next.js", "TypeScript", "Tailwind", "Auth.js", "Prisma", "SQLite"],
-    status: "development",
-    featured: true,
-    sortOrder: -70,
-    createdAt: "2026-10-03T00:00:00.000Z",
-    updatedAt: "2026-10-03T00:00:00.000Z",
-  }),
-  {
-    id: "github-optimizador",
-    title: "Optimizador de Excel — Gestión de inventario de activos",
-    slug: "optimizador-excel",
-    summary:
-      "Aplicación web local para gestionar el inventario de activos institucional: importación desde hojas Excel oficiales, asistente de ronda anual área por área y exportación fiel a Excel verificada celda a celda.",
-    description:
-      "Import de hojas Excel oficiales con fidelidad tal-cual (valores por formato), asistente de ronda anual con precarga del año anterior, altas/bajas con validación, exportación Excel verificada celda a celda y reportes HTML solo-públicos; 77 activos gestionados por ronda, guard de cierre de edición 77/77, E2E 19/19 y review RDD nativa aprobada.",
-    technologies: ["Node.js", "Fastify", "better-sqlite3", "React", "Vite", "Tailwind CSS"],
-    status: "development",
-    featured: true,
-    sortOrder: -60,
-    createdAt: "2026-10-22T00:00:00.000Z",
-    updatedAt: "2026-10-22T00:00:00.000Z",
-  },
 ];

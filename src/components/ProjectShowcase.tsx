@@ -21,7 +21,8 @@ const STATUS_LABEL: Record<string, string> = {
 /**
  * Sticky project showcase (portfolio-rebrand 14): the ONLY preview — a panel
  * pinned beside the compact rows showing the active project's screenshot
- * (last card whose top crossed the 35% reading line; holds while the list is
+ * (card whose center is nearest the viewport center — the row the eye is
+ * reading; holds while the list is
  * visible, retracts before it). Plus layer: ambient glow, corner notch,
  * progress dots, barber action buttons and a terminal line.
  * Swaps use a keyed remount layer (globals.css `preview-in`), neutralized
@@ -55,6 +56,7 @@ export function ProjectShowcase({
       if (nodes.length === 0 || previewable.length === 0) return;
       const ids = new Set(previewable.map((project) => project.id));
       const viewportHeight = window.innerHeight || 1;
+      const mid = viewportHeight / 2;
       // La lista solo está "por debajo" si todas sus cards empiezan tras el
       // viewport (el usuario todavía no llegó): ahí el panel se retrae.
       const listBelow = Array.from(nodes).every(
@@ -64,19 +66,23 @@ export function ProjectShowcase({
         setActive(-1);
         return;
       }
-      // Scrollspy alineado a la vista: el activo es la PRIMERA card aún
-      // visible desde arriba (su borde inferior no pasó el borde superior del
-      // viewport). Baja → instala la siguiente cuando la anterior sale;
-      // sube → vuelve a la anterior. Si toda la lista ya quedó arriba, el
-      // último proyecto sostiene el panel.
-      let firstVisible = -1;
+      // Scrollspy por posición: el activo es la card cuyo CENTRO está más
+      // cerca del centro del viewport — la fila que el ojo está leyendo.
+      // Baja → cambia cuando el centro de la siguiente se acerca más que el
+      // de la actual; sube → vuelve a la anterior. Si toda la lista ya quedó
+      // arriba, el último proyecto sostiene el panel.
+      let nearest = -1;
+      let nearestDistance = Number.POSITIVE_INFINITY;
       nodes.forEach((node, index) => {
-        if (firstVisible >= 0) return;
         if (!ids.has(node.dataset.projectId ?? "")) return;
-        if (node.getBoundingClientRect().bottom <= 0) return;
-        firstVisible = index;
+        const rect = node.getBoundingClientRect();
+        const distance = Math.abs(rect.top + rect.height / 2 - mid);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearest = index;
+        }
       });
-      const id = firstVisible >= 0 ? nodes[firstVisible]?.dataset.projectId : undefined;
+      const id = nearest >= 0 ? nodes[nearest]?.dataset.projectId : undefined;
       const mapped = previewable.findIndex((project) => project.id === id);
       if (mapped >= 0) {
         setActive(mapped);

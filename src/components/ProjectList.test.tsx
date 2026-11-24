@@ -382,9 +382,10 @@ describe("ProjectList", () => {
     expect(await screen.findByText("Alpha")).toBeTruthy();
     const panel = document.querySelector("[data-active-project]") as HTMLElement;
     expect(panel.getAttribute("data-active-project")).toBe("0");
-    // No scroll happens in the test: previewable[0] is the first featured
-    // project with screenshots (Portafolio personal) after the merge.
-    expect((panel.querySelector("img")?.getAttribute("src") ?? "").includes("portafolio-personal-01")).toBe(
+    // No scroll happens in the test: previewable[0] is the most-worked
+    // featured project with screenshots (Optimizador de Excel) after the
+    // most-worked-first reorder.
+    expect((panel.querySelector("img")?.getAttribute("src") ?? "").includes("optimizador-excel-01")).toBe(
       true,
     );
     // Imageless cards never lead the panel (S5) and Alpha (fixture, no cover
