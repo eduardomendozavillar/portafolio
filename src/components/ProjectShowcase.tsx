@@ -80,6 +80,9 @@ export function ProjectShowcase({
       const mapped = previewable.findIndex((project) => project.id === id);
       if (mapped >= 0) {
         setActive(mapped);
+      } else if (nodes[0].getBoundingClientRect().bottom < 0) {
+        // Toda la lista ya quedó arriba (scroll pasado): el último sostiene.
+        setActive(previewable.length - 1);
       } else {
         setActive((currentActive) => (currentActive >= 0 ? currentActive : 0));
       }
@@ -123,8 +126,8 @@ export function ProjectShowcase({
   const image = current.images[0];
 
   const layerClasses = reducedMotion
-    ? "absolute inset-0"
-    : "preview-layer-in absolute inset-0";
+    ? ""
+    : "preview-layer-in";
 
   return (
     <aside
@@ -157,7 +160,7 @@ export function ProjectShowcase({
             height={image.height}
             alt=""
             sizes="(min-width: 768px) 420px"
-            className="absolute inset-0 h-full w-full object-cover object-top"
+            className="h-auto w-full object-cover object-top"
           />
         </div>
         <div className="relative border-t border-line px-4 pb-4 pt-3">

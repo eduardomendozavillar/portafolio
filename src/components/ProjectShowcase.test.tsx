@@ -90,7 +90,7 @@ describe("ProjectShowcase", () => {
     expect(container.querySelector('[data-active-project="0"]')).toBeTruthy();
   });
 
-  it("switches the panel to the card nearest the viewport center on scroll", () => {
+  it("installs the first card still visible at the top on scroll", () => {
     Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
     let offset = 0;
     Object.defineProperty(window, "scrollY", { get: () => offset, configurable: true });
@@ -119,16 +119,23 @@ describe("ProjectShowcase", () => {
       </>,
     );
 
-    // After scrolling 600px, card tops become 0/300/600: centers 150/450/750 —
-    // viewport center 500 → nearest is Beta (450).
+    // Nueva regla (rebrand 14): activo = la PRIMERA card aún visible desde
+    // arriba. Tras 600px, tops 0/300/600 → la primera es Alpha.
     offset = 600;
     fireEvent.scroll(document);
 
     expect(
-      container.querySelector('[data-active-project="1"]'),
+      container.querySelector('[data-active-project="0"]'),
     ).toBeTruthy();
     const img = container.querySelector("img") as HTMLImageElement;
-    expect((img.getAttribute("src") ?? "").includes("beta-01")).toBe(true);
+    expect((img.getAttribute("src") ?? "").includes("alpha-01")).toBe(true);
+
+    // Al seguir bajando (Alpha sale por arriba), Beta toma el panel.
+    offset = 900;
+    fireEvent.scroll(document);
+    expect(
+      container.querySelector('[data-active-project="1"]'),
+    ).toBeTruthy();
   });
 
   it("panels are swapped with an animated layer and offer a Vista previa control", () => {
@@ -228,11 +235,15 @@ describe("ProjectShowcase", () => {
       </>,
     );
 
-    offset = 600; // tops 0 / 300 / 600 → Beta is the last above the line
+    offset = 600; // tops 0 / 300 / 600 → Alpha sigue encabezando (primera visible)
+    fireEvent.scroll(document);
+    expect(container.querySelector('[data-active-project="0"]')).toBeTruthy();
+
+    offset = 900; // Alpha sale por arriba → Beta toma el panel
     fireEvent.scroll(document);
     expect(container.querySelector('[data-active-project="1"]')).toBeTruthy();
 
-    offset = 300; // reverse: tops 300 / 600 / 900 → only Alpha crossed again
+    offset = 300; // reverse: Alpha vuelve a encabezar
     fireEvent.scroll(document);
     expect(container.querySelector('[data-active-project="0"]')).toBeTruthy();
     const img = container.querySelector("img") as HTMLImageElement;
