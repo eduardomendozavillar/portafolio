@@ -27,6 +27,10 @@ Rebrand completo de la interfaz (decisión del usuario tras análisis de referen
 - D2: Tipografía "Anton + Manrope".
 - D3: Heatmap "Sí, con datos GitHub".
 
+## Decisions (S11 i18n)
+
+- D8: Toggle ES/EN de sitio completo por **diccionario client-side** (sin routing): `src/i18n/dictionary.ts` (es = fuente de verdad verbatim, `en` espejo fiel tipado con `const en: typeof es`), `LanguageProvider` (localStorage `ev-lang`, default `es`, `<html lang>` sincronizado), `useT()`/`pickLocalized()`; datos con campo opcional `en` (proper nouns/tech/links sin traducir). Unidades: A core+header+hero `293e0b9`, B narrativas `c110088`, C proyectos+heatmap `a02f344` (+hotfix `"use client"` en ActivityHeatmap `168299c`), D certificaciones+habilidades+contacto+footer `4f07a1d` (worker gentle-ai-worker; ContactForm client-side SÍ, strings server-side de la API quedan en español — la API no conoce el idioma del visitante).
+
 ## Log
 
 - L9 (User): "bello papu solo falta que el con el scrol con cuerde" → sincronía fila-panel.
@@ -44,6 +48,10 @@ Rebrand completo de la interfaz (decisión del usuario tras análisis de referen
 - T4 (S6): `src/data/certificates.ts` (18 items: 4 featured del CV + 14 en expandible) + sección `// certificaciones` con `<details>` nativo, nav y palette actualizadas. Commit: `8e6779d`.
 - T5 (S7): heatmap con datos REALES via `gh` CLI GraphQL (82 contribuciones, 19 días activos → src/data/contributions.ts generado por scripts/fetch-contributions.mjs; sin tokens en la app). Commit: `ddadfb3`.
 - T6 (S9): gates por slice + Lighthouse móvil ≥90 + revisión visual del usuario + push (decisión del usuario).
+
+## Decisions (S11 i18n)
+
+- D8: Toggle ES/EN de sitio completo por **diccionario client-side** (sin routing): `src/i18n/dictionary.ts` (es = fuente de verdad verbatim, `en` espejo fiel tipado con `const en: typeof es`), `LanguageProvider` (localStorage `ev-lang`, default `es`, `<html lang>` sincronizado), `useT()`/`pickLocalized()`; datos con campo opcional `en` (proper nouns/tech/links sin traducir). Unidades: A core+header+hero `293e0b9`, B narrativas `c110088`, C proyectos+heatmap `a02f344` (+hotfix `"use client"` en ActivityHeatmap `168299c`), D certificaciones+habilidades+contacto+footer `4f07a1d` (worker gentle-ai-worker; ContactForm client-side SÍ, strings server-side de la API quedan en español — la API no conoce el idioma del visitante).
 
 ## Log
 
