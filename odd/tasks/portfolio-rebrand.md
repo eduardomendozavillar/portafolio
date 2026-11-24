@@ -33,6 +33,8 @@ Rebrand completo de la interfaz (decisión del usuario tras análisis de referen
 
 ## Log
 
+- L15 (User): "LISTO PAPU DESPLIEGA" → merge a master (`0382ef7`, 60 commits de feature) + push + verificación producción: DEPLOY READY, marcadores SSR OK (Contratame, Optimizador de Excel primero, bg-wordmark, profile-dial-v7, row-num). S11 COMPLETA. S10 COMPLETA (0f0ec3d).
+
 - L9 (User): "bello papu solo falta que el con el scrol con cuerde" → sincronía fila-panel.
 - L10 (User): "papu revisa rdd la parte del scroll con los proyectos - posicion - ubicacion con el proyecto tambien vamos a ordenar los proyos con el mas trabajado con condardando con el scroll" → S13.
 - L11 (User): "esto se movia ?" (captura marquee) → el CSS del marquee nunca se commiteó → S12 fix.
