@@ -26,11 +26,13 @@ afterEach(() => {
 });
 
 describe("LanguageProvider (S11 ES/EN toggle)", () => {
-  it("defaults to Spanish: nav reads Inicio/Sobre mí and the pill is ES", () => {
+  it("defaults to Spanish: nav reads Inicio/Sobre mí and ES is the pressed option", () => {
     renderHeader();
     expect(screen.getByRole("link", { name: "Inicio" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Sobre mí" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Cambiar idioma a inglés" }).textContent).toBe("ES");
+    const esButton = screen.getByRole("button", { name: "Idioma actual: español" });
+    expect(esButton.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByRole("button", { name: "Cambiar idioma a inglés" }).textContent).toBe("EN");
     expect(document.documentElement.lang).toBe("es");
   });
 
@@ -40,7 +42,7 @@ describe("LanguageProvider (S11 ES/EN toggle)", () => {
     expect(screen.getByRole("link", { name: "Home" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "About me" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Hire me" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Switch language to Spanish" }).textContent).toBe("EN");
+    expect(screen.getByRole("button", { name: "Switch language to Spanish" }).getAttribute("aria-pressed")).toBe("true");
     expect(document.documentElement.lang).toBe("en");
   });
 

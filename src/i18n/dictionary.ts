@@ -27,6 +27,7 @@ const es = {
     closeMenu: "Cerrar menú",
     langLabel: "ES",
     langAria: "Cambiar idioma a inglés",
+    langSelfEs: "Idioma actual: español",
   },
   hero: {
     chip: "Disponible para nuevas oportunidades",
@@ -172,6 +173,7 @@ const en: typeof es = {
     closeMenu: "Close menu",
     langLabel: "EN",
     langAria: "Switch language to Spanish",
+    langSelfEs: "Current language: English",
     },
   hero: {
     chip: "Available for new opportunities",

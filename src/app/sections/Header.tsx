@@ -153,14 +153,34 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <button
-            type="button"
-            onClick={() => setLang(lang === "es" ? "en" : "es")}
-            aria-label={t.header.langAria}
-            className="hidden rounded-lg border border-line px-2.5 py-1.5 font-mono text-[12px] text-ink-muted transition-colors hover:border-accent hover:text-accent xl:inline-block"
-          >
-            {t.header.langLabel}
-          </button>
+          {/* Selector de idioma (S11): par segmentado ES | EN; el activo
+              resalta. Español es el default del sitio. */}
+          <span className="hidden items-center gap-1 rounded-lg border border-line p-0.5 font-mono text-[12px] xl:flex">
+            {(
+              [
+                { code: "ES", value: "es" as const, aria: t.header.langSelfEs },
+                { code: "EN", value: "en" as const, aria: t.header.langAria },
+              ]
+            ).map((option) => {
+              const active = lang === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  aria-pressed={active}
+                  aria-label={option.aria}
+                  onClick={() => setLang(option.value)}
+                  className={`rounded-md px-2 py-1 transition-colors ${
+                    active
+                      ? "bg-paper-raised text-ink"
+                      : "text-ink-muted transition-colors hover:text-accent"
+                  }`}
+                >
+                  {option.code}
+                </button>
+              );
+            })}
+          </span>
           <Button href="#contacto" className="!px-4 !py-2 text-sm">
             {t.header.hireMe}
           </Button>
