@@ -104,6 +104,23 @@
     transform 200ms ease-out;
 }
 
+/* Marquee de tecnologías (rebrand 06): cinta lenta continua; se detiene
+   al hover para poder leer. Reduced-motion la deja estática (regla global). */
+.marquee-track {
+  animation: marquee-scroll 30s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* Never hide revealed content and never animate under reduced motion. */
   .reveal-hidden {

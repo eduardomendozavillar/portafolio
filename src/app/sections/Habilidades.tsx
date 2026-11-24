@@ -113,9 +113,9 @@ export function Habilidades() {
           aria-hidden="true"
           className="marquee mt-10 overflow-hidden border-y border-line py-2.5"
         >
-          <div className="marquee-track flex w-max gap-10 font-display text-lg uppercase tracking-[0.12em] text-ink-muted">
+          <div className="marquee-track flex w-max font-display text-lg uppercase tracking-[0.12em] text-ink-muted">
             {[0, 1].map((copy) => (
-              <span key={copy} className="flex gap-10">
+              <span key={copy} className="flex gap-10 pr-10">
                 {MARQUEE.map((tech) => (
                   <span key={tech}>
                     {tech} <span className="text-accent">·</span>
