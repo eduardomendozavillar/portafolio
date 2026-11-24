@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/Reveal";
-import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { Ahora } from "./sections/Ahora";
 import { Contacto } from "./sections/Contacto";
 import { Educacion } from "./sections/Educacion";
@@ -19,8 +18,7 @@ import { SobreMi } from "./sections/SobreMi";
  */
 export default function Home() {
   return (
-    <LanguageProvider>
-      <main className="flex flex-1 flex-col">
+    <main className="flex flex-1 flex-col">
         <IntroSplash />
       <Hero />
       <Reveal className="w-full">
@@ -53,7 +51,6 @@ export default function Home() {
       <Reveal className="w-full">
         <Contacto />
       </Reveal>
-        </main>
-    </LanguageProvider>
+    </main>
   );
 }

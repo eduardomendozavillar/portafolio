@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LanguageProvider } from "@/i18n/LanguageProvider";
 import type { ReactNode } from "react";
 import { Anton, Manrope } from "next/font/google";
 import { FX } from "@/components/FX";
@@ -34,11 +35,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${anton.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
-        <BackgroundFigures />
-        <FX />
-        <Header />
-        {children}
-        <Footer />
+        {/* LanguageProvider here (S11): the Header and Footer live in the
+            layout, so the language context must wrap the whole shell — not
+            just the page content. */}
+        <LanguageProvider>
+          <BackgroundFigures />
+          <FX />
+          <Header />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );
