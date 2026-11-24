@@ -1,15 +1,18 @@
+"use client";
+
 import { Container } from "@/components/ui/Container";
 import { profile } from "@/data/profile";
 import { socials } from "@/data/socials";
+import { useT } from "@/i18n/LanguageProvider";
 
 /** Footer: social profile links (open in a new tab) + copyright. */
 export function Footer() {
+  const t = useT();
   return (
     <footer className="border-t border-line">
       <Container className="flex flex-col items-start justify-between gap-6 py-10 md:flex-row md:items-center">
         <p className="text-sm text-ink-muted">
-          © {new Date().getFullYear()} {profile.name}. Todos los derechos
-          reservados.
+          © {new Date().getFullYear()} {profile.name}. {t.sections.footer.rights}
         </p>
         <ul className="flex gap-6 text-sm font-medium text-ink">
           {socials.map((social) => (

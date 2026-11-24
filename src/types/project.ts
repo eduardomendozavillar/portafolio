@@ -31,6 +31,8 @@ export type Project = {
   images?: ProjectImage[];
   featured: boolean;
   sortOrder: number;
+  /** English variant (S11): faithful mirror of title/summary/description. */
+  en?: Partial<Pick<Project, "title" | "summary" | "description">>;
   /** ISO-8601 timestamp. */
   createdAt: string;
   /** ISO-8601 timestamp. */

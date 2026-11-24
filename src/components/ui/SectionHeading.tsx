@@ -1,6 +1,8 @@
 /**
  * Section heading: display title + optional description.
- * Eyebrow/index only when they add information (not a repeat of the title).
+ * Rebrand 02: the `// title` eyebrow repeats the title on purpose (Marco-style
+ * dev marker, cyan mono); the legacy index/eyebrow props are kept for API
+ * compatibility but are not rendered.
  */
 export function SectionHeading({
   index,
@@ -15,23 +17,13 @@ export function SectionHeading({
   title: string;
   description?: string;
 }) {
-  const label = index ?? eyebrow;
-  const showLabel =
-    Boolean(label) &&
-    label!.trim().toLocaleLowerCase("es") !== title.trim().toLocaleLowerCase("es");
+  void index;
+  void eyebrow;
 
   return (
     <header className="mb-8 md:mb-10">
-      {showLabel ? (
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent">
-          {label}
-        </p>
-      ) : null}
-      <h2
-        className={`font-display text-3xl font-semibold tracking-tight text-ink md:text-4xl ${
-          showLabel ? "mt-3" : ""
-        }`}
-      >
+      <p className="font-display text-[15px] uppercase tracking-[0.14em] text-accent">// {title.toLowerCase()}</p>
+      <h2 className="mt-2 font-display text-3xl font-normal uppercase tracking-[0.02em] text-ink md:text-4xl">
         {title}
       </h2>
       {description ? (

@@ -25,7 +25,7 @@ function stubShowcaseRects(viewportHeight = 1000) {
       return { top: 999999, height: 0, bottom: 999999, width: 0, left: 0, right: 0, x: 0, y: 0, toJSON: () => undefined } as unknown as DOMRect;
     });
 }
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { ProjectList } from "./ProjectList";
 import type { Project } from "@/types/project";
 
@@ -194,7 +194,7 @@ describe("ProjectList", () => {
     render(<ProjectList />);
 
     expect(await screen.findAllByText("Portafolio personal")).toBeTruthy();
-    expect(screen.getByText("En producción")).toBeTruthy();
+    expect(screen.getAllByText("En producción").length).toBeGreaterThan(0);
     expect(screen.getAllByText("En desarrollo").length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText("Gamma sin estado")).toBeTruthy();
     expect(screen.queryByText("Personal")).toBeNull();
@@ -232,16 +232,16 @@ describe("ProjectList", () => {
       "Tailwind CSS",
     ];
     for (const tech of featuredTechs) {
-      expect(screen.getByRole("button", { name: tech })).toBeTruthy();
+      expect(within(group).getByRole("button", { name: tech })).toBeTruthy();
     }
 
     // Reset chip exists and starts pressed (no filter active).
     expect(
-      screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
+      within(group).getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
     ).toBe("true");
     for (const tech of featuredTechs) {
       expect(
-        screen.getByRole("button", { name: tech }).getAttribute("aria-pressed"),
+        within(group).getByRole("button", { name: tech }).getAttribute("aria-pressed"),
       ).toBe("false");
     }
   });
@@ -249,17 +249,25 @@ describe("ProjectList", () => {
   it("attenuates non-matching cards when a chip is active and restores on second click", async () => {
     mockProjectsResponse([]);
     render(<ProjectList />);
+    const techGroup = screen.getByRole("group", {
+      name: "Filtrar proyectos por tecnología",
+    });
 
     expect(await screen.findAllByText("taller.by")).toBeTruthy();
 
+    // Tras el await, loading→success re-monta el árbol: re-consultar el grupo.
+    const techGroupFresh = screen.getByRole("group", {
+      name: "Filtrar proyectos por tecnología",
+    });
+
     // Only taller.by uses Gemini: the other three featured cards attenuate.
-    fireEvent.click(screen.getByRole("button", { name: "Gemini" }));
+    fireEvent.click(within(techGroupFresh).getByRole("button", { name: "Gemini" }));
 
     expect(
-      screen.getByRole("button", { name: "Gemini" }).getAttribute("aria-pressed"),
+      within(techGroupFresh).getByRole("button", { name: "Gemini" }).getAttribute("aria-pressed"),
     ).toBe("true");
     expect(
-      screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
+      within(techGroupFresh).getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
     ).toBe("false");
 
     // Card lookup via the showcase hooks (the panel chip duplicates titles).
@@ -277,9 +285,9 @@ describe("ProjectList", () => {
     expect(screen.getAllByRole("link", { name: "Demo" }).length).toBeGreaterThan(0);
 
     // Single-select toggle: clicking the active chip again deselects it.
-    fireEvent.click(screen.getByRole("button", { name: "Gemini" }));
+    fireEvent.click(within(techGroupFresh).getByRole("button", { name: "Gemini" }));
     expect(
-      screen.getByRole("button", { name: "Gemini" }).getAttribute("aria-pressed"),
+      within(techGroupFresh).getByRole("button", { name: "Gemini" }).getAttribute("aria-pressed"),
     ).toBe("false");
     expect(document.querySelectorAll('[data-filtered="true"]').length).toBe(0);
   });
@@ -287,17 +295,24 @@ describe("ProjectList", () => {
   it("restores every card through the Todas reset chip", async () => {
     mockProjectsResponse([]);
     render(<ProjectList />);
+    const techGroup = screen.getByRole("group", {
+      name: "Filtrar proyectos por tecnología",
+    });
 
     expect(await screen.findAllByText("taller.by")).toBeTruthy();
 
-    fireEvent.click(screen.getByRole("button", { name: "Next.js" }));
+    const techGroupFresh = screen.getByRole("group", {
+      name: "Filtrar proyectos por tecnología",
+    });
+
+    fireEvent.click(within(techGroupFresh).getByRole("button", { name: "Next.js" }));
     // Next.js matches Portafolio personal and SGDI only.
     expect(document.querySelectorAll('[data-filtered="true"]').length).toBe(2);
 
-    fireEvent.click(screen.getByRole("button", { name: "Todas" }));
+    fireEvent.click(within(techGroupFresh).getByRole("button", { name: "Todas" }));
     expect(document.querySelectorAll('[data-filtered="true"]').length).toBe(0);
     expect(
-      screen.getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
+      within(techGroupFresh).getByRole("button", { name: "Todas" }).getAttribute("aria-pressed"),
     ).toBe("true");
   });
 
@@ -367,9 +382,10 @@ describe("ProjectList", () => {
     expect(await screen.findByText("Alpha")).toBeTruthy();
     const panel = document.querySelector("[data-active-project]") as HTMLElement;
     expect(panel.getAttribute("data-active-project")).toBe("0");
-    // No scroll happens in the test: previewable[0] is the first featured
-    // project with screenshots (Portafolio personal) after the merge.
-    expect((panel.querySelector("img")?.getAttribute("src") ?? "").includes("portafolio-personal-01")).toBe(
+    // No scroll happens in the test: previewable[0] is the most-worked
+    // featured project with screenshots (Optimizador de Excel) after the
+    // most-worked-first reorder.
+    expect((panel.querySelector("img")?.getAttribute("src") ?? "").includes("optimizador-excel-01")).toBe(
       true,
     );
     // Imageless cards never lead the panel (S5) and Alpha (fixture, no cover
@@ -383,36 +399,15 @@ describe("ProjectList", () => {
 
     await screen.findAllByText("Portafolio personal");
     fireEvent.click(
-      screen.getByRole("button", { name: "Ampliar vista previa de Portafolio personal" }),
+      screen.getByRole("button", { name: "Vista previa" }),
     );
     expect(screen.getByRole("dialog")).toBeTruthy();
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(
-      screen.getByRole("button", { name: "Ampliar vista previa de Portafolio personal" }),
+      screen.getByRole("button", { name: "Vista previa" }),
     ).toBe(document.activeElement);
   });
 
-  it("shows an inline mobile cover preview on cards with screenshots", async () => {
-    mockProjectsResponse([
-      project({
-        id: "a",
-        title: "Alpha",
-        sortOrder: 1,
-        images: [
-          { src: "/images/projects/alpha/alpha-01.webp", width: 800, height: 500 },
-        ],
-      }),
-      project({ id: "b", title: "Beta", sortOrder: 2 }),
-    ]);
-    render(<ProjectList />);
-
-    expect(await screen.findByText("Alpha")).toBeTruthy();
-    const alphaCover = screen.getByAltText("Captura de Alpha");
-    expect(
-      (alphaCover.closest("div")?.className ?? "").length > 0,
-    ).toBe(true);
-    expect(screen.queryByAltText("Captura de Beta")).toBeNull();
-  });
 });

@@ -37,8 +37,8 @@ export async function sendContactNotification(payload: {
   <meta charset="UTF-8">
   <title>Nuevo mensaje de contacto</title>
 </head>
-<body style="font-family:system-ui,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:24px;">
-  <h2 style="color:#0a0e17;border-bottom:2px solid #22d3ee;padding-bottom:8px;">Nuevo mensaje de contacto</h2>
+<body style="font-family:system-ui,sans-serif;line-height:1.6;color:#1C1C1C;max-width:600px;margin:0 auto;padding:24px;">
+  <h2 style="color:#1C1C1C;border-bottom:2px solid #B3261E;padding-bottom:8px;">Nuevo mensaje de contacto</h2>
   <table style="width:100%;border-collapse:collapse;margin-top:16px;">
     <tr>
       <td style="padding:8px 0;font-weight:600;width:100px;">Nombre:</td>
@@ -54,10 +54,10 @@ export async function sendContactNotification(payload: {
     </tr>
     <tr>
       <td style="padding:8px 0;font-weight:600;">ID:</td>
-      <td style="padding:8px 0;font-family:monospace;font-size:12px;color:#666;">${payload.id}</td>
+      <td style="padding:8px 0;font-family:monospace;font-size:12px;color:#57534E;">${payload.id}</td>
     </tr>
   </table>
-  <p style="margin-top:24px;font-size:12px;color:#888;">
+  <p style="margin-top:24px;font-size:12px;color:#8A8580;">
     Enviado desde el formulario de contacto de tu portafolio.
   </p>
 </body>

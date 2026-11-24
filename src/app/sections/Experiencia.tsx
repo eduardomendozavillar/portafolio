@@ -1,18 +1,27 @@
+"use client";
+
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/Reveal";
+import { useLang } from "@/i18n/LanguageProvider";
 import { experience } from "@/data/experience";
 import { TimelineDraw } from "./TimelineDraw";
+import { useT } from "@/i18n/LanguageProvider";
+import { pickLocalized } from "@/i18n/localize";
 
-/** Experiencia: real CV entries rendered from the typed data. */
+/** Experiencia: real CV entries rendered from the typed data (ES/EN, S11). */
 export function Experiencia() {
+  const t = useT();
+  const { lang } = useLang();
   return (
     <section id="experiencia" className="border-b border-line">
       <Container className="py-16 md:py-20">
-        <SectionHeading title="Experiencia" />
+        <SectionHeading title={t.sections.experience} />
         <TimelineDraw>
           <ol className="max-w-3xl">
-            {experience.map((item) => (
+            {experience.map((entry) => {
+              const item = pickLocalized(entry, lang);
+              return (
               <li
                 key={`${item.company}-${item.role}`}
                 className="timeline-item border-t border-line py-5 first:border-t-0 md:py-6"
@@ -28,7 +37,8 @@ export function Experiencia() {
                   <p className="mt-3 leading-7 text-ink-muted">{item.description}</p>
                 </Reveal>
               </li>
-            ))}
+              );
+            })}
           </ol>
         </TimelineDraw>
       </Container>

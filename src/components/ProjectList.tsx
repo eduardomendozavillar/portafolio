@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState , useMemo} from "react";
 import { Button } from "@/components/ui/Button";
 import { featuredGitHubProjects } from "@/data/github";
 import { fetchProjects } from "@/lib/api";
@@ -8,6 +8,8 @@ import type { Project } from "@/types/project";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectLightbox } from "./ProjectLightbox";
 import { ProjectShowcase } from "./ProjectShowcase";
+import { useLang, useT } from "@/i18n/LanguageProvider";
+import { pickLocalized } from "@/i18n/localize";
 
 type Status = "loading" | "success" | "error";
 
@@ -43,6 +45,14 @@ function cardMatchesTech(project: Project, activeTech: string | null) {
   );
 }
 
+function cardMatchesEstado(
+  project: Project,
+  activeEstado: "todas" | "production" | "development",
+) {
+  if (activeEstado === "todas") return true;
+  return project.status === activeEstado;
+}
+
 function projectIdentity(project: Project) {
   return [
     project.links?.repo?.toLowerCase(),
@@ -66,6 +76,7 @@ function mergeFeaturedProjects(remoteProjects: Project[]) {
  * message that never blocks the rest of the page.
  */
 export function ProjectList() {
+  const t = useT();
   const [status, setStatus] = useState<Status>("loading");
   const [projects, setProjects] = useState<Project[]>(featuredGitHubProjects);
 
@@ -104,7 +115,7 @@ export function ProjectList() {
             aria-hidden="true"
             className="h-4 w-4 animate-spin rounded-full border-2 border-line border-t-accent"
           />
-          Cargando proyectos dinámicos…
+          {t.sections.projects.states.loading}
         </p>
       </div>
     );
@@ -115,7 +126,7 @@ export function ProjectList() {
       <div className="flex flex-col items-start gap-4">
         <ProjectItems projects={projects} />
         <p role="alert" className="rounded-md border border-line bg-paper-raised px-4 py-3 text-ink-muted">
-          No se pudieron cargar los proyectos dinámicos. Mientras tanto, podés ver el proyecto destacado.
+          {t.sections.projects.states.error}
         </p>
         <Button variant="outline" onClick={retry}>
           Reintentar
@@ -138,9 +149,18 @@ export function ProjectList() {
 }
 
 function ProjectItems({ projects }: { projects: Project[] }) {
+  const t = useT();
+  const { lang } = useLang();
+  const localized = useMemo(
+    () => projects.map((project) => pickLocalized(project, lang)),
+    [projects, lang],
+  );
   // WU-B: tech-chip filter, single-select, chips = union of the featured
   // projects' technologies + a "Todas" reset chip.
   const [activeTech, setActiveTech] = useState<string | null>(null);
+  // Rebrand 10: maturity filter (Capturas protagonistas artboard) combined
+  // with the tech filter — a card shows when it passes both.
+  const [activeEstado, setActiveEstado] = useState<"todas" | "production" | "development">("todas");
   // portfolio-motion: sticky showcase panel + preview lightbox.
   const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
   const previewTriggerRef = useRef<HTMLButtonElement | null>(null);
@@ -159,11 +179,44 @@ function ProjectItems({ projects }: { projects: Project[] }) {
       setLightboxProject(project);
     };
 
+  const prodCount = localized.filter((project) => project.status === "production").length;
+  const devCount = localized.filter((project) => project.status === "development").length;
+
   return (
     <div className="flex flex-col gap-5">
+      {/* Resumen (rebrand 10 · capturas protagonistas). */}
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-line bg-paper-raised px-5 py-3.5 text-[13px] text-ink-muted">
+        <span><b className="font-display text-2xl font-normal text-accent">{localized.length}</b> {t.sections.projects.count.projects}</span>
+        <span><b className="font-display text-2xl font-normal text-accent">{prodCount}</b> {t.sections.projects.count.production}</span>
+        <span><b className="font-display text-2xl font-normal text-accent">{devCount}</b> {t.sections.projects.count.development}</span>
+      </div>
+      {/* Filtro por madurez (rebrand 10). */}
       <div
         role="group"
-        aria-label="Filtrar proyectos por tecnología"
+        aria-label={t.sections.projects.filterState}
+        className="flex flex-wrap gap-1.5"
+      >
+        {(
+          [
+            { label: t.sections.projects.all, value: "todas" },
+            { label: t.sections.projects.production, value: "production" },
+            { label: t.sections.projects.development, value: "development" },
+          ] as const
+        ).map((chip) => (
+          <button
+            key={chip.value}
+            type="button"
+            aria-pressed={activeEstado === chip.value}
+            onClick={() => setActiveEstado(chip.value)}
+            className={chipClasses(activeEstado === chip.value)}
+          >
+            {chip.label}
+          </button>
+        ))}
+      </div>
+      <div
+        role="group"
+        aria-label={t.sections.projects.filterTech}
         className="flex flex-wrap gap-1.5"
       >
         <button
@@ -172,7 +225,7 @@ function ProjectItems({ projects }: { projects: Project[] }) {
           onClick={() => setActiveTech(null)}
           className={chipClasses(activeTech === null)}
         >
-          Todas
+          {t.sections.projects.all}
         </button>
         {technologies.map((technology) => (
           <button
@@ -191,16 +244,16 @@ function ProjectItems({ projects }: { projects: Project[] }) {
       {/* Showcase-sticky panel (desktop) beside the scroll-tracked list. */}
       <div className="gap-10 md:grid md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
         <ProjectShowcase
-          projects={projects}
+          projects={localized}
           onOpenPreview={openFromShowcase}
         />
-        <ol>
-          {projects.map((project, index) => (
+        <ol className="space-y-4">
+          {localized.map((project, index) => (
             <ProjectCard
               key={project.id}
               project={project}
               index={index + 1}
-              attenuated={!cardMatchesTech(project, activeTech)}
+              attenuated={!cardMatchesTech(project, activeTech) || !cardMatchesEstado(project, activeEstado)}
               onPreview={
                 project.images && project.images.length > 0
                   ? openLightbox(project)

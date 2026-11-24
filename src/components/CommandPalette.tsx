@@ -23,10 +23,12 @@ type PaletteAction = {
 /** Section anchors — the same ids the header nav links to. */
 const SECTIONS = [
   { label: "Sobre mí", id: "sobre-mi", keywords: ["about"] },
-  { label: "Proyectos", id: "proyectos", keywords: ["projects"] },
-  { label: "Habilidades", id: "habilidades", keywords: ["skills"] },
   { label: "Experiencia", id: "experiencia", keywords: ["work"] },
+  { label: "Proyectos", id: "proyectos", keywords: ["projects"] },
   { label: "Educación", id: "educacion", keywords: ["education"] },
+  { label: "Ahora", id: "ahora", keywords: ["now", "building"] },
+  { label: "Certificaciones", id: "certificaciones", keywords: ["certificados", "certs", "credentials"] },
+  { label: "Habilidades", id: "habilidades", keywords: ["skills"] },
   { label: "Contacto", id: "contacto", keywords: ["contact"] },
 ] as const;
 
@@ -158,8 +160,8 @@ export function CommandPalette({
         entered ? "opacity-100" : "opacity-0"
       }`;
   const dialogClasses = reducedMotion
-    ? "fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-md border border-line bg-paper-raised shadow-2xl"
-    : `fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-md border border-line bg-paper-raised shadow-2xl transition-[opacity,transform] duration-200 ${
+    ? "fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-line bg-paper-raised/90 shadow-2xl backdrop-blur-xl"
+    : `fixed left-1/2 top-24 z-[61] w-[min(92vw,34rem)] -translate-x-1/2 rounded-2xl border border-line bg-paper-raised/90 shadow-2xl backdrop-blur-xl transition-[opacity,transform] duration-200 ${
         entered ? "scale-100 opacity-100" : "scale-[0.98] opacity-0"
       }`;
 

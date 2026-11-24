@@ -5,19 +5,24 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { CommandPalette } from "@/components/CommandPalette";
 import { ScrollProgress } from "./ScrollProgress";
-import { profile } from "@/data/profile";
+import { useLang } from "@/i18n/LanguageProvider";
+import type { Dictionary } from "@/i18n/dictionary";
+
 import { socials } from "@/data/socials";
 
-/** Anchor links shared by the desktop nav and the mobile menu. */
+/** Anchor links shared by the desktop nav and the mobile menu; labels come
+ * from the language dictionary (S11). */
 const NAV_LINKS = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Proyectos", href: "#proyectos" },
-  { label: "Sobre mí", href: "#sobre-mi" },
-  { label: "Habilidades", href: "#habilidades" },
-  { label: "Experiencia", href: "#experiencia" },
-  { label: "Educación", href: "#educacion" },
-  { label: "Contacto", href: "#contacto" },
-] as const;
+  { key: "inicio", href: "#inicio" },
+  { key: "sobreMi", href: "#sobre-mi" },
+  { key: "experiencia", href: "#experiencia" },
+  { key: "proyectos", href: "#proyectos" },
+  { key: "educacion", href: "#educacion" },
+  { key: "ahora", href: "#ahora" },
+  { key: "certificaciones", href: "#certificaciones" },
+  { key: "habilidades", href: "#habilidades" },
+  { key: "contacto", href: "#contacto" },
+] as const satisfies ReadonlyArray<{ key: keyof Dictionary["nav"]; href: string }>;
 
 /**
  * Sticky header: brand + desktop anchor nav + Contacto CTA + accessible
@@ -26,6 +31,7 @@ const NAV_LINKS = [
  * so the button stays in sync and receives returned focus.
  */
 export function Header() {
+  const { lang, setLang, t } = useLang();
   const [open, setOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   // Scrollspy (portfolio-recruiter): the nav link of the section sitting at
@@ -84,18 +90,18 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between gap-4 md:gap-6">
         <a
           href="#inicio"
-          className="shrink-0 font-display text-lg font-semibold text-ink"
+          aria-label="EV. — volver al inicio"
+          className="shrink-0 rounded-lg border border-line bg-paper-raised px-3 py-1.5 font-display text-[15px] uppercase tracking-[0.08em] text-ink"
         >
-          {profile.name}
-          <span className="text-accent">.</span>
+          EV<span className="text-accent">.</span>
         </a>
 
-        <nav aria-label="Navegación principal" className="hidden md:block">
-          <ul className="flex items-center gap-5 text-sm font-medium text-ink-muted lg:gap-6">
+        <nav aria-label={t.nav.principal} className="hidden md:block">
+          <ul className="flex items-center gap-5 font-mono text-[12.5px] uppercase tracking-[0.14em] text-ink-muted lg:gap-5">
             {NAV_LINKS.filter((link) => link.href !== "#contacto").map((link) => {
               const id = link.href.slice(1);
               const active = activeSection === id;
@@ -106,11 +112,11 @@ export function Header() {
                     aria-current={active ? "true" : undefined}
                     className={
                       active
-                        ? "whitespace-nowrap text-accent underline decoration-accent decoration-2 underline-offset-8"
-                        : "whitespace-nowrap transition-colors hover:text-accent"
+                        ? "whitespace-nowrap border-b-2 border-accent pb-0.5 text-ink"
+                        : "whitespace-nowrap transition-colors hover:text-ink"
                     }
                   >
-                    {link.label}
+                    {t.nav[link.key]}
                   </a>
                 </li>
               );
@@ -124,7 +130,7 @@ export function Header() {
             type="button"
             aria-haspopup="dialog"
             aria-expanded={paletteOpen}
-            aria-label="Abrir navegación rápida (Ctrl+K)"
+            aria-label={t.header.quickNav}
             onClick={() => setPaletteOpen(true)}
             className="inline-flex items-center gap-2 rounded-md border border-line bg-paper-raised/40 px-2.5 py-1.5 text-xs font-medium text-ink-muted transition-colors hover:border-accent hover:text-accent"
           >
@@ -147,15 +153,43 @@ export function Header() {
               </li>
             ))}
           </ul>
+          {/* Selector de idioma (S11): par segmentado ES | EN; el activo
+              resalta. Español es el default del sitio. */}
+          <span className="hidden items-center gap-1 rounded-lg border border-line p-0.5 font-mono text-[12px] xl:flex">
+            {(
+              [
+                { code: "ES", value: "es" as const, aria: t.header.langSelfEs },
+                { code: "EN", value: "en" as const, aria: t.header.langAria },
+              ]
+            ).map((option) => {
+              const active = lang === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  aria-pressed={active}
+                  aria-label={option.aria}
+                  onClick={() => setLang(option.value)}
+                  className={`rounded-md px-2 py-1 transition-colors ${
+                    active
+                      ? "bg-paper-raised text-ink"
+                      : "text-ink-muted transition-colors hover:text-accent"
+                  }`}
+                >
+                  {option.code}
+                </button>
+              );
+            })}
+          </span>
           <Button href="#contacto" className="!px-4 !py-2 text-sm">
-            Contratame
+            {t.header.hireMe}
           </Button>
         </div>
         <button
           ref={toggleRef}
           type="button"
           className="rounded-md p-2 text-ink md:hidden"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          aria-label={open ? t.header.closeMenu : t.header.openMenu}
           aria-expanded={open}
           aria-controls={menuId}
           onClick={() => setOpen((current) => !current)}
@@ -183,7 +217,7 @@ export function Header() {
       {open ? (
         <nav
           id={menuId}
-          aria-label="Navegación principal"
+          aria-label={t.nav.principal}
           className="border-t border-line bg-paper md:hidden"
         >
           <Container className="flex flex-col py-4">
@@ -195,7 +229,7 @@ export function Header() {
                     onClick={() => setOpen(false)}
                     className="block py-3 text-base font-medium text-ink transition-colors hover:text-accent"
                   >
-                    {link.label}
+                    {t.nav[link.key]}
                   </a>
                 </li>
               ))}

@@ -128,8 +128,8 @@ describe("CommandPalette", () => {
     ) as HTMLInputElement;
 
     fireEvent.keyDown(input, { key: "ArrowDown" });
-    // ↓ lands on the next option ("Proyectos"), ↑ returns to "Sobre mí".
-    expect(document.activeElement?.textContent).toContain("Proyectos");
+    // ↓ lands on the next option ("Experiencia"), ↑ returns to "Sobre mí".
+    expect(document.activeElement?.textContent).toContain("Experiencia");
     fireEvent.keyDown(input, { key: "ArrowUp" });
     fireEvent.keyDown(input, { key: "Enter" });
 

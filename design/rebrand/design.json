@@ -1,0 +1,77 @@
+{
+  "title": "Rebrand home — Eduardo Mendoza Villar",
+  "brief": "Rebrand completo del portafolio (decisión aprobada por el usuario): paleta charcoal #1C1C1C / bone #EDE6E0 / barber red #B32B1E, tipografía Anton (display) + Manrope (body), eyebrows estilo dev (// proyectos), hero adaptado al nuevo accent manteniendo composición, nueva sección // certificaciones (4 destacadas del CV + ver todas), card heatmap de actividad GitHub con violeta neon (estilo Andrea). El hero actual le gusta: solo cambia el accent. Información intacta (CV v2 verbatim). Referencias: portafoliomarcolagunes.netlify.app, dashboard de Andrea López, paleta del sitio barber.",
+  "feature": "odd/tasks/portfolio-rebrand.md",
+  "artboards": [
+    {
+      "file": "05-barber-strict.html",
+      "title": "05 · Barber Strict (implementado actualmente)",
+      "tradeoff": "La dirección en producción local: charcoal/bone/red estrictos con poster hero; reemplazable por las variantes Marco-style si el usuario las aprueba",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "06-marco-red.html",
+      "title": "06 · Marco Style · Red Edition",
+      "tradeoff": "El lenguaje visual completo de Marco (partículas, dial de foto, terminal, tiles, marquee animado) con la paleta del usuario; es la más fiel a su referencia",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "07-cinema-scroll.html",
+      "title": "07 · Cinema Scroll · Red Edition",
+      "tradeoff": "Escenas full-viewport con reveals scrubbed por scroll nativo; más cinematográfico pero menos denso en contenido por pantalla",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "13-proyectos-sin-panel.html",
+      "title": "13 · Proyectos SIN panel sticky (una vista previa: la captura en cada card)",
+      "tradeoff": "Elimina el panel sticky y su redundancia con las cards; cada card lleva su captura protagonista. La más simple",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "14-proyectos-solo-panel.html",
+      "title": "14 · Proyectos — el panel sticky como única vista previa",
+      "tradeoff": "Elimina las capturas de las cards (vuelven a filas compactas); el panel sticky muestra la captura grande del activo. El original de portfolio-motion",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "10-proyectos-capturas.html",
+      "title": "10 · Proyectos · Capturas protagonistas",
+      "tradeoff": "Las capturas reales son el protagonista de cada card; más impacto visual pero cards más altas",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "11-proyectos-filas.html",
+      "title": "11 · Proyectos · Filas editoriales",
+      "tradeoff": "Filas case-study alternadas con número gigante y captura al costado; elegante y narrativo pero ocupa más scroll",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "12-proyectos-carrusel.html",
+      "title": "12 · Proyectos · Carrusel snap",
+      "tradeoff": "Rail horizontal con scroll-snap nativo (arrastrable); compacto pero esconde 2 proyectos fuera de pantalla",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "09-proyectos.html",
+      "title": "09 · Proyectos (artboard dedicado para comentar)",
+      "tradeoff": "Solo la sección proyectos en una página corta: fácil de ver y comentar en el canvas sin scrollear el home entero",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "08-terminal-studio.html",
+      "title": "08 · Terminal Studio · Red Edition",
+      "tradeoff": "Estética terminal/dev con ventanas y prompt whoami; muy nicho y memorable, pero menos convencional para recruiters no técnicos",
+      "width": 1440,
+      "height": 900
+    }
+  ]
+}

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
+import { useLang } from "@/i18n/LanguageProvider";
+import { pickLocalized } from "@/i18n/localize";
 
 /** sessionStorage flag: the splash shows once per browsing session. */
 export const INTRO_SEEN_KEY = "intro-splash-seen";
@@ -43,6 +45,8 @@ function prefersReducedMotion(): boolean {
 export function IntroSplash() {
   const [dismissed, setDismissed] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const { lang } = useLang();
+  const localized = pickLocalized(profile, lang);
 
   useEffect(() => {
     if (hasSeen() || prefersReducedMotion()) {
@@ -136,10 +140,10 @@ export function IntroSplash() {
         </div>
         <div className="[animation:intro-rise_600ms_ease-out_120ms_both]">
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-accent">
-            {profile.role}
+            {localized.role}
           </p>
-          <p className="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
-            {profile.name}
+          <p className="mt-2 font-display text-3xl font-normal uppercase tracking-[0.02em] text-ink sm:text-4xl">
+            {localized.name}
           </p>
         </div>
         <p className="text-sm text-ink-muted [animation:intro-rise_600ms_ease-out_240ms_both]">

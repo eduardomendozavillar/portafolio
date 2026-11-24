@@ -1,19 +1,17 @@
-import Image from "next/image";
-import { Reveal } from "./Reveal";
 import type { Project, ProjectStatus } from "@/types/project";
+import { useT } from "@/i18n/LanguageProvider";
 
-const STATUS_LABEL: Record<ProjectStatus, string> = {
-  production: "En producción",
-  development: "En desarrollo",
-  personal: "Personal",
+const STATUS_KEY: Record<ProjectStatus, "production" | "development" | "personal"> = {
+  production: "production",
+  development: "development",
+  personal: "personal",
 };
 
 /**
- * Presentational project row: index, title + status, outcome, tech, links.
- * Pure component — no hooks, safe to render from the client list.
- *
- * `attenuated` (WU-B filter): reduced opacity + slight desaturate via the
- * `data-filtered` hook; the card stays visible and its links stay focusable —
+ * Compact project row (portfolio-rebrand 14): the screenshot lives ONLY in
+ * the sticky showcase panel — rows are number + title + summary + tags +
+ * links, highlighted (filled number, row background) on hover and when the
+ * showcase marks them active. `attenuated` (tech filter): reduced opacity,
  * never hidden or aria-hidden.
  */
 export function ProjectCard({
@@ -29,7 +27,8 @@ export function ProjectCard({
   onPreview?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
   const number = String(index).padStart(2, "0");
-  const statusLabel = project.status ? STATUS_LABEL[project.status] : null;
+  const t = useT();
+  const statusLabel = project.status ? t.sections.projects[STATUS_KEY[project.status]] : null;
 
   return (
     <li
@@ -38,53 +37,44 @@ export function ProjectCard({
          nearest the viewport center through these document-wide attributes. */
       data-project-card={index - 1}
       data-project-id={project.id}
-      className={`project-card border-t border-line py-5 first:border-t-0 md:py-6 ${
+      className={`project-card project-row rounded-lg px-4 py-4 transition-colors md:px-5 ${
         attenuated ? "opacity-50 saturate-50" : ""
       }`}
     >
-      <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:gap-6">
+      <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:gap-5">
         <p
-          className="font-display text-xl font-semibold text-accent md:text-2xl"
+          className="row-num font-display text-3xl font-normal md:text-4xl"
           aria-hidden="true"
         >
           {number}
         </p>
         <div className="min-w-0 flex-1">
-          {/* Mobile cover preview (showcase-sticky S7): on narrow screens the
-              sticky panel cannot carry the visuals, so each card shows its
-              first screenshot inline, revealed on scroll (WU-B Reveal). */}
-          {project.images && project.images.length > 0 ? (
-            <Reveal className="md:hidden">
-              <div className="overflow-hidden rounded-md border border-line bg-paper">
-                <Image
-                  src={project.images[0].src}
-                  width={project.images[0].width}
-                  height={project.images[0].height}
-                  alt={`Captura de ${project.title}`}
-                  sizes="(max-width: 767px) 100vw, 0px"
-                  className="h-auto w-full object-cover"
-                />
-              </div>
-            </Reveal>
-          ) : null}
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h3 className="font-display text-xl font-semibold text-ink">
+            <h3 className="font-display text-xl font-normal uppercase tracking-[0.02em] text-ink">
               {project.title}
             </h3>
             {statusLabel ? (
-              <span className="rounded-full border border-line bg-paper-raised px-2.5 py-0.5 text-xs font-medium text-ink-muted">
+              <span
+                className={`rounded-none px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-[0.07em] ${
+                  project.status === "production"
+                    ? "bg-ink text-paper"
+                    : "bg-cta text-cta-contrast"
+                }`}
+              >
                 {statusLabel}
               </span>
             ) : null}
           </div>
-          <p className="mt-2 leading-7 text-ink-muted">{project.summary}</p>
+          <p className="mt-2 text-[13.5px] leading-6 text-ink-muted">
+            {project.summary}
+          </p>
 
           {project.technologies.length > 0 ? (
-            <ul className="mt-3 flex flex-wrap gap-1.5">
+            <ul className="mt-3 flex flex-wrap gap-1.5 font-mono text-[11.5px]">
               {project.technologies.map((technology) => (
                 <li
                   key={technology}
-                  className="rounded-full border border-line px-2.5 py-0.5 text-xs text-ink"
+                  className="rounded-md border border-line px-2.5 py-1 text-ink-muted"
                 >
                   {technology}
                 </li>
@@ -92,37 +82,30 @@ export function ProjectCard({
             </ul>
           ) : null}
 
-          {project.images && project.images.length > 0 && onPreview ? (
-            <ul className="mt-4 flex gap-5 text-sm font-medium">
-              <li>
-                <button
-                  type="button"
-                  onClick={onPreview}
-                  aria-label={`Vista previa de ${project.title}`}
-                  className="text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
-                >
-                  Vista previa
-                </button>
-              </li>
-            </ul>
-          ) : null}
-
-          {project.links && (project.links.demo || project.links.repo) ? (
-            <ul className="mt-4 flex gap-5 text-sm font-medium">
-              {project.links.demo ? (
-                <li>
+          <div className="mt-4 flex flex-wrap items-center gap-5 text-sm font-medium">
+            {project.images && project.images.length > 0 && onPreview ? (
+              <button
+                type="button"
+                onClick={onPreview}
+                aria-label={`${t.sections.projects.previewOf} ${project.title}`}
+                className="text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+              >
+                {t.sections.projects.preview}
+              </button>
+            ) : null}
+            {project.links && (project.links.demo || project.links.repo) ? (
+              <>
+                {project.links.demo ? (
                   <a
                     href={project.links.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-accent underline decoration-accent/40 decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+                    className="text-ink underline decoration-line decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
                   >
                     Demo
                   </a>
-                </li>
-              ) : null}
-              {project.links.repo ? (
-                <li>
+                ) : null}
+                {project.links.repo ? (
                   <a
                     href={project.links.repo}
                     target="_blank"
@@ -131,10 +114,10 @@ export function ProjectCard({
                   >
                     Código
                   </a>
-                </li>
-              ) : null}
-            </ul>
-          ) : null}
+                ) : null}
+              </>
+            ) : null}
+          </div>
         </div>
       </div>
     </li>

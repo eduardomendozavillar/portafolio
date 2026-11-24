@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>05 — Barber Strict (solo 3 colores)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Dirección 05 (la del usuario): SOLO Charcoal #1C1C1C, Bone #EDE6E0 y
+     Barber Red #B32B1E. Nada de violeta/cyan. La estructura es la mejor de
+     las previas: Anton poster, heatmap, cards, marquee. */
+  :root {
+    --charcoal: #1C1C1C;
+    --charcoal-2: #242424;
+    --bone: #EDE6E0;
+    --bone-muted: rgba(237,230,224,0.62);
+    --line: rgba(237,230,224,0.15);
+    --red: #B32B1E;
+    --red-soft: rgba(179,43,30,0.18);
+    --font-display: "Anton", "Arial Narrow", Impact, "Arial Black", sans-serif;
+    --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body { background: var(--charcoal); color: var(--bone); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+  header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 13px 32px; background: rgba(28,28,28,0.92); backdrop-filter: blur(10px); border-bottom: 3px solid var(--red); }
+  .brand { font-family: var(--font-display); font-size: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .brand em { color: var(--red); font-style: normal; }
+  nav { display: flex; gap: 18px; font-size: 13.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--bone-muted); }
+  nav a.on { color: var(--bone); border-bottom: 3px solid var(--red); padding-bottom: 3px; }
+  .cta { background: var(--red); color: #fff; padding: 10px 22px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px); }
+
+  .hero { position: relative; overflow: hidden; padding: 72px 0 64px; text-align: center; }
+  .hero::before { content: ""; position: absolute; inset: -30% -10% auto; height: 380px; background: radial-gradient(ellipse 55% 60% at 50% 0%, var(--red-soft), transparent 70%); }
+  .hero > .wrap { position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .status { display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--red); padding: 6px 16px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; }
+  .avatar { width: 118px; height: 118px; border-radius: 50%; border: 3px solid var(--red); }
+  h1 { font-family: var(--font-display); font-size: clamp(58px, 9vw, 104px); line-height: 0.94; text-transform: uppercase; }
+  h1 .ghost { display: block; color: transparent; -webkit-text-stroke: 2px var(--bone); }
+  h1 .solid em { color: var(--red); font-style: normal; }
+  .stripe { height: 10px; width: 280px; margin: 20px auto 4px; background: repeating-linear-gradient(-45deg, var(--red) 0 16px, var(--bone) 16px 32px); }
+  .kicker { font-size: 12.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--bone-muted); font-weight: 700; }
+  .thesis { max-width: 620px; color: var(--bone-muted); }
+  .thesis b { color: var(--bone); }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn { padding: 12px 26px; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .btn.primary { background: var(--red); color: #fff; }
+  .btn.bone { background: var(--bone); color: var(--charcoal); }
+  .btn.ghost { border: 2px solid var(--line); }
+  .stack { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .chip { border: 1px solid var(--line); padding: 4px 12px; font-size: 12px; color: var(--bone-muted); }
+
+  section { padding: 64px 0; }
+  .eyebrow { font-family: var(--font-display); color: var(--red); font-size: 16px; text-transform: uppercase; letter-spacing: 0.12em; }
+  h2 { font-family: var(--font-display); font-size: clamp(44px, 6vw, 68px); text-transform: uppercase; line-height: 0.95; margin: 6px 0 28px; }
+  h2 span { color: transparent; -webkit-text-stroke: 1.5px var(--bone); }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { border: 1px solid var(--line); background: var(--charcoal-2); padding: 22px; transition: border-color 160ms; }
+  .card:hover { border-color: var(--red); }
+  .card .top { display: flex; align-items: baseline; gap: 12px; }
+  .num { font-family: var(--font-display); font-size: 38px; color: var(--red); line-height: 1; }
+  .badge { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 10px; background: var(--bone); color: var(--charcoal); }
+  .badge.dev { background: var(--red); color: #fff; }
+  .card h3 { font-family: var(--font-display); font-size: 22px; text-transform: uppercase; letter-spacing: 0.02em; margin: 10px 0 8px; }
+  .card p { color: var(--bone-muted); font-size: 13.5px; }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .tag { border: 1px solid var(--line); padding: 2px 10px; font-size: 11px; color: var(--bone-muted); }
+
+  .marquee { overflow: hidden; border-block: 3px solid var(--red); background: var(--charcoal-2); padding: 10px 0; margin-top: 32px; }
+  .marquee span { font-family: var(--font-display); text-transform: uppercase; font-size: 19px; letter-spacing: 0.1em; white-space: nowrap; }
+  .marquee em { color: var(--red); font-style: normal; }
+
+  .heat { border: 1px solid var(--line); border-left: 5px solid var(--red); border-radius: 2px; padding: 22px; background: var(--charcoal-2); }
+  .heat .big { font-size: 13.5px; color: var(--bone-muted); }
+  .heat .big b { color: var(--red); font-size: 18px; }
+  .cells { display: grid; grid-template-columns: repeat(30, 1fr); gap: 4px; margin: 12px 0 10px; }
+  .cell { aspect-ratio: 1; border-radius: 2px; background: rgba(179,43,30,0.12); }
+  .cell.l1 { background: rgba(179,43,30,0.4); }
+  .cell.l2 { background: var(--red); }
+  .cell.l3 { background: var(--red); box-shadow: 0 0 8px rgba(179,43,30,0.6); }
+  .scalebar { height: 6px; border-radius: 999px; background: linear-gradient(90deg, rgba(179,43,30,0.12), var(--red)); }
+
+  .certs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cert { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); padding: 15px 18px; background: var(--charcoal-2); }
+  .cert .vig { margin-left: auto; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red); border: 2px solid var(--red); padding: 3px 10px; }
+  footer { padding: 34px 32px; color: var(--bone-muted); font-size: 13px; border-top: 3px solid var(--red); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Eduardo Mendoza Villar<em>.</em></div>
+  <nav><a>Inicio</a><a class="on">Proyectos</a><a>Certificaciones</a><a>Habilidades</a><a>Contacto</a></nav>
+  <a class="cta">Contratame</a>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="status"><span class="dot"></span> Disponible · Santa Marta, Colombia</p>
+    <img class="avatar" alt="Foto de perfil de Eduardo Mendoza Villar" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' fill='%23242424'/%3E%3Ccircle cx='128' cy='100' r='44' fill='%23333'/%3E%3Cpath d='M40 256c8-64 48-92 88-92s80 28 88 92z' fill='%23333'/%3E%3C/svg%3E">
+    <h1><span class="solid">Eduardo Mendoza</span><span class="ghost">Villar</span></h1>
+    <div class="stripe"></div>
+    <p class="kicker">Ingeniero de Sistemas · Especialización en IA (en curso)</p>
+    <p class="thesis">Conecto la ingeniería de sistemas con la <b>inteligencia artificial aplicada</b> —LLMs, agentes y RAG— para construir sistemas claros, seguros y escalables.</p>
+    <div class="actions"><a class="btn primary">Ver proyectos</a><a class="btn bone">Descargar CV</a><a class="btn ghost">Contratame</a></div>
+    <div class="stack"><span class="chip">Next.js</span><span class="chip">RAG</span><span class="chip">TypeScript</span><span class="chip">Vercel</span></div>
+  </div>
+</section>
+
+<section id="actividad">
+  <div class="wrap">
+    <p class="eyebrow">// actividad</p>
+    <h2>En <span>marcha</span></h2>
+    <div class="heat">
+      <p class="big"><b>19</b> días con actividad de desarrollo en el último año</p>
+      <div class="cells"><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l1"></span><span class="cell"></span><span class="cell"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell"></span><span class="cell l2"></span><span class="cell"></span><span class="cell l3"></span><span class="cell"></span><span class="cell l1"></span><span class="cell l2"></span></div>
+      <div class="scalebar"></div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="wrap">
+    <p class="eyebrow">// proyectos</p>
+    <h2>Proyectos <span>reales</span></h2>
+    <div class="grid">
+      <article class="card"><div class="top"><span class="num">01</span><span class="badge">En producción</span></div><h3>Portafolio personal</h3><p>Portafolio orientado a reclutadores, construido con Next.js, TypeScript, Tailwind, Firebase/Firestore y desplegado en Vercel.</p><div class="tags"><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Vercel</span></div></article>
+      <article class="card"><div class="top"><span class="num">02</span><span class="badge dev">En desarrollo</span></div><h3>taller.by</h3><p>Aplicación de productividad personal y composición musical avanzada, con backend Express, PostgreSQL y capa de IA con Gemini.</p><div class="tags"><span class="tag">React</span><span class="tag">Express</span><span class="tag">Gemini</span></div></article>
+      <article class="card"><div class="top"><span class="num">03</span><span class="badge dev">En desarrollo</span></div><h3>SGDI — Ventanilla Única</h3><p>Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche, con autenticación por roles y WCAG AA.</p><div class="tags"><span class="tag">Auth.js</span><span class="tag">Prisma</span><span class="tag">SQLite</span></div></article>
+      <article class="card"><div class="top"><span class="num">04</span><span class="badge dev">En desarrollo</span></div><h3>Optimizador de Excel</h3><p>Gestión de inventario de activos: importación desde hojas Excel oficiales, asistente de ronda anual y exportación fiel verificada celda a celda.</p><div class="tags"><span class="tag">Fastify</span><span class="tag">better-sqlite3</span><span class="tag">React</span></div></article>
+    </div>
+    <div class="marquee"><span>Next.js <em>·</em> TypeScript <em>·</em> RAG <em>·</em> LLMs <em>·</em> Agentes <em>·</em> SQL <em>·</em> FastAPI <em>·</em> Docker <em>·</em> Vercel <em>·</em></span></div>
+  </div>
+</section>
+
+<section id="certificaciones">
+  <div class="wrap">
+    <p class="eyebrow">// certificaciones</p>
+    <h2>Certi<span>ficaciones</span></h2>
+    <div class="certs">
+      <div class="cert"><div><b>AI Engineer for Developers Associate</b><div style="color:var(--bone-muted);font-size:12px">DataCamp</div></div><span class="vig">Vigente</span></div>
+      <div class="cert"><div><b>AI+ Foundation</b><div style="color:var(--bone-muted);font-size:12px">Certificados IT</div></div><span class="vig">Verificable</span></div>
+      <div class="cert"><div><b>AI Fundamentals</b><div style="color:var(--bone-muted);font-size:12px">Google · Coursera</div></div><span class="vig">Verificable</span></div>
+      <div class="cert"><div><b>Aprende SQL</b><div style="color:var(--bone-muted);font-size:12px">midudev</div></div><span class="vig">Verificable</span></div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--bone-muted)">Ver todas <b style="color:var(--red)">(+14 certificaciones más)</b></p>
+  </div>
+</section>
+
+<footer><span>© 2026 Eduardo Mendoza Villar</span><span>GitHub · LinkedIn · Descargar CV</span></footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "chosen": "14-proyectos-solo-panel.html",
+  "handoffs": {
+    "01-home.html": {
+      "status": "in_progress",
+      "queued": false,
+      "sentAt": "2026-11-21T01:38:16.448Z",
+      "startedAt": "2026-11-21T01:38:27.111Z",
+      "implementedAt": null,
+      "feature": "odd/tasks/portfolio-rebrand.md",
+      "note": "Implementando el rebrand en el stack real (slice 1: tokens charcoal/bone/red + Anton/Manrope + hero accent rojo)"
+    },
+    "02-neon-dashboard.html": {
+      "status": "implemented",
+      "queued": false,
+      "sentAt": "2026-11-21T02:02:31.859Z",
+      "startedAt": "2026-11-21T02:02:31.859Z",
+      "implementedAt": "2026-11-21T02:19:47.420Z",
+      "note": "Rebrand 02 Neon Dashboard implementado en el stack real: tokens violeta/cyan, Anton+Manrope, eyebrows //, glass cards, certificaciones y heatmap con datos reales. Preview corriendo en :3050",
+      "previewUrl": "http://localhost:3050/"
+    },
+    "06-marco-red.html": {
+      "status": "implemented",
+      "queued": false,
+      "sentAt": "2026-11-21T04:17:42.365Z",
+      "startedAt": null,
+      "implementedAt": "2026-11-21T04:49:44.739Z",
+      "feature": "odd/tasks/portfolio-rebrand.md",
+      "note": "Imagen Gemini del usuario integrada (crop del retrato → profile-dial.webp) en el dial del hero. Implementación completa + comentario resuelto. Preview: http://localhost:3050",
+      "previewUrl": "http://localhost:3050/"
+    },
+    "10-proyectos-capturas.html": {
+      "status": "implemented",
+      "queued": false,
+      "sentAt": "2026-11-21T13:55:50.239Z",
+      "startedAt": null,
+      "implementedAt": "2026-11-21T14:06:40.337Z",
+      "feature": "odd/tasks/portfolio-rebrand.md",
+      "note": "Plantilla 10 implementada en el stack real: capturas protagonistas con overlay de acciones rápidas, filtro por madurez + strip de resumen, spotlight de cursor. Preview: http://localhost:3050",
+      "previewUrl": "http://localhost:3050/"
+    },
+    "14-proyectos-solo-panel.html": {
+      "status": "implemented",
+      "queued": false,
+      "sentAt": "2026-11-24T02:13:31.485Z",
+      "startedAt": "2026-11-24T02:14:06.881Z",
+      "implementedAt": "2026-11-24T02:20:31.109Z",
+      "feature": "odd/tasks/portfolio-rebrand.md",
+      "note": "14 implementada: panel sticky como ÚNICA vista previa (glow, notch, dots, botones barber, terminal) + filas compactas sincronizadas; fuera las capturas de las cards. Preview: http://localhost:3050",
+      "previewUrl": "http://localhost:3050/"
+    }
+  }
+}

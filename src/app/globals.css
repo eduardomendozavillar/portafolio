@@ -1,25 +1,35 @@
 @import "tailwindcss";
 
 /*
- * Circuit Night (visual direction B) — dark systems/IA identity.
- * Semantic token names stay stable; only values change so components
- * keep using paper / ink / accent utilities.
+ * Rebrand (portfolio-rebrand) — Barber Strict identity (paleta oficial del
+ * aprobada): EXACTLY three colors — Charcoal #1C1C1C, Bone #EDE6DB and
+ * Barber Red #B3261E. No barber red, no cyan. Semantic token names stay stable;
+ * only values change so components keep using paper / ink / accent utilities.
  */
 
 :root {
   /* Surfaces & text */
-  --background: #0a0e17; /* paper / base */
-  --foreground: #e8eef7; /* ink */
-  --color-paper: #0a0e17;
-  --color-paper-raised: #121826;
-  --color-ink: #e8eef7;
-  --color-ink-muted: #94a3b8;
-  --color-line: #1e293b;
+  --background: #1c1c1c; /* paper / base (charcoal black oficial) */
+  --foreground: #ede6db; /* ink (bone white oficial) */
+  --color-paper: #1c1c1c;
+  /* Superficie elevada: paso derivado del charcoal (documentado) para que
+     las cards con borde se distingan del fondo. */
+  --color-paper-raised: #262626;
+  --color-ink: #ede6db;
+  --color-ink-muted: rgba(237, 230, 219, 0.72);
+  --color-line: rgba(237, 230, 219, 0.15);
 
-  /* Accent (electric cyan) */
-  --color-accent: #22d3ee;
-  --color-accent-soft: #083344;
-  --color-accent-contrast: #0a0e17;
+  /* Accent — barber red, lightened for AA text contrast on charcoal
+     (deep #B3261E remains in --color-cta for fills). */
+  --color-accent: #ed6a5b;
+  --color-accent-soft: rgba(179, 38, 30, 0.18);
+  --color-accent-contrast: #ffffff;
+
+  /* Aliases kept for compatibility (red edition: no secondary hues) */
+  --color-accent-2: #ed6a5b;
+  --color-accent-2-soft: rgba(179, 38, 30, 0.18);
+  --color-cta: #b3261e;
+  --color-cta-contrast: #ffffff;
 }
 
 @theme inline {
@@ -33,11 +43,16 @@
   --color-accent: var(--color-accent);
   --color-accent-soft: var(--color-accent-soft);
   --color-accent-contrast: var(--color-accent-contrast);
-  --color-teal: var(--color-accent);
+  --color-accent-2: var(--color-accent-2);
+  --color-accent-2-soft: var(--color-accent-2-soft);
+  --color-cta: var(--color-cta);
+  --color-cta-contrast: var(--color-cta-contrast);
+  --color-teal: var(--color-accent-2);
 
-  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, -apple-system,
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-anton), "Arial Narrow", Impact, ui-sans-serif,
+    sans-serif;
 }
 
 @layer base {
@@ -50,7 +65,7 @@
   body {
     background: var(--background);
     color: var(--foreground);
-    font-family: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
     font-size: 1.0625rem;
     line-height: 1.65;
     letter-spacing: 0.01em;
@@ -87,6 +102,23 @@
   transition:
     opacity 200ms ease-out,
     transform 200ms ease-out;
+}
+
+/* Marquee de tecnologías (rebrand 06): cinta lenta continua; se detiene
+   al hover para poder leer. Reduced-motion la deja estática (regla global). */
+.marquee-track {
+  animation: marquee-scroll 30s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -150,6 +182,134 @@
 }
 
 /**
+ * Activity heatmap (portfolio-rebrand 05): barber-red intensity levels; the
+ * component sets cell size, shape and layout.
+ */
+.level-0 {
+  background: rgba(179, 38, 30, 0.12);
+}
+
+.level-1 {
+  background: rgba(179, 38, 30, 0.42);
+}
+
+.level-2 {
+  background: var(--color-accent);
+}
+
+.level-3 {
+  background: var(--color-accent);
+  box-shadow: 0 0 8px rgba(179, 38, 30, 0.6);
+}
+
+/**
+ * Hero photo dial (rebrand 06): static frame + rotating tick ring + red arc
+ * accent + inner glow; the photo is the child <img> positioned by Hero.
+ */
+.dial-ring { position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 8deg, rgba(237,230,224,0.35) 8deg 10deg, transparent 10deg 30deg, rgba(237,230,224,0.35) 30deg 32deg, transparent 32deg 60deg, rgba(237,230,224,0.35) 60deg 62deg, transparent 62deg 90deg, rgba(237,230,224,0.35) 90deg 92deg, transparent 92deg 120deg, rgba(237,230,224,0.35) 120deg 122deg, transparent 122deg 150deg, rgba(237,230,224,0.35) 150deg 152deg, transparent 152deg 180deg, rgba(237,230,224,0.35) 180deg 182deg, transparent 182deg 210deg, rgba(237,230,224,0.35) 210deg 212deg, transparent 212deg 240deg, rgba(237,230,224,0.35) 240deg 242deg, transparent 242deg 270deg, rgba(237,230,224,0.35) 270deg 272deg, transparent 272deg 300deg, rgba(237,230,224,0.35) 300deg 302deg, transparent 302deg 330deg, rgba(237,230,224,0.35) 330deg 332deg, transparent 332deg 360deg);
+  animation: dial-spin 26s ease-in-out infinite alternate;
+}
+@keyframes dial-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.dial-arc { position: absolute; inset: 16px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--color-accent); border-right-color: var(--color-accent); transform: rotate(-24deg); opacity: 0.9; }
+.dial-glow { position: absolute; inset: 34px; border-radius: 50%; box-shadow: inset 0 0 44px rgba(179,43,30,0.28); pointer-events: none; }
+.type-caret { display: inline-block; width: 9px; height: 1.05em; background: var(--color-ink); vertical-align: text-bottom; animation: type-blink 1.1s steps(1) infinite; }
+@keyframes type-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .dial-ring { animation: none; }
+  .type-caret { animation: none; }
+}
+
+/**
+ * Proyectos filas compactas (rebrand 14): la captura vive SOLO en el panel
+ * sticky; las filas se resaltan (relleno del número, fondo y borde rojo) al
+ * hover y cuando el panel las marca como activas.
+ */
+.project-row { border: 1px solid transparent; border-left-width: 4px; }
+.project-row .row-num { color: transparent; -webkit-text-stroke: 1.5px var(--color-accent); transition: color 160ms, -webkit-text-stroke 160ms; }
+.project-row:hover, .project-row.row-active {
+  background: var(--color-paper-raised);
+  border-color: var(--color-line);
+  border-left-color: var(--color-accent);
+}
+.project-row:hover .row-num, .project-row.row-active .row-num {
+  color: var(--color-accent);
+  -webkit-text-stroke: 0;
+}
+
+/**
+ * Panel showcase plus (rebrand 14): glow ambiental + notch barber ya
+ * definidos por clases del componente; el ancho de ticks gira (ver
+ * .dial-ring más abajo) — la capa preview-in anima el swap.
+ */
+
+/**
+ * Ambient background (rebrand 06): floating dust + wireframe node figures
+ * drifting slowly. Decorative only; fully static under reduced motion.
+ */
+.bg-dust, .bg-dust::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(2px 2px at 12% 22%, rgba(237,230,224,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 78% 12%, rgba(237,230,224,0.4), transparent),
+    radial-gradient(2.5px 2.5px at 44% 68%, rgba(237,230,224,0.28), transparent),
+    radial-gradient(1.5px 1.5px at 88% 52%, rgba(179,43,30,0.5), transparent),
+    radial-gradient(2px 2px at 22% 82%, rgba(237,230,224,0.3), transparent),
+    radial-gradient(1.5px 1.5px at 60% 38%, rgba(179,43,30,0.35), transparent),
+    radial-gradient(2px 2px at 33% 48%, rgba(237,230,224,0.22), transparent),
+    radial-gradient(1.5px 1.5px at 70% 78%, rgba(237,230,224,0.3), transparent);
+}
+.bg-dust::after { transform: translate3d(14px, -10px, 0) scale(1.06); opacity: 0.7; }
+
+.bg-wordmark,
+.bg-wordmark-strip {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  font-family: var(--font-display), sans-serif;
+  text-transform: uppercase;
+  line-height: 0.8;
+  white-space: nowrap;
+}
+/* "EV." gigante en outline detrás del hero: llena el vacío sin competir. */
+.bg-wordmark {
+  left: -3vw;
+  bottom: -0.18em;
+  font-size: clamp(240px, 34vw, 560px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(237, 230, 219, 0.09);
+}
+/* Tira vertical en el borde derecho: repetición del wordmark en rojo tenue. */
+.bg-wordmark-strip {
+  top: 8vh;
+  right: -14px;
+  writing-mode: vertical-rl;
+  font-size: 44px;
+  letter-spacing: 0.06em;
+  color: rgba(179, 38, 30, 0.16);
+}
+.bg-figure { position: fixed; z-index: 0; pointer-events: none; opacity: 0.5; }
+.bg-figure-1 { top: -60px; right: -80px; width: 420px; }
+.bg-figure-2 { bottom: -80px; left: -70px; width: 360px; transform: rotate(24deg); }
+.bg-figure-3 { top: 38%; left: -110px; width: 300px; transform: rotate(-18deg); opacity: 0.35; }
+@media (prefers-reduced-motion: reduce) {
+  .bg-dust, .bg-dust::after { display: none; }
+  .bg-figure { animation: none; }
+}
+@supports (animation: x) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bg-dust { animation: bg-drift 26s ease-in-out infinite alternate; }
+    .bg-dust::after { animation: bg-drift 34s ease-in-out infinite alternate-reverse; }
+    .bg-figure-1 { animation: bg-float 18s ease-in-out infinite alternate; }
+    .bg-figure-2 { animation: bg-float-2 24s ease-in-out infinite alternate-reverse; }
+    .bg-figure-3 { animation: bg-float-3 30s ease-in-out infinite alternate; }
+    @keyframes bg-drift { to { transform: translate3d(-18px, 14px, 0); } }
+    @keyframes bg-float { to { transform: translateY(34px) rotate(3deg); } }
+    @keyframes bg-float-2 { from { transform: rotate(24deg); } to { transform: rotate(18deg) translateY(30px); } }
+    @keyframes bg-float-3 { from { transform: rotate(-18deg); } to { transform: rotate(-10deg) translateY(26px); } }
+  }
+}
+
+/**
  * Intro splash (portfolio-recruiter): the load moment. Content rises in,
  * the progress bar sweeps; reduced motion hides the whole splash before
  * first paint (a blocking, animated intro is exactly what that preference
@@ -186,23 +346,33 @@
 }
 
 /**
- * Quiet hover lift for project cards (WU-B): hairline border emphasis + 2px
- * rise, applied only on real hover-capable, fine pointers.
+ * Project cards (rebrand 02): glass blocks — translucent raised surface with
+ * blur, barber red border emphasis on hover + 2px rise, only on hover-capable
+ * fine pointers.
  */
+.project-card {
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-paper-raised) 45%, transparent);
+  backdrop-filter: blur(8px);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .project-card {
     transition:
       transform 180ms ease-out,
-      border-color 180ms ease-out;
+      border-color 180ms ease-out,
+      box-shadow 180ms ease-out;
   }
 
   .project-card:hover {
     transform: translateY(-2px);
     border-color: color-mix(
       in oklab,
-      var(--color-line) 60%,
-      var(--color-ink-muted) 40%
+      var(--color-line) 35%,
+      var(--color-accent) 65%
     );
+    box-shadow: 0 0 28px -10px var(--color-accent);
   }
 
   /* Magnetic offset for the hero primary CTA (WU-B), driven by a tiny

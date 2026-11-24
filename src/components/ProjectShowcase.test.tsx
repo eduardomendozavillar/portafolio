@@ -90,7 +90,7 @@ describe("ProjectShowcase", () => {
     expect(container.querySelector('[data-active-project="0"]')).toBeTruthy();
   });
 
-  it("switches the panel to the card nearest the viewport center on scroll", () => {
+  it("installs the card whose center is nearest the reading center on scroll", () => {
     Object.defineProperty(window, "innerHeight", { value: 1000, configurable: true });
     let offset = 0;
     Object.defineProperty(window, "scrollY", { get: () => offset, configurable: true });
@@ -119,8 +119,9 @@ describe("ProjectShowcase", () => {
       </>,
     );
 
-    // After scrolling 600px, card tops become 0/300/600: centers 150/450/750 —
-    // viewport center 500 → nearest is Beta (450).
+    // Nueva regla (posición real): activo = la card cuyo CENTRO está más
+    // cerca del centro del viewport. Tras 600px, centros 150/450/750 con el
+    // centro de lectura en 500 → la fila que el ojo lee es Beta.
     offset = 600;
     fireEvent.scroll(document);
 
@@ -129,6 +130,20 @@ describe("ProjectShowcase", () => {
     ).toBeTruthy();
     const img = container.querySelector("img") as HTMLImageElement;
     expect((img.getAttribute("src") ?? "").includes("beta-01")).toBe(true);
+
+    // Al seguir bajando, el centro de Gamma (450) queda más cerca del
+    // centro de lectura (500) que el de Beta (150) → Gamma toma el panel.
+    offset = 900;
+    fireEvent.scroll(document);
+    expect(
+      container.querySelector('[data-active-project="2"]'),
+    ).toBeTruthy();
+
+    offset = 1200; // centros -450/-150/150 → Gamma sostiene la lectura
+    fireEvent.scroll(document);
+    expect(
+      container.querySelector('[data-active-project="2"]'),
+    ).toBeTruthy();
   });
 
   it("panels are swapped with an animated layer and offer a Vista previa control", () => {
@@ -142,7 +157,7 @@ describe("ProjectShowcase", () => {
     // Keyed remount layer animates in (globals.css preview-in) unless reduced.
     expect(container.querySelector('[data-showcase-layer]')).toBeTruthy();
 
-    const button = screen.getByRole("button", { name: "Ampliar vista previa de Alpha" });
+    const button = screen.getByRole("button", { name: "Vista previa" });
     expect(button.textContent).toContain("Vista previa");
     fireEvent.click(button);
     // Contract: (project clicked for, event) so the opener can return focus.
@@ -228,11 +243,15 @@ describe("ProjectShowcase", () => {
       </>,
     );
 
-    offset = 600; // tops 0 / 300 / 600 → Beta is the last above the line
+    offset = 600; // centros 150/450/750 → Beta es la fila en lectura
     fireEvent.scroll(document);
     expect(container.querySelector('[data-active-project="1"]')).toBeTruthy();
 
-    offset = 300; // reverse: tops 300 / 600 / 900 → only Alpha crossed again
+    offset = 1200; // Gamma toma el panel
+    fireEvent.scroll(document);
+    expect(container.querySelector('[data-active-project="2"]')).toBeTruthy();
+
+    offset = 300; // reverse: centros 450/750/1050 → Alpha vuelve
     fireEvent.scroll(document);
     expect(container.querySelector('[data-active-project="0"]')).toBeTruthy();
     const img = container.querySelector("img") as HTMLImageElement;

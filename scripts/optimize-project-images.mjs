@@ -28,13 +28,14 @@ const QUALITY = 78;
 
 const FOLDER_TO_SLUG = {
   FITBOX: "fitbox-elite",
+  OPTIMIZADOR: "optimizador-excel",
   PORTAFOLIO: "portafolio-personal",
   SGDI: "sgdi",
   "TALLER.BY": "taller-by",
 };
 
 /** Serial ordering of the featured projects, matches github.ts presentation. */
-const SLUG_ORDER = ["portafolio-personal", "taller-by", "fitbox-elite", "sgdi"];
+const SLUG_ORDER = ["portafolio-personal", "taller-by", "fitbox-elite", "sgdi", "optimizador-excel"];
 
 function fileBaseName(slug, index) {
   return `${slug}-${String(index + 1).padStart(2, "0")}`;

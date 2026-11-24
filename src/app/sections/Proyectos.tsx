@@ -1,16 +1,20 @@
+"use client";
+
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectList } from "@/components/ProjectList";
 import { githubActivity } from "@/data/github";
+import { useT } from "@/i18n/LanguageProvider";
 
 /** Proyectos: client section consuming GET /api/projects (design D1). */
 export function Proyectos() {
+  const t = useT();
   return (
     <section id="proyectos" className="border-b border-line">
       <Container className="py-16 md:py-20">
         <SectionHeading
-          title="Proyectos"
-          description="Una selección de trabajos que muestran cómo resuelvo problemas reales con fundamentos sólidos."
+          title={t.sections.projects.title}
+          description={t.sections.projects.description}
         />
         <aside
           aria-labelledby="github-activity-title"
@@ -20,17 +24,17 @@ export function Proyectos() {
             id="github-activity-title"
             className="text-sm font-medium uppercase tracking-[0.2em] text-accent"
           >
-            {githubActivity.title}
+            {t.sections.projects.activity.title}
           </h3>
           <dl className="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-sm text-ink-muted">
             <div className="flex items-baseline gap-2">
-              <dt>Repos públicos</dt>
+              <dt>{t.sections.projects.activity.publicRepos}</dt>
               <dd className="font-display text-lg font-semibold text-ink">
                 {githubActivity.publicRepos}
               </dd>
             </div>
             <div className="flex items-baseline gap-2">
-              <dt>Desde</dt>
+              <dt>{t.sections.projects.activity.since}</dt>
               <dd className="font-display text-lg font-semibold text-ink">
                 {githubActivity.since}
               </dd>
@@ -46,6 +50,20 @@ export function Proyectos() {
           </a>
         </aside>
         <ProjectList />
+        <div
+          aria-hidden="true"
+          className="mt-8 overflow-hidden border-y-[3px] border-accent bg-paper-raised py-2.5"
+        >
+          <p className="whitespace-nowrap font-display text-lg uppercase tracking-[0.12em] text-ink-muted">
+            {t.sections.projects.marquee
+              .map((tech, index) => (
+                <span key={tech}>
+                  {index > 0 ? <span className="text-accent"> · </span> : null}
+                  {tech}
+                </span>
+              ))}
+          </p>
+        </div>
       </Container>
     </section>
   );

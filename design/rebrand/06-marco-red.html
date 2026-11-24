@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>06 — Marco Style · Red Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Dirección 06: el lenguaje visual de Marco Lagunes con la paleta del
+     usuario (charcoal #1C1C1C / bone #EDE6E0 / barber red). Partículas
+     flotantes, Anton gigante con degradado, foto con dial de marcas, terminal
+     whoami, tiles de stack, marquee animado. Reduced-motion: todo estático. */
+  :root {
+    --bg: #161310; --bg-2: #1C1915;
+    --bone: #EDE6E0; --bone-muted: rgba(237,230,224,0.6);
+    --line: rgba(237,230,224,0.12);
+    --red: #B32B1E; --red-bright: #ED6A5B; --red-wash: rgba(179,43,30,0.14);
+    --fd: "Anton", "Arial Narrow", Impact, sans-serif;
+    --fb: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --fm: "Consolas", "JetBrains Mono", monospace;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--bone); font-family: var(--fb); line-height: 1.6; overflow-x: hidden; position: relative; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 30px; position: relative; z-index: 1; }
+
+  /* Partículas de polvo flotante (CSS puro, decorativo). */
+  /* Figura de fondo: red de nodos juvenil (wireframe rojo) flotando lento. */
+  .figure { position: fixed; z-index: 0; pointer-events: none; opacity: 0.5; }
+  .figure.f1 { top: -60px; right: -80px; width: 420px; }
+  .figure.f2 { bottom: -80px; left: -70px; width: 360px; transform: rotate(24deg); }
+  .figure.f3 { top: 38%; left: -110px; width: 300px; transform: rotate(-18deg); opacity: 0.35; }
+  @media (prefers-reduced-motion: reduce) { .figure { animation: none; } }
+  @supports (animation: x) { @media (prefers-reduced-motion: no-preference) {
+    .figure.f1 { animation: floaty 18s ease-in-out infinite alternate; }
+    .figure.f2 { animation: floaty 24s ease-in-out infinite alternate-reverse; }
+    .figure.f3 { animation: floaty 30s ease-in-out infinite alternate; }
+    @keyframes floaty { to { transform: translateY(34px) rotate(3deg); } }
+    .figure.f2 { animation-name: floaty2; }
+    @keyframes floaty2 { from { transform: rotate(24deg); } to { transform: rotate(18deg) translateY(30px); } }
+    .figure.f3 { animation-name: floaty3; }
+    @keyframes floaty3 { from { transform: rotate(-18deg); } to { transform: rotate(-10deg) translateY(26px); } }
+  } }
+
+  .dust, .dust::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(2px 2px at 12% 22%, rgba(237,230,224,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 78% 12%, rgba(237,230,224,0.4), transparent),
+      radial-gradient(2.5px 2.5px at 44% 68%, rgba(237,230,224,0.28), transparent),
+      radial-gradient(1.5px 1.5px at 88% 52%, rgba(179,43,30,0.5), transparent),
+      radial-gradient(2px 2px at 22% 82%, rgba(237,230,224,0.3), transparent),
+      radial-gradient(1.5px 1.5px at 60% 38%, rgba(179,43,30,0.35), transparent),
+      radial-gradient(2px 2px at 33% 48%, rgba(237,230,224,0.22), transparent),
+      radial-gradient(1.5px 1.5px at 70% 78%, rgba(237,230,224,0.3), transparent);
+  }
+  .dust::after { transform: translate3d(14px, -10px, 0) scale(1.06); opacity: 0.7; }
+  @media (prefers-reduced-motion: reduce) { .dust, .dust::after { display: none; } }
+  @supports (animation: x) { @media (prefers-reduced-motion: no-preference) {
+    .dust { animation: drift 26s ease-in-out infinite alternate; }
+    .dust::after { animation: drift 34s ease-in-out infinite alternate-reverse; }
+    @keyframes drift { to { transform: translate3d(-18px, 14px, 0); } }
+  } }
+
+  header { position: sticky; top: 0; z-index: 10; background: rgba(22,19,16,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 12px; padding-bottom: 12px; }
+  .logo { font-family: var(--fd); font-size: 15px; letter-spacing: 0.08em; border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; background: var(--bg-2); }
+  .logo em { color: var(--red-bright); font-style: normal; }
+  nav { display: flex; gap: 20px; font-family: var(--fm); font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-muted); }
+  nav a.on { color: var(--bone); border-bottom: 2px solid var(--red-bright); padding-bottom: 3px; }
+  .lang { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font-family: var(--fm); font-size: 12px; color: var(--bone-muted); }
+
+  .hero { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; padding: 90px 0 70px; }
+  .chip { display: inline-flex; gap: 9px; align-items: center; border: 1px solid var(--red-bright); border-radius: 999px; padding: 6px 15px; font-family: var(--fm); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone); }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red-bright); box-shadow: 0 0 0 3px rgba(237,106,91,0.22); }
+  .coords { font-family: var(--fm); font-size: 12px; letter-spacing: 0.1em; color: var(--bone-muted); margin-left: 12px; }
+  h1 { font-family: var(--fd); font-size: clamp(64px, 9.5vw, 118px); line-height: 0.9; text-transform: uppercase; letter-spacing: 0.01em; margin-top: 22px; }
+  h1 .l1 { background: linear-gradient(180deg, #fff 20%, var(--bone) 55%, rgba(237,230,224,0.35) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; display: block; }
+  h1 .l2 { display: block; color: transparent; -webkit-text-stroke: 1.5px rgba(237,230,224,0.45); }
+  .role { display: flex; align-items: center; gap: 12px; margin-top: 20px; font-family: var(--fm); font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red-bright); }
+  .role::before { content: ""; width: 34px; height: 2px; background: var(--red-bright); }
+  h2.thesis { font-family: var(--fb); font-size: 21px; font-weight: 800; line-height: 1.35; color: var(--bone); margin-top: 16px; max-width: 480px; }
+  .bio { color: var(--bone-muted); font-size: 14.5px; max-width: 520px; margin-top: 14px; }
+  .actions { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+  .btn { padding: 12px 22px; border-radius: 8px; font-weight: 700; font-size: 14px; }
+  .btn.primary { background: var(--red); color: #fff; box-shadow: 0 6px 26px -8px rgba(179,43,30,0.6); }
+  .btn.outline { border: 1px solid var(--line); background: var(--bg-2); }
+  .btn.dark { background: #000; border: 1px solid var(--line); }
+  .icons { display: flex; gap: 16px; margin-left: 8px; font-family: var(--fm); font-size: 16px; color: var(--bone-muted); }
+
+  .dial { position: relative; width: min(360px, 90%); aspect-ratio: 1; margin: 0 auto; border-radius: 50%; border: 1px solid rgba(237,230,224,0.25); }
+  /* Ancho de marcas: gira horario y luego antihorario (alternate). */
+  .ring { position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0 8deg, rgba(237,230,224,0.35) 8deg 10deg, transparent 10deg 30deg, rgba(237,230,224,0.35) 30deg 32deg, transparent 32deg 60deg, rgba(237,230,224,0.35) 60deg 62deg, transparent 62deg 90deg, rgba(237,230,224,0.35) 90deg 92deg, transparent 92deg 120deg, rgba(237,230,224,0.35) 120deg 122deg, transparent 122deg 150deg, rgba(237,230,224,0.35) 150deg 152deg, transparent 152deg 180deg, rgba(237,230,224,0.35) 180deg 182deg, transparent 182deg 210deg, rgba(237,230,224,0.35) 210deg 212deg, transparent 212deg 240deg, rgba(237,230,224,0.35) 240deg 242deg, transparent 242deg 270deg, rgba(237,230,224,0.35) 270deg 272deg, transparent 272deg 300deg, rgba(237,230,224,0.35) 300deg 302deg, transparent 302deg 330deg, rgba(237,230,224,0.35) 330deg 332deg, transparent 332deg 360deg);
+    animation: dialspin 26s ease-in-out infinite alternate; }
+  @keyframes dialspin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .ring { animation: none; } }
+  .dial::before { content: ""; position: absolute; inset: 26px; border-radius: 50%; border: 1px solid rgba(237,230,224,0.15); }
+  .dial img { position: absolute; inset: 34px; width: calc(100% - 68px); height: calc(100% - 68px); border-radius: 50%; object-fit: cover; filter: saturate(0.88) contrast(1.08); box-shadow: 0 18px 50px -18px rgba(0,0,0,0.85); }
+  /* Aro de acento: arco rojo girando + glow interior (poster look). */
+  .dial .arc { position: absolute; inset: 16px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--red-bright); border-right-color: var(--red-bright); transform: rotate(-24deg); opacity: 0.9; }
+  .dial .glow { position: absolute; inset: 34px; border-radius: 50%; box-shadow: inset 0 0 44px rgba(179,43,30,0.28); pointer-events: none; }
+
+  .term { background: #121009; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 30px 80px -40px rgba(0,0,0,0.9); }
+  .term .bar { display: flex; gap: 7px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: rgba(0,0,0,0.35); }
+  .term .b { width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
+  .term .b.r { background: var(--red); }
+  .term .t { font-family: var(--fm); font-size: 12px; color: var(--bone-muted); margin-left: 8px; }
+  .term .body { padding: 18px 20px; font-family: var(--fm); font-size: 13.5px; }
+  .term .p { color: var(--red-bright); }
+  .term .o { color: var(--bone); }
+
+  section { padding: 74px 0; position: relative; z-index: 1; }
+  .eyebrow { font-family: var(--fm); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red-bright); }
+  .eyebrow::after { content: ""; display: inline-block; width: 120px; height: 1px; background: var(--line); vertical-align: middle; margin-left: 16px; }
+  h2 { font-family: var(--fd); font-size: clamp(46px, 7vw, 78px); text-transform: uppercase; line-height: 0.95; margin: 10px 0 34px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .tile { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); aspect-ratio: 1; display: grid; place-items: center; align-content: center; gap: 6px; font-family: var(--fm); font-size: 11.5px; color: var(--bone-muted); text-align: center; padding: 10px 6px; transition: border-color 160ms, transform 160ms, box-shadow 160ms; }
+  .tile:hover { border-color: var(--red-bright); transform: translateY(-4px); box-shadow: 0 8px 24px -10px rgba(179,43,30,0.5); }
+  /* Iconos de marca: SVG vector inline (sin assets externos). */
+  .icon { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; overflow: hidden; background: rgba(255,255,255,0.04); outline: 1px solid var(--line); }
+  .icon svg { width: 26px; height: 26px; }
+  .tile:hover .icon { outline-color: rgba(237,230,224,0.3); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; }
+  .ccard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 16px; }
+  .ccard h3 { font-size: 13.5px; font-weight: 800; }
+  .ccard .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; font-family: var(--fm); font-size: 11.5px; }
+  .ccard .tag { border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; color: var(--bone-muted); }
+
+  .pcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pcard { position: relative; overflow: hidden; border: 1px solid var(--line); border-left: 4px solid var(--red); border-radius: 12px; background: var(--bg-2); padding: 20px; transition: transform 200ms, border-color 200ms, box-shadow 200ms; }
+  .pcard:hover { transform: translateY(-4px); border-color: var(--red-bright); box-shadow: 0 14px 40px -18px rgba(179,43,30,0.55); }
+  .pcard .shot { position: relative; margin: -20px -20px 14px; aspect-ratio: 16/6.5; background: linear-gradient(135deg, #221f1c, #191613 60%, rgba(179,43,30,0.25)); overflow: hidden; }
+  .pcard .shot .chrome { display: flex; gap: 5px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  .pcard .shot .chrome i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .pcard .shot .chrome i:first-child { background: var(--red); }
+  .pcard .shot .skel { padding: 10px 12px; display: grid; gap: 6px; }
+  .pcard .shot .skel i { display: block; height: 7px; border-radius: 3px; background: rgba(237,230,224,0.14); }
+  .pcard .shot .skel i:first-child { width: 55%; background: rgba(179,43,30,0.5); }
+  .pcard .shot .skel i:nth-child(2) { width: 80%; }
+  .pcard .shot .skel i:nth-child(3) { width: 40%; }
+  .pcard:hover .shot .skel i { background: rgba(237,230,224,0.3); }
+  .pcard:hover .shot .skel i:first-child { background: var(--red-bright); }
+  .pcard .meta { font-family: var(--fm); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red-bright); }
+  .pcard h3 { font-size: 17px; font-weight: 800; margin: 8px 0 6px; }
+  .pcard p { font-size: 13.5px; color: var(--bone-muted); }
+  .pcard .link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--fm); font-size: 12px; color: var(--red-bright); }
+
+  /* Certificaciones interactivas: spotlight rojo que sigue el mouse dentro
+     de cada card + elevación y flecha al hover. */
+  .pcard, .cert { --cx: 50%; --cy: 50%; }
+  .pcard::after, .cert::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 200ms;
+    background: radial-gradient(140px 90px at var(--cx) var(--cy), rgba(179,43,30,0.18), transparent 75%); }
+  .pcard:hover::after, .cert:hover::after { opacity: 1; }
+  .pcard:hover .link i { transform: translateX(5px); }
+  .pcard .link i { font-style: normal; display: inline-block; transition: transform 180ms; }
+  .pcard:hover .link i { transform: translateX(5px); }
+
+  .marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 10px 0; margin-top: 40px; }
+  .marquee .track { display: flex; gap: 40px; width: max-content; font-family: var(--fd); font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--bone-muted); animation: scrollm 30s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .marquee em { color: var(--red-bright); font-style: normal; }
+  @keyframes scrollm { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee .track { animation: none; } }
+
+  .now { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ncard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 18px; }
+  .ncard h3 { font-size: 14.5px; font-weight: 800; margin-bottom: 8px; }
+  .ncard p { font-size: 13.5px; color: var(--bone-muted); }
+
+  footer { padding: 36px 30px; border-top: 1px solid var(--line); font-size: 13px; color: var(--bone-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  footer a { color: var(--bone); text-decoration: underline; text-decoration-color: var(--red-bright); text-underline-offset: 4px; }
+
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .tiles { grid-template-columns: repeat(3, 1fr); } .cards { grid-template-columns: 1fr 1fr; } .pcards, .now { grid-template-columns: 1fr; } nav { display: none; } }
+  /* Spotlight del header: brillo que sigue al cursor (rebrand interactiva). */
+  header { position: sticky; }
+  header::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 300ms;
+    background: radial-gradient(340px 130px at var(--mx, 50%) var(--my, 50%), rgba(179,43,30,0.22), transparent 70%); }
+  header:hover::before { opacity: 1; }
+  header nav a { position: relative; transition: color 150ms; }
+  header nav a::after { content: ""; position: absolute; inset: -6px -12px; border-radius: 6px; opacity: 0; pointer-events: none;
+    background: radial-gradient(60px 30px at var(--lx, 50%) 50%, rgba(237,230,224,0.12), transparent); transition: opacity 150ms; }
+  header nav a:hover::after { opacity: 1; }
+
+  /* Reveals bidireccionales (GSAP-style con IntersectionObserver nativo):
+     entran al bajar y se re-animan al subir. */
+  .rv { opacity: 0; transform: translateY(34px); transition: opacity 700ms cubic-bezier(.2,.7,.2,1), transform 700ms cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv[data-d="1"] { transition-delay: 80ms; } .rv[data-d="2"] { transition-delay: 160ms; } .rv[data-d="3"] { transition-delay: 240ms; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+
+  /* Tilt 3D de los tiles del stack (siguiendo el cursor). */
+  .tile { transform-style: preserve-3d; will-change: transform; }
+</style>
+</head>
+<body>
+<svg class="figure f1" viewBox="0 0 300 220" fill="none" stroke="rgba(179,43,30,0.55)" stroke-width="1.4" aria-hidden="true">
+  <path d="M20 180 L110 40 L200 150 L280 30 L200 150 L110 40 L20 180 L280 30" stroke-linejoin="round"/>
+  <circle cx="110" cy="40" r="4" fill="#ED6A5B"/><circle cx="280" cy="30" r="3.5" fill="#EDE6E0"/><circle cx="20" cy="180" r="3" fill="#B32B1E"/><circle cx="200" cy="150" r="4" fill="#ED6A5B"/>
+</svg>
+<svg class="figure f2" viewBox="0 0 260 200" fill="none" stroke="rgba(237,230,224,0.22)" stroke-width="1.3" aria-hidden="true">
+  <path d="M130 10 L250 90 L170 190 L20 150 Z"/><path d="M130 10 L170 190 M250 90 L20 150"/>
+  <circle cx="130" cy="10" r="3" fill="#EDE6E0"/><circle cx="170" cy="190" r="3" fill="#ED6A5B"/>
+</svg>
+<svg class="figure f3" viewBox="0 0 240 180" fill="none" stroke="rgba(179,43,30,0.4)" stroke-width="1.3" aria-hidden="true">
+  <path d="M10 90 L90 10 L230 60 L160 170 Z"/><circle cx="90" cy="10" r="3" fill="#ED6A5B"/><circle cx="230" cy="60" r="3" fill="#EDE6E0"/><circle cx="160" cy="170" r="3" fill="#B32B1E"/>
+</svg>
+<div class="dust" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <div class="logo">EV<em>.</em></div>
+    <nav><a class="on">Sobre mí</a><a>Experiencia</a><a>Proyectos</a><a>Educación</a><a>Ahora</a><a>Certificaciones</a><a>Stack</a><a>Contacto</a></nav>
+    <span class="lang">ES</span>
+  </div>
+</header>
+
+<section class="hero wrap" id="inicio">
+  <div>
+    <p class="chip"><span class="dot"></span> Disponible · Santa Marta</p>
+    <h1><span class="l1">Eduardo</span><span class="l2">Mendoza Villar</span></h1>
+    <p class="role">Full-Stack · IA aplicada · RAG</p>
+    <p class="thesis">Ingeniero de sistemas enfocado en IA aplicada: LLMs, arquitecturas RAG y orquestación de agentes.</p>
+    <p class="bio">Experiencia construyendo y desplegando aplicaciones web full-stack, incluido un sistema de gestión documental institucional (SGDI) para el Hospital Universitario Julio Méndez Barreneche. Aplico Spec-Driven Development y pruebas automatizadas.</p>
+    <div class="actions">
+      <a class="btn primary" href="#proyectos">Ver proyectos</a>
+      <a class="btn outline" href="#">⬇ Descargar CV</a>
+      <a class="btn dark" href="#contacto">Contactarme</a>
+      <span class="icons">&lt;/&gt; · ✉ · ◉</span>
+    </div>
+  </div>
+  <div>
+    <div class="dial">
+      <span class="ring" aria-hidden="true"></span>
+      <span class="arc" aria-hidden="true"></span>
+      <span class="glow" aria-hidden="true"></span>
+      <img alt="Foto de perfil de Eduardo Mendoza Villar" src="data:image/jpeg;base64,[object Object]">
+    </div>
+    <div class="term" style="margin-top:22px">
+      <div class="bar"><span class="b r"></span><span class="b"></span><span class="b"></span><span class="t">eduardo@portfolio:~</span></div>
+      <div class="body">
+        <p><span class="p">$ whoami</span></p>
+        <p class="o">Eduardo Mendoza Villar — Full-Stack · IA</p>
+        <p style="margin-top:8px"><span class="p">$</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos" class="wrap">
+  <p class="eyebrow">// proyectos</p>
+  <h2>Proyectos destacados</h2>
+  <div class="pcards">
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En producción</p><h3>SGDI — Ventanilla Única de Radicación</h3><p>Sistema institucional de gestión documental para el Hospital Universitario Julio Méndez Barreneche: roles, radicado RAD y trazabilidad, con WCAG AA.</p><a class="link" href="#">detalle del caso <i>→</i></a></article>
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En producción</p><h3>Portafolio personal</h3><p>Este sitio: Next.js 16, 122 pruebas automatizadas, Lighthouse 90+ y despliegue continuo en Vercel.</p><a class="link" href="#">ver en vivo <i>→</i></a></article>
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En desarrollo</p><h3>taller.by</h3><p>Productividad y composición musical asistida por IA: React, Express, PostgreSQL y Gemini.</p><a class="link" href="#">verificar <i>→</i></a></article>
+    <article class="pcard"><div class="shot" aria-hidden="true"><div class="chrome"><i></i><i></i><i></i></div><div class="skel"><i></i><i></i><i></i></div></div><p class="meta">En desarrollo</p><h3>Optimizador de Excel</h3><p>Inventario institucional: importación desde hojas Excel oficiales, ronda anual y exportación fiel verificada celda a celda.</p><a class="link" href="#">verificar <i>→</i></a></article>
+  </div>
+</section>
+
+<section id="ahora" class="wrap">
+  <p class="eyebrow">// ahora</p>
+  <h2>Ahora mismo</h2>
+  <div class="now">
+    <div class="ncard"><h3>Qué estoy construyendo</h3><p>La especialización en IA y mejoras continuas del SGDI institucional.</p></div>
+    <div class="ncard"><h3>Dónde estoy</h3><p>Santa Marta, Colombia — abierto a remoto e híbrido.</p></div>
+  </div>
+</section>
+
+<section id="certificaciones" class="wrap">
+  <p class="eyebrow">// certificaciones</p>
+  <h2>Certificaciones</h2>
+  <div class="pcards" style="grid-template-columns:1fr 1fr">
+    <article class="pcard"><p class="meta">Vigente</p><h3>AI Engineer for Developers Associate</h3><p>DataCamp · verificar en línea.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">Vigente</p><h3>AI+ Foundation</h3><p>Certificados IT · verificación en línea.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">2026</p><h3>AI Fundamentals</h3><p>Google · Coursera · accomplishments verificados.</p><span class="link">verificar →</span></article>
+    <article class="pcard"><p class="meta">2026</p><h3>Aprende SQL</h3><p>midudev · 29 lecciones, 112 ejercicios, 7 exámenes.</p><span class="link">verificar →</span></article>
+  </div>
+  <p style="margin-top:12px;font-size:13px;color:var(--bone-muted)">Ver todas <b style="color:var(--red-bright)">(+14 certificaciones más)</b></p>
+</section>
+
+<section id="stack" class="wrap">
+  <p class="eyebrow">// stack</p>
+  <h2>Stack técnico</h2>
+  <div class="tiles">
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#3178C6"/><path d="M6.7 10.2h2.1V17h1.9v-6.8h2.1V8.5H6.7v1.7zm9-1.9c-1.5 0-2.4.7-2.8 1.4l1.4.9c.3-.5.7-.8 1.3-.8.6 0 1 .3 1 .8 0 .6-.5.8-1.3 1.2-1 .4-2 .9-2 2.3 0 1.3 1 2.2 2.4 2.2.9 0 1.6-.4 2-1.1l-1.3-.8c-.2.4-.5.6-1 .6-.5 0-.8-.3-.8-.7 0-.6.6-.8 1.4-1.2 1-.4 2-.9 2-2.3 0-1.4-1.1-2.5-2.7-2.5z" fill="#fff"/></svg></span>TypeScript</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#000" stroke="rgba(255,255,255,0.25)"/><path d="M8.5 16V8h1.6l4.4 5.7V8h1.5v8h-1.5l-4.5-5.9V16z" fill="#fff"/></svg></span>Next.js</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" stroke-width="1.1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" stroke-width="1.1" transform="rotate(-60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" stroke-width="1.1"/><circle cx="12" cy="12" r="2" fill="#61DAFB"/></svg></span>React</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z" fill="#539E43"/><path d="M9.4 15.5V9h1.4l3.8 5V9H16v6.5h-1.4l-3.9-5.2v5.2z" fill="#fff"/></svg></span>Node.js</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#242938"/><text x="12" y="15.5" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="9" fill="#fff" font-style="italic">ex</text></svg></span>Express</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#0B7B5B"/><path d="M6 17V7h2v8h4v2z" fill="#fff"/><path d="M13 7h2.2l1.6 4.2L18.4 7h2.1l-2.6 7.2c-.3.8-.9 1.3-1.8 1.3h-.9v-1.4h.5l.3-.8z" fill="#fff" opacity="0.85"/></svg></span>Fastify</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#009688"/><path d="M6 16c1.2-4 3-6 4-6.5-.4 2.2.6 3.5 2 3.8 2 .5 3.5-1 5-1.3.5 1.6-1 4.5-3.5 5.5-2.7 1.1-6-.2-7.5-1.5z" fill="#fff"/><circle cx="9" cy="8.5" r="1.6" fill="#fff"/></svg></span>FastAPI</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#336791"/><path d="M12 5.5c-3.2 0-5.5 1.7-5.5 3.9v5.2c0 2.2 2.3 3.9 5.5 3.9s5.5-1.7 5.5-3.9V9.4c0-2.2-2.3-3.9-5.5-3.9z" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M8 9.5c1.5-.8 3-.8 4 0s2.5.8 4 0" fill="none" stroke="#fff" stroke-width="1"/><ellipse cx="12" cy="11.5" rx="3.5" ry="1.4" fill="#fff" opacity="0.9"/></svg></span>PostgreSQL</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#003B57"/><path d="M8 17c-.6-3.2-.4-6 .6-8.5h.4c-.6 2.5-.5 5.3.2 8.5z" fill="#7FB8DF"/><rect x="6.5" y="7" width="11" height="10" rx="1.2" fill="none" stroke="#fff" stroke-width="1.1"/><path d="M10 17c1-3 .8-5.5-.4-7.5" fill="none" stroke="#fff" stroke-width="1"/></svg></span>SQLite</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1512"/><path d="M13.5 2.5l-6.7 11h4.6l-1.4 8 6.8-11.4h-4.6z" fill="#FFA000"/><path d="M16.5 3.5l-4.9 8.3h3.4l-1 5.9 5-8.6h-3.3z" fill="#FFC64D" opacity="0.75"/></svg></span>Firebase</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><defs><linearGradient id="gm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8E44AD"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><rect width="24" height="24" rx="4" fill="#111"/><path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7z" fill="url(#gm)"/></svg></span>Gemini</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1512"/><path d="M4 13c3-6 6-8 9-6 2.4 1.6 1.5 4.5 4 5.2 1.8.5 3-.6 3-2.2 2.2 2.9 1 6.8-2.4 8.6-4.6 2.4-11.2.8-13.6-5.6z" fill="url(#mcg)"/><defs><linearGradient id="mcg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#6D4AFF"/><stop offset="1" stop-color="#C77DFF"/></linearGradient></defs></svg></span>MCP</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1D63ED"/><path d="M13.4 3h-3.2v4.1H6v3.2h4.2v4.1h3.2v-4.1h4.1V7.1h-4.1z" fill="#fff" opacity="0.95"/><path d="M13.4 13.2h3.4v3.4a1.3 1.3 0 01-1.3 1.3h-2.1zM10.2 13.2H6.9v3.4a1.3 1.3 0 001.3 1.3h2z" fill="#fff" opacity="0.7"/></svg></span>Docker</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#000" stroke="rgba(255,255,255,0.2)"/><path d="M12 5l9 15.5H3z" fill="#fff"/></svg></span>Vercel</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><path d="M14.2 2L4.5 13.5h6.2L9.8 22 19.5 10h-6.4z" fill="#DD0031"/><path d="M12 2.5L5 13h4.5z" fill="#C3002F"/><path d="M14.2 2L9.5 13h5L19.5 10z" fill="#FF5252" opacity="0.8"/></svg></span>Angular</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#0b1220"/><path d="M19.6 6.3c1.2 1.7 1.9 3.6 1.7 5.7-.2 3-2.1 5.4-5.1 6.2-2.9.8-5.8-.2-7.3-2 .8-.2 1.9-.4 2.9-.9 2.5-1.2 5.7-3.4 6.4-6.2.4-1.3.3-2.3.1-2.9-.6 1.2-1.5 1.9-2.5 2.1.5.6.8 1.4.8 2.3-1-1.4-2.7-2.2-4.6-1.9-2.9.4-5 2.4-5.3 4.3-.3 2 .8 4 3.2 5.2-2.9 1-6.3-.5-7.6-3.3C1.3 11 3.6 5.5 8.2 4c3.7-1.2 9.3-.6 11.4 2.3z" fill="#38BDF8" opacity="0.9"/><path d="M17.4 10.5c.3 1.5-.4 3-1.9 3.7-2.5 1.2-5.9 3.6-6.6 6.3-.2.9 0 1.7.4 2.3-.9-.4-1.6-1.2-1.9-2.3-.6-2.1.5-5.1 3.4-7 1.9-1.2 4.4-2 6.6-3z" fill="#38BDF8"/></svg></span>Tailwind</div>
+    <div class="tile"><span class="icon"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1512"/><path d="M18.6 3.5L9.9 12l-1.7-1.7-3.5 3.5 4.9 4.9 9-9z" fill="#729B1B"/><path d="M12.8 13.8l-2.6 2.5-1.2-1.2 2.6-2.5z" fill="#fff" opacity="0.6"/><path d="M5.5 6l3.6 3.6-1.4 1.4L4.1 7.4z" fill="#BD34FE"/></svg></span>Vitest</div>
+  </div>
+  </div>
+  <div class="cards">
+    <div class="ccard"><h3>Frontend</h3><div class="tags"><span class="tag">Next.js</span><span class="tag">React.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind CSS</span><span class="tag">Angular</span></div></div>
+    <div class="ccard"><h3>Backend</h3><div class="tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Fastify</span><span class="tag">FastAPI</span><span class="tag">APIs REST</span></div></div>
+    <div class="ccard"><h3>IA / Datos</h3><div class="tags"><span class="tag">LLMs locales y cloud</span><span class="tag">RAG</span><span class="tag">Agentes</span><span class="tag">MCP</span><span class="tag">PostgreSQL</span></div></div>
+    <div class="ccard"><h3>Herramientas</h3><div class="tags"><span class="tag">Docker</span><span class="tag">GitHub</span><span class="tag">Vercel</span><span class="tag">CLI</span></div></div>
+    <div class="ccard"><h3>Pruebas</h3><div class="tags"><span class="tag">Vitest</span><span class="tag">Pruebas E2E</span></div></div>
+    <div class="ccard"><h3>Desarrollo con IA</h3><div class="tags"><span class="tag">ODD</span><span class="tag">RDD</span><span class="tag">Skills</span><span class="tag">Gemini-assisted</span></div></div>
+  </div>
+  <div class="marquee" aria-hidden="true"><div class="track"><span>Next.js <em>·</em> TypeScript <em>·</em> RAG <em>·</em> LLMs <em>·</em> Agentes <em>·</em> SQL <em>·</em> FastAPI <em>·</em> Docker <em>·</em> Vercel <em>·</em>&nbsp;</span><span>Next.js <em>·</em> TypeScript <em>·</em> RAG <em>·</em> LLMs <em>·</em> Agentes <em>·</em> SQL <em>·</em> FastAPI <em>·</em> Docker <em>·</em> Vercel <em>·</em>&nbsp;</span></div></div>
+</section>
+
+<footer><span>© 2026 Eduardo Mendoza Villar</span><span><a>GitHub</a> · <a>LinkedIn</a> · <a>Descargar CV</a> · Santa Marta, Colombia</span></footer>
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+
+  // Spotlight del header siguiendo al cursor.
+  var header = document.querySelector("header");
+  header.addEventListener("pointermove", function (e) {
+    var r = header.getBoundingClientRect();
+    header.style.setProperty("--mx", (e.clientX - r.left) + "px");
+    header.style.setProperty("--my", (e.clientY - r.top) + "px");
+    var link = e.target.closest("nav a");
+    if (link) {
+      var lr = link.getBoundingClientRect();
+      link.style.setProperty("--lx", (e.clientX - lr.left) + "px");
+    }
+  });
+
+  // Reveals bidireccionales: entra al bajar, se re-animan al subir.
+  var targets = document.querySelectorAll("section .eyebrow, section h2, .pcard, .tile, .term, .ncard, .ccard, .heat");
+  targets.forEach(function (el, i) {
+    el.classList.add("rv");
+    el.dataset.d = String(i % 3 + 1);
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { en.target.classList.toggle("in", en.isIntersecting); });
+  }, { threshold: 0.18 });
+  targets.forEach(function (el) { io.observe(el); });
+
+  // Tilt 3D + desplazamiento X-Y de los tiles siguiendo el cursor.
+  document.querySelectorAll(".tile").forEach(function (tile) {
+    tile.addEventListener("pointermove", function (e) {
+      var r = tile.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      tile.style.transform =
+        "translate(" + (x * 12).toFixed(1) + "px, " + (y * 12).toFixed(1) + "px)" +
+        " rotateX(" + (-y * 10).toFixed(1) + "deg) rotateY(" + (x * 12).toFixed(1) + "deg)";
+    });
+    tile.addEventListener("pointerleave", function () { tile.style.transform = ""; });
+  });
+
+  // Spotlight por tarjeta (certificaciones/proyectos): sigue el mouse.
+  document.querySelectorAll(".cert, .pcard").forEach(function (card) {
+    card.addEventListener("pointermove", function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty("--cx", (e.clientX - r.left) + "px");
+      card.style.setProperty("--cy", (e.clientY - r.top) + "px");
+    });
+  });
+
+  // Parallax suave en las figuras de fondo (gsap scroll-feel).
+  var figs = document.querySelectorAll(".figure");
+  var onScroll = function () {
+    var y = window.scrollY;
+    figs.forEach(function (f, i) { f.style.marginTop = ((i % 2 ? -1 : 1) * y * (0.06 + i * 0.03)).toFixed(1) + "px"; });
+  };
+  document.addEventListener("scroll", onScroll, { passive: true });
+})();
+</script>
+</body>
+</html>

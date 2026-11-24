@@ -1,0 +1,13 @@
+import { existsSync } from "node:fs";
+import puppeteer from "puppeteer-core";
+const chrome = [process.env.CHROME_PATH].filter(c=>existsSync(c))[0];
+const b = await puppeteer.launch({ executablePath: chrome, headless: "new", args: ["--hide-scrollbars"] });
+const p = await b.newPage();
+await p.setViewport({ width: 1600, height: 900 });
+await p.goto("http://localhost:3050/", { waitUntil: "networkidle2", timeout: 30000 });
+await p.evaluate(() => document.getElementById("proyectos")?.scrollIntoView());
+await new Promise(r=>setTimeout(r,1500));
+const aside = await p.$("[data-active-project]");
+await aside.screenshot({ path: "panel-check.png" });
+await b.close();
+console.log("shot ok");

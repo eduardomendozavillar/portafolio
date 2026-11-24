@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
+import { LanguageProvider } from "@/i18n/LanguageProvider";
 import type { ReactNode } from "react";
-import { Outfit, Source_Sans_3 } from "next/font/google";
+import { Anton, Manrope } from "next/font/google";
+import { FX } from "@/components/FX";
+import { BackgroundFigures } from "./sections/BackgroundFigures";
 import { Footer } from "./sections/Footer";
 import { Header } from "./sections/Header";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+/** Rebrand (portfolio-rebrand): Anton condensada para display, Manrope para cuerpo. */
+const anton = Anton({
+  variable: "--font-anton",
+  weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
-  variable: "--font-source-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
   display: "swap",
 });
@@ -27,12 +32,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="es"
-      className={`${outfit.variable} ${sourceSans.variable} h-full antialiased`}
+      className={`${anton.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
-        <Header />
-        {children}
-        <Footer />
+        {/* LanguageProvider here (S11): the Header and Footer live in the
+            layout, so the language context must wrap the whole shell — not
+            just the page content. */}
+        <LanguageProvider>
+          <BackgroundFigures />
+          <FX />
+          <Header />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

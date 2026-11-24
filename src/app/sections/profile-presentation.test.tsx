@@ -43,11 +43,13 @@ vi.mock("next/image", () => ({
 
 const NAV_LINKS = [
   "#inicio",
-  "#proyectos",
   "#sobre-mi",
-  "#habilidades",
   "#experiencia",
+  "#proyectos",
   "#educacion",
+  "#ahora",
+  "#certificaciones",
+  "#habilidades",
   "#contacto",
 ];
 
@@ -114,10 +116,13 @@ describe("Header", () => {
     expect(container).toBeTruthy();
   });
 
-  it("renders the real name as the brand linking to the hero anchor", () => {
+  it("renders the EV brand monogram linking to the hero anchor", () => {
     render(<Header />);
 
-    const brand = screen.getByRole("link", { name: new RegExp(profile.name) });
+    // Rebrand 06: the brand is the "EV." monogram; the accessible name keeps
+    // the visible "EV." prefix (label-content-name rule) and states the goal.
+    const brand = screen.getByRole("link", { name: /EV\. — volver al inicio/ });
+    expect(brand.textContent).toContain("EV");
     expect(brand.getAttribute("href")).toBe("#inicio");
     expect(screen.getByRole("banner")).toBeTruthy();
   });
@@ -177,13 +182,14 @@ describe("Footer", () => {
 });
 
 describe("Hero", () => {
-  it("shows the availability badge with a pulse dot", () => {
+  it("shows the availability chip with a theme-tone dot", () => {
     render(<Hero />);
 
     const badge = document.querySelector("[data-availability]") as HTMLElement;
     expect(badge).toBeTruthy();
     expect(badge.textContent).toContain("Disponible para nuevas oportunidades");
-    expect(badge.querySelector("span")?.className).toContain("animate-pulse");
+    // Rebrand 05/06: the dot uses the barber-red theme tone (no green).
+    expect(badge.querySelector("span")?.className).toContain("bg-accent");
   });
 
   it("renders the role eyebrow, real name and call to actions", () => {
@@ -197,17 +203,18 @@ describe("Hero", () => {
       screen.getByRole("link", { name: "Ver proyectos" }).getAttribute("href"),
     ).toBe("#proyectos");
     expect(
-      screen.getByRole("link", { name: "Contáctame" }).getAttribute("href"),
+      screen.getByRole("link", { name: "Contactarme" }).getAttribute("href"),
     ).toBe("#contacto");
   });
 
-  it("renders the profile photo with Spanish alt text", () => {
+  it("renders the dial photo with Spanish alt text", () => {
     render(<Hero />);
 
     const photo = screen.getByRole("img", {
       name: `Foto de perfil de ${profile.name}`,
     });
-    expect(photo.getAttribute("src")).toBe("/images/profile.webp");
+    // Rebrand 06: the dial uses the barber-red portrait (Gemini poster crop).
+    expect(photo.getAttribute("src")).toBe("/images/profile-dial-v7.webp");
   });
 
   it("renders social links near the CTAs as new-tab anchors", () => {
@@ -238,7 +245,7 @@ describe("Hero", () => {
   it("offers the CV as a same-document download next to the CTAs", () => {
     render(<Hero />);
 
-    const cv = screen.getByRole("link", { name: "Descargar CV" });
+    const cv = screen.getByRole("link", { name: /Descargar CV/ });
     expect(cv.getAttribute("href")).toBe("/CV_Eduardo_Mendoza_Ingeniero_IA.pdf");
     expect(cv.getAttribute("download")).not.toBeNull();
   });

@@ -1,0 +1,25 @@
+{
+  "arrangement": "free",
+  "positions": {
+    "01-home.html": {
+      "x": 0,
+      "y": 0
+    },
+    "02-neon-dashboard.html": {
+      "x": 1703,
+      "y": 67
+    },
+    "03-bone-poster.html": {
+      "x": 3223,
+      "y": 67
+    },
+    "05-barber-strict.html": {
+      "x": 4743,
+      "y": 67
+    },
+    "04-neon-poster.html": {
+      "x": 6263,
+      "y": 67
+    }
+  }
+}
