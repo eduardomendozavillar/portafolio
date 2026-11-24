@@ -216,6 +216,18 @@
       "sentAt": "2026-11-21T13:46:57.134Z",
       "resolvedAt": "2026-11-21T13:47:40.071Z",
       "resolution": "Plus de experiencia: strip de resumen (4 proyectos · 2 producción · 122 pruebas), filtro interactivo por estado, overlay de acciones rápidas al hover de la captura (Ver demo / Código) y spotlight de cursor por card."
+    },
+    {
+      "id": "9zyizwf0",
+      "file": "14-proyectos-solo-panel.html",
+      "selector": "body > div > div > aside",
+      "excerpt": "¢.ûúï?»þ­þãûÃþ\u0013ÐÿÊÿTÿ;þ/ò£ä\u0017ò\u000fåÿç·þHü?ü·ëWt\u001eþ³õûØ Ö£Îÿ\u0007þ£öûÜÃÒ×ÿrýð÷\u001fóOêíÿ½ÿýûþEý\u001fý¯÷OÈÀ×ÿ\u0019ûñè}ôï_ò¿Ðþfýÿ.þ£þÓûÏú¯ÙÏ¤ïå?öÿqûÓí\u0007ô\u001fò_ûÏü\u00028þÓÿü_¶gÿÿû>ÿ?qÿÿÝÿéòËûÿÿþ Ð\u000f\u0001\u0016ääÀyB[¯:AÁÜûTÁwgt¡'¸go¡Þ#\u001e§´¶Ù\b»Sà\u001bÊ{-Ì\u0003ÀE¹x\b·0\u000fH-ÙÐo©ªvê\u0017â\u0001àKä]oR\u000eäv í$¹pIæ¹;òb¼¶C\u000fnàsä\u0005ÉLTu\u001dæ¦&",
+      "comment": "esganegial puedes darle un plus a esto ?",
+      "createdAt": "2026-11-24T02:10:47.189Z",
+      "status": "resolved",
+      "sentAt": "2026-11-24T02:10:47.216Z",
+      "resolvedAt": "2026-11-24T02:11:46.218Z",
+      "resolution": "Plus del panel: glow ambiental rojo con notch de esquina, indicador de dots del proyecto activo, botones barber clip-path (Ver en vivo/Código) y línea de terminal \"activo: …\"."
     }
   ]
 }
