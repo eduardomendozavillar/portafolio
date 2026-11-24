@@ -49,7 +49,10 @@ export function ActivityHeatmap() {
         </a>
       </div>
       <div
-        className="mt-4 grid auto-cols-min grid-flow-col grid-rows-7 gap-[3px]"
+        className="heatmap-scroll -mx-2 mt-4 overflow-x-auto px-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+      <div
+        className="grid w-max auto-cols-min grid-flow-col grid-rows-7 gap-[3px]"
         role="img"
         aria-label={t.sections.projects.heatmap.imgAria.replace("{days}", String(contributionsActiveDays))}
       >
@@ -62,6 +65,7 @@ export function ActivityHeatmap() {
             />
           )),
         )}
+      </div>
       </div>
       <div className="mt-3 flex items-center justify-between text-[11px] text-ink-muted">
         <span>{t.sections.projects.heatmap.less}</span>

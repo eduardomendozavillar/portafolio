@@ -295,6 +295,11 @@
   .bg-dust, .bg-dust::after { display: none; }
   .bg-figure { animation: none; }
 }
+/* Móvil (reporte post-deploy): el watermark gigante y la tira lateral
+   invaden pantallas angostas — quedan como decor exclusivo de desktop. */
+@media (max-width: 767px) {
+  .bg-wordmark, .bg-wordmark-strip { display: none; }
+}
 @supports (animation: x) {
   @media (prefers-reduced-motion: no-preference) {
     .bg-dust { animation: bg-drift 26s ease-in-out infinite alternate; }
